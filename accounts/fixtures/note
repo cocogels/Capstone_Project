@@ -1,0 +1,4 @@
+
+
+Backup Fixtures
+ python manage.py dumpdata accounts --format json --indent 4 > accounts/fixtures/accounts.json

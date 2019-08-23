@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    <title>Home | Marketing</title>
+{% endblock title %}
+
+
+{% block header %}
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-secondary fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="{% url 'crm_blog:home' %}">Home</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav mr-auto">
+                        <a class="nav-itemx nav-link" href="#"></a>
+                        <a class=" nav-item nav-link" href="#"></a>
+                    </div>
+
+                    <!-- Navbar Right Side -->
+                    <div class="navbar-nav">
+                        {% if user.is_authenticated  %}
+                    
+                                <a class="nav-item nav-link" href="{% url 'crm_blog:profile' %}">{{ user.email }}</a>
+                                <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
+                                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                                <a class="Wnav-item nav-link" href="{% url 'marketinghead:index' %}">MH-Admin</a>
+                                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                        {% else %}
+                                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                    
+                        {% endif %}    
+                       
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% if user.is_centermanager %}
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                   
+                    <h3>Center Manager</h3>
+                    <p class='text-muted'>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-light"> <a href="{% url 'centermanager:target' %}">Add Target Details </a> | 
+                            <a href="{% url 'centermanager:target_list' %}">Update Target Details</a> </li>
+                            <li class="list-group-item list-group-item-light"> <a href="{% url 'centermanager:payment' %}">Add Payment Details</a> | <a href="#">Update Payment Details</a> </li>
+                            <li class="list-group-item list-group-item-light"><a href="{% url 'centermanager:sanction' %}">Add Sanction Details</a> | <a href="#"> Update Sanction Details</a> </li>
+                            <li class="list-group-item list-group-item-light"><a href="{% url 'centermanager:commission' %}">Add Commission Details</a> | <a href="#"> Update Commission Details</a> </li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endif %}
+
+    {% if user.is_marketinghead %}
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                    <h3>MarketingHead</h3>
+                    <p class='text-muted'>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-light"> <a href="{% url 'accounts:register' %}">User Registration</a> </li>
+                            <li class="list-group-item list-group-item-light">etc</li>
+                            <li class="list-group-item list-group-item-light">etc</li>
+                            <li class="list-group-item list-group-item-light">etc</li>
+                            <li class="list-group-item list-group-item-light">etc</li>
+                            <li class="list-group-item list-group-item-light">etc</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% endif %}
+{% endblock header %}
+
+
+
+
+{% block content %}
+ 
+{% endblock content %}

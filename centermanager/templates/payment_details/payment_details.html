@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+        <title>Marketing | Add-Payment-Details</title>
+{% endblock title %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+        <div class="content-section">
+                {% if messages %}
+                        {% for message in messages %}
+                                <div class="alert alert-success" role="alert"> 
+                                        <center> {{ message }} </center>
+                                </div>
+                        {% endfor %}
+                {% endif %}
+                <form action="" method="POST">
+                        {% csrf_token %}
+                        <fieldset class="form-group">
+                                <legend> <center>Payment Details</center> </legend>
+                                {{ form|crispy }}
+                        </fieldset>
+                        <div class="form-group">
+                                <button class="btn btn-outline-info" type="submit">
+                                        Submit
+                                </button>
+                        </div>
+                </form>
+        </div>     
+{% endblock content %}
