@@ -5,100 +5,154 @@
     <title>Home | Marketing</title>
 {% endblock title %}
 
-
 {% block header %}
-    <header class="site-header">
-        <nav class="navbar navbar-expand-md navbar-dark bg-secondary fixed-top">
-            <div class="container">
-                <a class="navbar-brand mr-4" href="{% url 'crm_blog:home' %}">Home</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
-                    aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarToggle">
-                    <div class="navbar-nav mr-auto">
-                        <a class="nav-itemx nav-link" href="#"></a>
-                        <a class=" nav-item nav-link" href="#"></a>
-                    </div>
 
-                    <!-- Navbar Right Side -->
-                    <div class="navbar-nav">
-                        {% if user.is_authenticated  %}
-                    
-                                <a class="nav-item nav-link" href="{% url 'crm_blog:profile' %}">{{ user.email }}</a>
-                                <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
-                                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                                <a class="Wnav-item nav-link" href="{% url 'marketinghead:index' %}">MH-Admin</a>
-                                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                        {% else %}
-                                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                    
-                        {% endif %}    
-                       
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    {% if user.is_centermanager %}
-    <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-8">
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">
-                    {{ message }}
-                </div>
-                {% endfor %}
-                {% endif %}
-            </div>
-            <div class="col-md-4">
-                <div class="content-section">
-                   
-                    <h3>Center Manager</h3>
-                    <p class='text-muted'>
-                        <ul class="list-group">
-                            <li class="list-group-item list-group-item-light"> <a href="{% url 'centermanager:target' %}">Add Target Details </a> | 
-                            <a href="{% url 'centermanager:target_list' %}">Update Target Details</a> </li>
-                            <li class="list-group-item list-group-item-light"> <a href="{% url 'centermanager:payment' %}">Add Payment Details</a> | <a href="#">Update Payment Details</a> </li>
-                            <li class="list-group-item list-group-item-light"><a href="{% url 'centermanager:sanction' %}">Add Sanction Details</a> | <a href="#"> Update Sanction Details</a> </li>
-                            <li class="list-group-item list-group-item-light"><a href="{% url 'centermanager:commission' %}">Add Commission Details</a> | <a href="#"> Update Commission Details</a> </li>
-                        </ul>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </main>
-    {% endif %}
-
-    {% if user.is_marketinghead %}
-    <main role="main" class="container">
-        <div class="row">
-            <div class="col-md-8">
-            </div>
-            <div class="col-md-4">
-                <div class="content-section">
-                    <h3>MarketingHead</h3>
-                    <p class='text-muted'>
-                        <ul class="list-group">
-                            <li class="list-group-item list-group-item-light"> <a href="{% url 'accounts:register' %}">User Registration</a> </li>
-                            <li class="list-group-item list-group-item-light">etc</li>
-                            <li class="list-group-item list-group-item-light">etc</li>
-                            <li class="list-group-item list-group-item-light">etc</li>
-                            <li class="list-group-item list-group-item-light">etc</li>
-                            <li class="list-group-item list-group-item-light">etc</li>
-                        </ul>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </main>
-    {% endif %}
+    {% include 'header.html' %}
 {% endblock header %}
 
-
-
-
 {% block content %}
- 
+
+{% if user.is_centermanager %}
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="content-section">
+
+                <h3>Center Manager</h3>
+                <p class='text-muted'>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'centermanager:school_year'  %}">Add School Year</a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'centermanager:target_list'  %}">Target Sheet Information</a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'centermanager:payment_list' %}">Payment Information </a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'centermanager:sanction_list' %}"> Sanction Information </a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'centermanager:commission_list' %}">Commission Information</a>
+                        </li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endif %}
+
+{% if user.is_marketinghead %}
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+            <div class="content-section">
+                <h3>MarketingHead</h3>
+                <p class='text-muted'>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">
+                             <a href="{% url 'accounts:register_list' %}">
+                                Register
+                            </a> 
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'crm_blog:view-target-list' %}">
+                                 Target Sheet
+                            </a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'marketing_head:assign_list' %}"> 
+                                Assign Quota
+                            </a> 
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url  'marketing_head:budget_list'  %}">
+                                 Budget 
+                            </a> 
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="#"> 
+                                Collateral     
+                            </a> 
+                        </li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endif %}
+
+{% if user.is_icl %}
+<main role="main" class="container">
+    <div class="row">
+        <div class="col-md-8">
+        </div>
+        <div class="col-md-4">
+            <div class="content-section">
+              
+                <h3>Career Consultant</h3>
+            
+                <p class='text-muted'>
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-light">
+                            <a href="{% url 'careerconsultant:icl_contact_list' %}">
+                             Contacts
+                            </a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="#">
+                               asdas
+                            </a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="#">
+                                Aaasda
+                            </a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="#">
+                             ada
+                            </a>
+                        </li>
+                        <li class="list-group-item list-group-item-light">
+                            <a href="#">
+                             adas
+                            </a> </li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</main>
+{% endif %}
+
+
+
+
+{% if user.is_registrar %}
+    <main role="main" class="container">
+        <div class="row">
+            <div class="col-md-8">
+            </div>
+            <div class="col-md-4">
+                <div class="content-section">
+                    <h3>Registrar</h3>
+                    <p class='text-muted'>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-light"> <a href="#">Course Information </a> </li>
+                            <li class="list-group-item list-group-item-light"> <a href="#">Student Status</a> </li>
+                        
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endif %}
+
 {% endblock content %}

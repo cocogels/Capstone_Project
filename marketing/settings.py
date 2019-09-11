@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet',
+    'jet.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,12 +42,25 @@ INSTALLED_APPS = [
 
     # Handling all User Account
     'accounts.apps.AccountsConfig',
+    
+    #Adds on
     'crispy_forms',
+    'bootstrap4',
+    'bootstrap_datepicker_plus',
     'rest_framework',
     #handling our crm content
     'crm_blog.apps.CrmBlogConfig',
     #handling  adding cm  set details
     'centermanager',
+    'multiselectfield',
+    'marketinghead',
+    'centerbusinessmanager',
+    'registrar',
+    'careerconsultant',
+    'partial_date',
+    #phone
+    'phonenumber_field',
+    
 ]
 
 #Registering our own Custom User
@@ -97,7 +112,7 @@ WSGI_APPLICATION = 'marketing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_marketing_capstone',
+        'NAME': 'capstone',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -151,6 +166,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+#Setting Phone Number
+PHONENUMBER_DEFAULT_REGION = 'PH'
+PHONENUMBER_DB_FORMAT =True
+INTERNATIONAL = True
+NATIONAL = True
+RFC3966 = True
 
 LOGIN_REDIRECT_URL = 'crm_blog:home'
 LOGOUT_REDIRECT_URL = 'login'
@@ -160,15 +181,13 @@ LOGOUT_URL = 'logout'
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_URL = '/media/'
+JET_DEFAULT_THEME = 'light-gray'
 
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
-
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+MEDIA_URL   = '/media/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}

@@ -15,21 +15,33 @@ Including another URLconf
 """
 
 from django.contrib import admin
+
+from django.conf import settings
+from django.conf.urls.static import static
+
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from accounts.forms import AuthenticationForm
 from accounts.admin import admin_marketinghead_site
+
 #from accounts.urls import user_login, user_logout
 urlpatterns = [
+    path('jet/', include('jet.urls', 'jet')),
+    path('jet/dashboard', include( 'jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
+    path('marketing-admin/', admin_marketinghead_site.urls),
     path('crm_blog/', include('crm_blog.urls'),),
     path('center/', include('centermanager.urls'),),
     path('accounts/', include('accounts.urls'),),
-    # path('user-login/', user_login, name='login' ),
-    # path('user-logout/', user_logout, name='logout'),
-    path('marketinghead/', admin_marketinghead_site.urls),
-    
+    path('marketinghead/', include('marketinghead.urls')),
+    path('careerconsultant/', include('careerconsultant.urls')),
+    path('registrar/',include('registrar.urls')),
     path('', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
 
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ 

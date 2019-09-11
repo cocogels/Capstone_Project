@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Marketing | Payment</title>
+{% endblock title %}
+
+
+{% block header %}
+    {% include 'header.html' %}
+{% endblock header %}
+
+{% block content %}
+    {%  if request.user.is_authenticated %}
+        {% if request.user.is_centermanager  %}
+            <div class="content-section" >
+                 
+                {% include 'messages.html' %}
+                <div class="float-left">
+                    <h3> Payment Information </h3>
+                </div>
+                
+                <a href="{% url 'centermanager:payment'%}" class="btn btn-info float-right">
+                    Add New
+                </a>
+            
+                    {% if object_list %}
+                        <ul>
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                            
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                {% for payment in object_list %}
+                                <tbody>
+                                    <tr>
+                            
+                                        <td>{{ payment.date_created }}</td>
+                                        <td>{{ payment.title }}</td>
+                                        <td> <a class="btn btn-secondary" href="{% url 'centermanager:payment_update' payment.pk %}">Update</a> </td>
+                                    </tr>
+                                </tbody>
+                                {% endfor %}
+                            </table>
+                        </ul>
+                    {% else %}
+                        <p>No Target Have Been Set</p>
+                    {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content  %}

@@ -1,0 +1,68 @@
+<header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-secondary fixed-top">
+        <div class="container">
+            <a class="navbar-brand mr-4" href="{% url 'crm_blog:home' %}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+                aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+                <div class="navbar-nav mr-auto">
+                    <a class="nav-itemx nav-link" href="#"></a>
+                    <a class=" nav-item nav-link" href="#"></a>
+                </div>
+
+                <div class="navbar-nav">
+                    {% if request.user.is_superuser %}
+
+                    <a class="nav-item nav-link" href="{% url 'admin:index' %}">Admin</a>
+
+                    {% endif %}
+
+                    {% if request.user.is_marketinghead %}
+                    <a class="nav-item nav-link" href="{% url 'accounts:profile' %}">{{ user.email }}</a>
+
+                    {% endif %}
+
+                    {% if request.user.is_centermanager %}
+                    <a class="nav-item nav-link" href="{% url 'accounts:profile' %}">{{ user.email }}</a>
+                    {% endif %}
+
+                    {% if request.user.is_centerbusinessmanager %}
+                    <a class="nav-item nav-link" href="{% url 'accounts:profile' %}">{{ user.email }}</a>
+                    {% endif %}
+
+                    {% if request.user.is_registrar %}
+                    <a class="nav-item nav-link" href="{% url 'accounts:profile' %}">{{ user.email }}</a>
+                    {% endif %}
+
+
+                    {% if not request.user.is_marketinghead  and not request.user.is_centermanager and not request.user.is_centerbusinessmanager and not request.user.is_registrar %}
+                        <a class="nav-item nav-link" href="{% url 'accounts:profile' %}">{{ user.email }}</a>
+                        <a class="nav-item nav-link btn btn-outline-info" href="{% url 'logout' %}">Logout</a>
+                        {% if request.user.is_shs %}
+                        
+                        {% endif %}
+
+                        {% if request.user.is_budgetary %}
+                        
+                        {% endif  %}
+
+                        {% if request.user.is_icl %}
+                    
+                        {% endif %}
+                        
+                        {% if request.user.is_ihe %}
+                        
+                        {% endif %}
+
+
+                    {% else %}
+                    <a class="nav-item nav-lin btn btn-outline-info" href="{% url 'logout' %}">Logout</a>
+                    {% endif %}
+                
+                </div>
+                
+            </div>
+    </nav>
+</header>

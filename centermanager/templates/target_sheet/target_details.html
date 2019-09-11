@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+        <title>Marketing | TargetSheet</title>
+{% endblock title %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="content-section">
+        <h1> <center>Target Details</center></h1>
+        {% for target in object.target.all %}
+            
+        {% endfor %}
+    </div>
+
+{% endblock content %}

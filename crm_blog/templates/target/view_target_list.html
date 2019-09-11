@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+
+
+{% block header %}
+    {% include 'header.html' %}
+{% endblock header %}
+
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+        {%  if request.user.is_authenticated %}
+            {% if request.user.is_marketinghead %}
+                <div class="content-section" >
+
+                    {% if object_list %}
+                        {% for target in object_list %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="float-left">Target Sheet</h4>
+                                <form class="form-inline float-right">
+                                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                </form>
+                                
+                            </div>
+                            
+                            <div class="container-fluid" >
+                                <div class="card-body">
+                                    <blockquote class="blockquote mb-0">
+                                        <center> School Year {{ target.start_date }} - {{ target.end_date }} </center>
+                                        <br>
+                                        <table class="table">
+                                            <thead class="thead-dark" >
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Amount</th>
+                                            </thead>
+                                            <tbody> 
+                                                    <tr>
+                                                        <td>
+                                                            Senior High : 
+                                                        </td>
+                                                        <td>
+                                                        {{ target.seniorhigh }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Higher Education:   
+                                                    </td>
+                                                    <td>
+                                                        {{ target.higher_ed }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Corporate: 
+                                                    </td>
+                                                    <td>
+                                                        {{ target.corporate }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Retail:
+                                                    </td>
+                                                    <td>
+                                                        {{ target.retail }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        OWWA:
+                                                    </td>
+                                                    <td>
+                                                        {{ target.owwa }}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        
+                                        <footer class="blockquote-footer">{{ target.date_created }}</footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                    {% else %}
+                        <p>No Current Target Sheet Created</p>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+
+
+{% block content %}
+
+{%  if request.user.is_authenticated %}
+{% if request.user.is_marketinghead %}
+
+
+    {% include 'messages.html' %}
+    <div class='card'>
+        <div class="card-title mt-3">
+            <h3 class='float-left ml-3'> Registerd User </h3>
+            <a class=' card-link btn btn-info float-right mr-4' href="{% url 'accounts:register' %}">
+                Add Employee
+            </a>
+        </div>
+        <div clas='card-header' >
+            
+        </div>
+        <div class="card-body" >
+            <table  class="table table-bordered table-sm" cellspacing="0" width="100%">
+                {% if object_list %}
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"> <center>  Email</center></th>
+                        <th scope="col"> <center> Action</center></th>
+                    </tr>
+                </thead>
+                {% for registration in object_list %}
+                <tbody>
+                    <tr>
+                        <td>{{ registration.email  }}</td>
+                        <td>
+            
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+                </ul>
+                {% else %}
+                <p>No Account Has Been Registered</p>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+{% endif %}
+
+
+{% endblock content  %}

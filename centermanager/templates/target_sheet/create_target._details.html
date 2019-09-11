@@ -1,45 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-        <title>Marketing | TargetSheet</title>
+<title>Marketing | TargetSheet</title>
 {% endblock title %}
+
 
 {% load crispy_forms_tags %}
 {% block content %}
-        <div class="content-section">
-                {% if messages %}
-                        {% for message in messages %}
-                                <div class="alert alert-success" role="alert"> 
-                                        <center> {{ message }} </center>
-                                </div>
-                        {% endfor %}
-                {% endif %}
-                <form action="" method="POST">
-                        {% csrf_token %}
-                        <fieldset class="form-group">
-                                <legend> <center>SET NEW TARGET</center> </legend>
-                                <!-- <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
-                                        {{ form.date }}
-                                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
-                                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                        </div>
-                                </div> -->
-        
-                                        
-                                {{ form|crispy }}
-                        </fieldset>
-                        <div class="form-group">
-                                <button class="btn btn-outline-info" type="submit">
-                                        Submit
-                                </button>
-                        </div>
-                </form>
-        </div>     
-
-        <script>
-                $(function () {
-                        $("#datetimepicker1").datetimepicker();
-                });
-        </script>
+<div class="content-section">
+        {% include 'messages.html' %}
+        <form action="" method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                        {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">
+                                Submit
+                        </button>
+                </div>
+        </form>
+</div>
 {% endblock content %}

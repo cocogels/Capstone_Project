@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+
+
+{% block content %}
+
+{%  if request.user.is_authenticated %}
+{% if request.user.is_marketinghead  %}
+<div class="content-section">
+
+        <h2>
+            <center> Target This Year </center>
+        </h2>
+
+        <table style="border-collapse: collapse">
+
+            <tr>
+                <td style="max_width:20%">
+                    <div class="card ml-5" style=>
+                        <div class="card-header">Senior High</div>
+
+                        <div class="card-body">Sample 123124</div>
+
+                    </div>
+                </td>
+
+                <td style="max_width:20%">
+                    <div class="card ml-5" style=>
+                        <div class="card-header">Higher Education</div>
+                        <div class="card-body">Sample 123124</div>
+
+                </td>
+
+                <td style="max_width:20%">
+                    <div class="card ml-5" style=>
+                        <div class="card-header">Retail</div>
+                        <div class="card-body">Sample 123124</div>
+
+                    </div>
+                </td>
+
+                <td style="max_width:20%">
+                    <div class="card ml-5" style=>
+                        <div class="card-header">Coporate</div>
+                        <div class="card-body">Sample 123124</div>
+
+                    </div>
+                </td>
+                <td style="max_width:20%%">
+                    <div class="card ml-5" style=>
+                        <div class="card-header">OWWA</div>
+                        <div class="card-body">Sample 123124</div>
+
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+
+
+    {% include 'messages.html' %}
+    
+    <hr>
+    <div class=" ml-5 float-left">
+        <h3>Assign Quota Information </h3>
+    </div>
+
+    <!-- <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target=".bd-target-modal-lg">
+    </button>
+     -->
+
+   
+
+        <table class="float-right">
+            <tr>
+                <td>
+                    <a href="{%  url 'marketing_head:assign_territory' %}" class="btn btn-info pr-4">
+                        Territory
+                    </a>
+                </td>
+                <td>
+                    <a href="{%  url 'marketing_head:assign_quota' %}" class="btn btn-info">
+                        Add Quota
+                    </a>
+                </td>
+            </tr>
+        </table>
+    
+
+    <ul>
+        <table class="table">
+            {% if object_list %}
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Assigned To</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            {% for quota in object_list %}
+            <tbody>
+                <tr>
+
+                    <td>
+                        {{ quota.user_profile }}
+                    </td>
+
+             
+                    <td>
+                    </td>
+                   
+                    <td>
+                        <a class="btn btn-secondary" href="{% url 'marketing_head:assign_quota'  %}">
+                            Update
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+    </ul>
+    {% else %}
+    <p>No Quota Have Been Assign</p>
+    </table>
+    {% endif %}
+</div>
+{% endif %}
+{% endif %}
+</div>
+
+
+<div class="modal fade bd-target-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="container-fluid">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content  %}

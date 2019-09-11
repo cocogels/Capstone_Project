@@ -1,14 +1,65 @@
-from django.db import models
-from django.utils import timezone
+import datetime
+#rom django.core.validators import MaxValueValidator, MinValueValidator
+import calendar 
 
+
+from django.db import models    
+from django.utils import timezone
+from django.utils.text import slugify
+
+from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
+from django.core.exceptions import ValidationError
 
+
+
+
+
+# def current_year():
+#     return datetime.date.today().year
+    
+# def max_value_current_year(value):
+#     return MaxValueValidator(current_year())(value)
+
+# start_year  = models.IntegerField(_('start_year'), unique_for_year=True ,validators=[MinValueValidator(2017), max_value_current_year], null=True)
+
+# class SchoolYearManager(models.Manager):
+    
+#     def validate_year(self, start_year, end_year):
+#         errors =[]
+#         if start_year and end_year:
+#             if start_year < end_year:
+#                 errors.append('End Year Cannot be Earlier Than Start Year')
+            
+#             if start_year < datetime.date.today().year+1:
+#                 errors.append('Year Cannot be in Past..!')
+
+#             if end_year > datetime.date.today().year+5:
+#                 errors.append('Year Cannot be Six Years A Head..!')
+
+
+
+class SchoolYear(models.Model):
+    start_year   = models.DateField(unique=True)
+    end_year     = models.DateField(unique=True)
+    date_created = models.DateField(auto_now_add=True, null=True)
+    date_updated = models.DateField(auto_now=True, null=True)
+    
+ #   objects = SchoolYearManager()
+    class Meta:
+        verbose_name_plural = 'School Year'
+        ordering = ['-date_created',]
+        
+    def date_created_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.date_created <= now
+
+        
+    
 class TargetSheet(models.Model):
 
     ts_id           = models.AutoField(primary_key=True)
-    start_year      = models.DateField(blank=True, null=True)
-    end_year        = models.DateField(blank=True, null=True)
     corporate       = models.BigIntegerField(null=True,)
     retail          = models.BigIntegerField(null=True,)
     owwa            = models.BigIntegerField(null=True,)
@@ -16,17 +67,25 @@ class TargetSheet(models.Model):
     higher_ed       = models.BigIntegerField(null=True,)
     date_created    = models.DateTimeField(auto_now_add=True)
     date_updated    = models.DateTimeField(auto_now=True)
-    
-    def date_added_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.date_added <= now
-    
-    class Meta:
+  
+    class Meta:      
         verbose_name_plural = 'Target Sheet'
+        ordering = ['-date_created','-date_updated']
+    
+    def get_absolute_url(self):
+        return reverse("centermanager:target_details", kwargs={"id": self.id})
+    
+    def date_created_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.date_created <= now
+
+
+
 
 
 
 class PaymentDetails(models.Model):
+ 
     status_choices =(
         ('regular', 'RegularClass'),
         ('nightclass', 'NightClass')
@@ -35,6 +94,18 @@ class PaymentDetails(models.Model):
         max_length=50,
         choices=status_choices,
         default='regular'
+    )
+    
+    course_choices = (
+        ('bsit','BSIT'),
+        ('bsba','BSBA'),
+        ('shs','SHS'),
+    )
+    
+    course = models.CharField(
+        max_length=50,
+        choices=course_choices,
+        default='bsit',
     )
     payment_details_id      = models.AutoField(primary_key=True)
     cash_amount_per_unit    = models.BigIntegerField(null=True)
@@ -47,20 +118,25 @@ class PaymentDetails(models.Model):
     ins_registration_fee    = models.BigIntegerField(null=True)
     date_created            = models.DateTimeField(auto_now_add=True)
     date_updated            = models.DateTimeField(auto_now=True)
+    
+    
+    
+    class Meta:
+        verbose_name_plural ='Payment Details'
 
+
+    def get_absolute_url(self):
+        return f'{self.slug}'
     
-    
-    def __str__(self):
-        return self.status
-    
+    def get_update_url(self):
+        self.slug = slugify(self.title)
+        super(Paymentdetails, self).save(*arggs,**kwargs)
+        
     def date_created_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.date_created <= now
 
 
-    class Meta:
-        verbose_name_plural ='Payment Details'
-        
         
 
 
@@ -68,6 +144,7 @@ class PaymentDetails(models.Model):
 
 
 class SanctionSetting(models.Model):
+    
     ss_id           = models.AutoField(primary_key=True)
     first_sanction  = models.CharField(max_length=255, blank=False)
     second_sanction = models.CharField(max_length=255, blank=False)
@@ -76,6 +153,8 @@ class SanctionSetting(models.Model):
     fifth_sanction  = models.CharField(max_length=255, blank=False)
     date_created    = models.DateTimeField(auto_now_add=True)
     date_updated    = models.DateTimeField(auto_now=True)
+    
+
     
     def date_added_recently(self):
         now = timezone.now()
@@ -99,7 +178,9 @@ class SanctionSetting(models.Model):
 #                 params={'value': value},
 #             )
 class CommissionSetting(models.Model):
-    fee_choices     = (
+    
+    title = models.CharField(max_length=255, null=True)
+    fee_choices = (
                     (True, 'PAID'), 
                     (False ,'UNPAID'),
                     )
@@ -117,6 +198,8 @@ class CommissionSetting(models.Model):
     date_created       = models.DateTimeField(auto_now_add=True)
     date_updated       = models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return self.title
     
     def date_added_recently(self):
         now = timezone.now()

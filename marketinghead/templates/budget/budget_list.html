@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+
+
+{% block content %}
+
+{%  if request.user.is_authenticated %}
+{% if request.user.is_marketinghead  %}
+<div class="content-section">
+
+    {% include 'messages.html' %}
+
+    <div class="float-left">
+        <h3> Budget Information </h3>
+    </div>
+
+    <!-- <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target=".bd-target-modal-lg">
+    </button>
+     -->
+    <a href="{%  url 'marketing_head:budget' %}" class="btn btn-info float-right"> 
+        Add New
+    </a>
+
+
+    <ul> 
+        <table class="table">
+            {% if object_list %}
+            <thead class="thead-dark"></thead>
+                <tr>
+
+                    <th scope="col">Date</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            {% for budget in object_list %}
+            <tbody>
+                <tr>
+
+                    <td>{{ budget.date_created }}</td>
+                    <td>{{ budget.b_amount }}</td>
+                    <td> <a class="btn btn-secondary"
+                            href="{% url 'marketing_head:budget_update' budget.pk %}">Update</a> </td>
+                </tr>
+            </tbody>
+            {% endfor %}
+    </ul>
+    {% else %}
+    <p>No Budget Have Been Set</p>
+    </table>
+    {% endif %}
+</div>
+{% endif %}
+{% endif %}
+
+
+
+<div class="modal fade bd-target-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="container-fluid">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content  %}

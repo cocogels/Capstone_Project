@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{{ form.media }}
+
+{% block title %}
+<title>Marketing | TargetSheet</title>
+{% endblock title %}
+
+
+{% block content %}
+<div class="content-section">
+    {% include 'messages.html' %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {% bootstrap_form form %}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

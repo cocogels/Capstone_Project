@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block header %}
+    {% include 'header.html' %}
+{% endblock header %}
+
+
+
+{% block content %}
+
+    {%  if request.user.is_authenticated %}
+        {% if request.user.is_icl  %}
+            <div class="content-section" >
+
+           {% include 'messages.html' %}
+           
+                <div class="float-left">
+                    <h3> ICL Contact Information </h3>
+                </div>
+                
+                <a href="{% url 'careerconsultant:icl_contact' %}"class='btn btn-info float-right' >
+                 Add Contacts
+
+                </a>
+          
+                
+
+                    {% if object_list %}
+                        <div class="table-responsive-sm">
+
+                      
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        
+                                        <th scope="col">Created By</th>
+                                        <th scope="col">Organization</th>
+                                        <th scope="col">Contact Person</th>
+                                        <th scope="col">Type</th>                                        
+                                        <th scope="col">Telephone.#</th>
+                                        <th scope="col">Cellphone.#</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                            {% for contacts in object_list %}
+                                    <tbody>
+                                        <tr>
+                                            <td scope='row'>{{ contacts.created_by }}</td>
+                                            <td scope='row'>{{ contacts.name }}</td>
+                                            <td scope='row'>{{ contacts.c_person }}</td>                                           
+                                            <td scope='row'>{{ contacts.org_type }}</td>
+                                            <td scope='row'>{{ contacts.telephone_number }}</td>
+                                            <td scope='row'>{{ contacts.phone_number }}</td>
+                                            <td scope='row'>{{ contacts.email }}</td>
+                                            <td>
+                                                <a href="#">Upda </a>
+                                            </td>                                            
+                                        </tr>                   
+                                    </tbody>
+                            {% endfor %}
+                            </table>
+                        </div>
+                    {% else %}
+                        <p>No Contact  Have Been Added</p>
+                    {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock content  %}
+
