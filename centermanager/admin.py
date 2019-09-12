@@ -3,8 +3,7 @@ from django.contrib import admin
 from .models import TargetSheet, PaymentDetails, SanctionSetting, CommissionSetting, SchoolYear
 from .forms import TargetSheetForm, SchoolYearForm, PaymentDetailsForm, SanctionSettingForm
 # Register your models here.
-from .widgets import CustomDatePickerInput
-from django.db import models as db_models
+
 class TargetSheetAdmin(admin.ModelAdmin):
     form = TargetSheetForm
     fieldsets =(
@@ -43,9 +42,7 @@ class TargetSheetAdmin(admin.ModelAdmin):
 
 
 class SchoolYearAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-         db_models.DateField: {'widget': CustomDatePickerInput},
-     }
+  
     form = SchoolYearForm
     list_display = (
     'start_year',

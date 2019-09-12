@@ -1,12 +1,23 @@
+{% load static from staticfiles %}
+
+<!-- Core plugin JavaScript-->
+<script src="https://kit.fontawesome.com/cc80dec61d.js"></script>
+<!-- <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootadmin.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/datatables.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/fullcalendar.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.slimscroll.min.js' %}"></script> -->
 
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'design/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'design/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-        $(".create-book").modalForm({
-            formURL: "{% url 'create_book' %}"
-        });
+<!-- Core plugin JavaScript-->
+<script src="{% static 'design/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-    });
-</script>
+<!-- Custom scripts for all pages-->
+<script src="{% static 'design/js/sb-admin-2.min.js' %}"></script>

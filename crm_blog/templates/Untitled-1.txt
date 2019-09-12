@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap sidebar</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="sidebar-wrapper">
+        <nav class="sidebar">
+          <ul class="sidebar__toggled">  
+            <li><a href="javascript:void(0)" id="main-toggle" class="sidebar-toggle">Menu</a></li>
+          </ul>
+        </nav>
+        <nav class="sidebar">
+          <ul>  
+            <li class="title">Item Group</li>
+            <li><a><span class="icon glyphicon glyphicon-link"></span>Link1</a></li>
+            <li><a><span class="icon glyphicon glyphicon-link"></span>link2</a></li>
+            <li>
+              <a class="dropdown-toggle" href="#"><span class="icon glyphicon glyphicon-link"></span></span>Sub menu</a>
+              <ul class="dropdown-menu" data-role="dropdown">
+                <li><a href="#">Subitem 1</a></li>
+                <li><a href="#">Subitem 2</a></li>
+                <li><a href="#">Subitem 3</a></li>
+                <li class="divider"></li>
+                <li><a href="">Subitem 4</a></li>
+                <li class="disabled"><a href="#">Subitem 4</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    <div id="page-content-wrapper"><button class="btn btn-default sidebar-toggle">Toggle Sidebar</button></div>
+    </div>
+  </body>
+</html>
