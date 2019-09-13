@@ -22,14 +22,12 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from accounts.forms import AuthenticationForm
-from accounts.admin import admin_marketinghead_site
 
 #from accounts.urls import user_login, user_logout
 urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard', include( 'jet.dashboard.urls', 'jet-dashboard')),
     path('admin/', admin.site.urls),
-    path('marketing-admin/', admin_marketinghead_site.urls),
     path('crm_blog/', include('crm_blog.urls'),),
     path('center/', include('centermanager.urls'),),
     path('accounts/', include('accounts.urls'),),
