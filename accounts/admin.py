@@ -94,18 +94,6 @@ admin.site.unregister(Group)
 """-----------------------------------------------------"""
 
 
-class MarketingHeadAdminSite(AdminSite):
-    site_header = 'MarketingHead '
-
-    def has_permission(self, request):
-        return(
-            request.user.is_active and request.user.is_marketinghead
-        )
-
-
-admin_marketinghead_site = MarketingHeadAdminSite(name='marketinghead_admin')
-admin_marketinghead_site.register(UserMarketingProfile)
-
 
 
 
