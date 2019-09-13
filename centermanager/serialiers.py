@@ -27,6 +27,8 @@ class SchoolYearSerializer(serializers.ModelSerializer):
 
 
         if data['end_year'] > datetime.date.today().year+5:
-            raise serializers.ValidationError('End Year Canoot Exceed Five Years')
+            raise serializers.ValidationError('End Year Canot Exceed Five Years')
+        
+        
         return data
         
