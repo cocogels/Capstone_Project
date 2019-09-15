@@ -9,9 +9,93 @@
 <title>Marketing | TargetSheet</title>
 {% endblock title %}
 
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
 
 {% block content %}
-<div class="content-section">
+<div class="container-fluid">
+
+    <!-- Start of Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page">
+                <a href="{% url 'crm_blog:home' %}">
+                    Overview
+                </a>
+
+                <i class="fas fa-chevron-right small"></i>
+
+                <a href="{% url 'centermanager:school_year' %}">
+                    General Information
+                </a>
+
+            </li>
+        </ol>
+    </nav>
+    <!-- End of Bread Crumb -->
+    <div class="float-right">
+        <a href="#">
+            right
+        </a>
+    </div>
+    <div class="float-left">
+        <a href="">
+            left
+        </a>
+    </div>
+    <br>
+    <div cclass="jumbotron jumbotron-fluid card">
+        <div>
+            <h1 class="display-4"></h1>
+            <div class="card">
+               
+                <nav class="nav">
+                    <a class="nav-link" href="#">Active</a>
+                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </nav>
+                <hr>
+                <div class="card-body">
+                      <div class="col-xl-3 col-md-6 mb-4">
+                          <div class="card border-left-warning shadow h-100 py-2">
+                              <div class="card-body">
+                                  <div class="row no-gutters align-items-center">
+                                      <div class="col mr-2">
+                                          <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending
+                                              Requests</div>
+                                          <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                      </div>
+                                      <div class="col-auto">
+                                          <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+<!-- <div class="content-section">
     {% include 'messages.html' %}
     <form action="" method="POST">
         {% csrf_token %}
@@ -24,6 +108,4 @@
             </button>
         </div>
     </form>
-</div>
-
-{% endblock content %}
+</div> -->

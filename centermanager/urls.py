@@ -8,7 +8,7 @@ app_name = 'centermanager'
 
 urlpatterns = [
     
-    path('add-school-year/', views.create_school_year, name='school_year'),
+    path('general-information/', views.create_school_year, name='school_year'),
     path('target-list/', views.TargetListView.as_view(), name='target_list'),
     path('create-target-details/', views.create_target_sheet, name='target' ),
     
