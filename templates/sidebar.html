@@ -5,25 +5,102 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    {% if request.user.is_centermanager %}
+    {% if request.user.is_superuser %}
     <li class="nav-item active">
-        <a class="nav-link" href="{% url 'crm_blog:home' %}">
-            <strong> CENTER MANAGER </strong>
+        <a class="nav-link" href="{% url 'admin:index' %}">
+            <strong> 
+                ADMIN 
+            </strong>
         </a>
     </li>
     {% endif %}
-    <!-- Divider -->
-    <hr class="sidebar-divider">
 
+
+    {% if request.user.is_centerbusinessmanager %}
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'crm_blog:home' %}">
-            <i class="far fa-eye"></i>
-            <span>Overview</span></a>
+            <strong> 
+                Center Business Manager 
+            </strong>
+        </a>
     </li>
+    {% endif %}
+
+    {% if request.user.is_registrar %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong> 
+                Registrar 
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if request.user.is_bugetary %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong> 
+                Career Consultant 
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if request.user.is_ihe %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong> 
+                Career Consultant 
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+
+    {% if request.user.is_shs %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong> 
+                Career Consultant 
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if request.user.is_icl %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong> 
+                Career Consultant 
+            </strong>
+        </a>
+    </li>
+    {% endif %}
    
     <!-- Nav Item - Pages Collapse Menu -->
     {% if request.user.is_centermanager %}
-      
+    <li class="nav-item active">
+            <a class="nav-link" href="{% url 'crm_blog:home' %}">
+                <strong> 
+                    Center Manager 
+                </strong>
+            </a>
+        </li>
+        <hr class="sidebar-divider my-0">
+        <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-users-cog"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                  <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Settings:</h6>
+                    <a class="collapse-item" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+                    <a class="collapse-item" href="{% url 'centermanager:commission_list' %}">Commission</a>
+                  </div>
+                </div>
+              </li> 
+        <!-- <hr class="sidebar-divider my-0">
     <li class="nav-item">
         <a class="nav-link collapsed" href="{% url 'centermanager:school_year' %}" aria-expanded="true"
             aria-controls="collapseTwo">
@@ -34,18 +111,62 @@
                 </strong>
             </span>
         </a>
-    </li>
+    </li> -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'centermanager:school_year' %}" aria-expanded="true"
+        <a class="nav-link collapsed" href="{% url 'centermanager:payment_list' %}" aria-expanded="true"
             aria-controls="collapseTwo">
-            <i class="fas fa-user-tie"></i>
+            <i class="fas fa-file-invoice"></i>
             <span>
                 <strong>
-                    Career Consultant
+                   Matriculation 
                 </strong>
             </span>
         </a>
     </li>
+
+    <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'centermanager:school_year' %}" aria-expanded="true"
+                aria-controls="collapseTwo">
+                <i class="fas fa-user-plus"></i>
+                <span>
+                    <strong>
+                       Add Employer 
+                    </strong>
+                </span>
+            </a>
+        </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'centermanager:school_year' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-school"></i>
+            <span>
+                <strong>
+                   School Year 
+                </strong>
+            </span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'centermanager:school_year' %}" aria-expanded="true"
+                aria-controls="collapseTwo">
+                <i class="fas fa-folder-plus"></i>
+                <span>
+                    <strong>
+                       Target Sheet
+                    </strong>
+                </span>
+            </a>
+        </li>
+   
+ 
+
+     <li class="nav-item active">
+         <a class="nav-link" href="{% url 'crm_blog:home' %}">
+             <i class="far fa-eye"></i>
+             <span>Overview</span></a>
+     </li>
     {% endif %}
      <!-- <li class="nav-item">
          <a class="nav-link collapsed" href="{% url 'centermanager:school_year' %}" data-toggle="collapse"

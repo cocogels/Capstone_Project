@@ -9,8 +9,70 @@
     {% include 'header.html' %}
 {% endblock header %}
 
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
 {% block content %}
-    {%  if request.user.is_authenticated %}
+
+
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- {%  if request.user.is_authenticated %}
         {% if request.user.is_centermanager  %}
             <div class="content-section" >
                  
@@ -51,6 +113,4 @@
                     {% endif %}
             </div>
         {% endif %}
-    {% endif %}
-
-{% endblock content  %}
+    {% endif %} -->
