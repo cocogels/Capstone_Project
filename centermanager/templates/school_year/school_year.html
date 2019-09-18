@@ -9,9 +9,15 @@
 <title>Marketing | TargetSheet</title>
 {% endblock title %}
 
+{% block sidebar %}
+    {% include 'sidebar.html' %}
+{% endblock sidebar %}
 
+{% block navbar %}
+    {% include 'navbar.html' %}
+{% endblock navbar %}
 {% block content %}
-<div class="content-section">
+
     {% include 'messages.html' %}
     <form action="" method="POST">
         {% csrf_token %}
@@ -26,4 +32,16 @@
     </form>
 </div>
 
+                </div>
+              </div>
+</div>
+
+
+
+
 {% endblock content %}
+
+
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock footer %}

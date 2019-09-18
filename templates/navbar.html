@@ -1,14 +1,16 @@
 {% load static from staticfiles %}
 
 <!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<nav class="navbar navbar-expand navbar-light bg-secondary topbar mb-4 static-top shadow">
 
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
     </button>
+    <div  class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100" >
+        <img src="{% static '/design/img/ICMarketing1.png' %}" alt="" width="200 px">
+    </div>
 
- 
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -138,7 +140,7 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> 
                     {% if request.user.is_centermanager %}
                         {{ user.email }}
-                 <img class="img-profile rounded-circle" src="{% static 'design/img/ICMarketing.png' %}">
+                 <img class="img-profile rounded-circle" src="{% static 'design/img/matic.PNG' %}">
 
                     {% endif %}
                 </span>
