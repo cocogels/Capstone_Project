@@ -9,8 +9,79 @@
     {% include 'header.html' %}
 {% endblock header %}
 
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
 {% block content %}
-    {%  if request.user.is_authenticated %}
+    
+    <a href="#" class="btn btn-success btn-icon-split">
+        <span class="icon text-white-50">
+            
+            <i class="fas fa-plus-circle"></i>
+        </span>
+        <span class="text">Add School Year</span>
+    </a>
+
+
+    
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- {%  if request.user.is_authenticated %}
         {% if request.user.is_centermanager  %}
             <div class="content-section" >
                  
@@ -51,6 +122,4 @@
                     {% endif %}
             </div>
         {% endif %}
-    {% endif %}
-
-{% endblock content  %}
+    {% endif %} -->

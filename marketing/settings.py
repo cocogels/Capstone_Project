@@ -114,7 +114,7 @@ WSGI_APPLICATION = 'marketing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'capstone',
+        'NAME': 'db_capstone',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
