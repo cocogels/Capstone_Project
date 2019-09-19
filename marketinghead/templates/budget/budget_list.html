@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
@@ -6,10 +7,15 @@
 {% include 'header.html' %}
 {% endblock header %}
 
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
 
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
 
 {% block content %}
-
 {%  if request.user.is_authenticated %}
 {% if request.user.is_marketinghead  %}
 <div class="content-section">
@@ -17,27 +23,27 @@
     {% include 'messages.html' %}
 
     <div class="float-left">
-        <h3> Budget Information </h3>
+        <h6> Budget Information </h6>
     </div>
 
     <!-- <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target=".bd-target-modal-lg">
     </button>
      -->
-    <a href="{%  url 'marketing_head:budget' %}" class="btn btn-info float-right"> 
-        Add New
+    <a href="{%  url 'marketing_head:budget' %}" class="btn btn-info float-right">
+        <h7> Add New </h7> 
     </a>
 
 
-    <ul> 
+    <ul>
         <table class="table">
             {% if object_list %}
             <thead class="thead-dark"></thead>
-                <tr>
+            <tr>
 
-                    <th scope="col">Date</th>
-                    <th scope="col">Amount</th>
-                    <th scope="col">Action</th>
-                </tr>
+                <th scope="col">Date</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Action</th>
+            </tr>
             </thead>
             {% for budget in object_list %}
             <tbody>
@@ -52,7 +58,7 @@
             {% endfor %}
     </ul>
     {% else %}
-    <p>No Budget Have Been Set</p>
+    <h4> <center> School Year 2019 - 2020 </center> </h4>
     </table>
     {% endif %}
 </div>
@@ -71,4 +77,128 @@
         </div>
     </div>
 </div>
-{% endblock content  %}
+
+<div class="container">
+    <div class="d-flex mb-3">
+        <div class="p-2 ">
+            <!-- <div class="card" style="width:200px">
+                <div class="card-body">
+                    <h4 class="card-title">Jeraldine Matic</h4>
+                    <p class="card-text"></p>
+                    <a href="#" class="btn btn-primary"> Update Profile </a>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="p-2 " style="width:1000rem">
+            <h5></h5>
+            <span>
+                <h6></h6>
+           
+            <div class="d-flex mb-3">
+                <div class="p-2 flex-fill ">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                        <Center> LEADS </Center>
+                                    </div>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-800">
+                                        <center> 0 </center>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="p-2 flex-fill ">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                        <center> ENROLLEE </center>
+                                    </div>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-800">
+                                        <center> 0 </center>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="p-2 flex-fill ">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-lg font-weight-bold text-primary text-uppercase mb-1">
+                                        <a href="">
+                                            <span class="float-right">
+                                               <h7> 
+                                                   Add Budget 
+                                               </h7>
+                                            </span><br>
+                                        </a>
+                                    <div class="h1 mb-0 font-weight-bold text-gray-800">
+                                        <a
+                                                <h7>
+                                                    January 1
+                                                </h7>
+                                            </span><br>
+                                        </a>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width:100%">20,000</div>
+                                        </div>
+                                        <br>
+                                        <a <h7>
+                                            February 1
+                                            </h7>
+                                            </span><br>
+                                        </a>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width:100%">20,000</div>
+                                        </div>
+                                        <br>
+                                        <a <h7>
+                                            March 1
+                                            </h7>
+                                            </span><br>
+                                        </a>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width:100%">20,000</div>
+                                        </div>
+                                        <br>
+                                        <a <h7>
+                                            April 1
+                                            </h7>
+                                            </span><br>
+                                        </a>
+                                        <div class="progress">
+                                            <div class="progress-bar" style="width:100%">20,000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+
+

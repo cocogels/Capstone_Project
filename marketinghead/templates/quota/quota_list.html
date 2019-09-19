@@ -6,10 +6,15 @@
 {% include 'header.html' %}
 {% endblock header %}
 
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
 
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
 
 {% block content %}
-
 {%  if request.user.is_authenticated %}
 {% if request.user.is_marketinghead  %}
 <div class="content-section">

@@ -27,10 +27,59 @@
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'crm_blog:home' %}">
             <strong>
-                Center Business Manager
+               <center> Marketing Head </center> 
             </strong>
         </a>
     </li>
+<hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'marketing_head:budget_list' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-file-invoice"></i>
+            <span>
+                <strong>
+                    Budget
+                </strong>
+            </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'accounts:register'%}" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-user-plus"></i>
+            <span>
+                <strong>
+                    Add Employer
+                </strong>
+            </span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+    
+    
+        <a class="nav-link collapsed" href="{% url 'marketing_head:collateral_list' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-book-open"></i>
+            <span>
+                <strong>
+                    Collateral
+                </strong>
+            </span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'marketing_head:assign_list' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-share"></i>
+            <span>
+                <strong>
+                    Quota
+                </strong>
+            </span>
+        </a>
+    </li>
+
     {% endif %}
 
     {% if request.user.is_centerbusinessmanager %}

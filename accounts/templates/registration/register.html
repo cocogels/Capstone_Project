@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
 {% block title %}
 <title>Marketing | Registration </title>
 {% endblock title %}
@@ -49,3 +61,7 @@
     </form>
 </div>
 {% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

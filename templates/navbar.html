@@ -145,8 +145,7 @@
                 
                 {% if request.user.is_marketinghead %}
                 {{ user.email }}
-                <img class="img-profile rounded-circle" src="#">
-
+                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
                 {% endif %}
 
                 {% if request.user.is_centerbusinessmanager %}
