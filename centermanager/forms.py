@@ -7,7 +7,6 @@ from bootstrap_datepicker_plus import YearPickerInput
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 from .serializers import SchoolYearSerializer
-from bootstrap_modal_forms.forms import BSModalForm
 
 
 """  TargetSheet Validation Form """
@@ -53,7 +52,7 @@ class SchoolYearForm(forms.ModelForm):
         end_year     = cleaned_data.get("end_year")
         
         if start_year and end_year: 
-            if start_year >  end_year:
+            if start_year > end_year:
                     raise forms.ValidationError('Please Enter A Valid Date')
                 
             if start_year < datetime.date.today():

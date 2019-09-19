@@ -41,8 +41,8 @@ from django.core.exceptions import ValidationError
 
 
 class SchoolYear(models.Model):
-    start_year   = models.DateField(unique_for_year='start_year')
-    end_year     = models.DateField(unique_for_year='end_year')
+    start_year   = models.DateField(unique=True)
+    end_year     = models.DateField(unique=True)
     date_created = models.DateField(auto_now_add=True, null=True)
     date_updated = models.DateField(auto_now=True, null=True)
     

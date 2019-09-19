@@ -1,0 +1,10 @@
+  
+  
+  
+  <select class="form-control form-control-sm float-right" name="" id="">
+      {% for school in school_year_list %}
+      <option value="">
+          {{ school.start_year|date:'Y' }} - {{ school.end_year|date:'Y' }}
+      </option>
+      {% endfor %}
+  </select>

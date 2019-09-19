@@ -11,10 +11,6 @@
 <title>Marketing | TargetSheet</title>
 {% endblock title %}
 
-{% block extra_js%}
-<script src="http://malsup.github.com/jquery.form.js"></script>
-{% endblock %}
-
 {% block sidebar %}
 {% include 'sidebar.html' %}
 {% endblock sidebar %}
@@ -27,7 +23,6 @@
 
 
 {% block content %}
-{% include "_modal.html" %}
 <div class="container-fluid">
     
     <!-- Start of Breadcrumb -->
@@ -56,43 +51,53 @@
     </span>
     <span class="float-right">
         <select class="form-control form-control-sm float-right" name="" id="">
-            {% for schoolyear in school_year_list %}
-            <option value="">{{ schoolyear.start_year|date:'Y' }} - {{ schoolyear.end_year|date:'Y' }}
-            </option>
+            {% for school in school_year_list %}
+                <option value="">
+                    {{ school.start_year|date:'Y' }} - {{ school.end_year|date:'Y' }}
+                </option>
             {% endfor %}
-        </select>
+            </select>
     </span>
     <br>
     <div class="content-section">
         {% include 'messages.html' %}
         <div class="card" style="height:500px">
                 <div class="cad-body">
-
+                    <center>    
+                        <h2 class="mt-4">
+                            School Year:{{ school_year_list.start_year }} - {{ end_year|date:'Y' }}
+                        </h2>
+                        
+                 
+                    </center>
                 </div>
             </div>
         </div>
         
     </div>
-    
-<script type="text/javascript">
-    $(function () {
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-        // Create book button
-        $(".create-book").modalForm({
-            formURL: "{% url 'centermanager:create_school_year' %}"
-        });
 
-    });
-</script>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-{% include 'modal.html' %}
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock content %}
 
 {% block footer %}
