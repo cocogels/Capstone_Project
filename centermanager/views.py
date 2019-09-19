@@ -7,7 +7,7 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.http import HttpResponseRedirect, Http404, JsonResponse
-from .forms import TargetSheetForm, PaymentDetailsForm, SanctionSettingForm, CommissionSettingForm, SchoolYearForm
+from .forms import TargetSheetForm, PaymentDetailsForm, SanctionSettingForm, CommissionSettingForm, SchoolYearForm, AddEmployeeForm
 from .models import TargetSheet, PaymentDetails, SanctionSetting, CommissionSetting, SchoolYear
 from django.views.generic.dates import YearArchiveView
 # Create your views here.
@@ -24,7 +24,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from .forms import SchoolYearForm
+from .forms import SchoolYearForm, AddEmployeeForm
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView
 from django.views import generic
@@ -32,6 +32,36 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.db.models import Q
 from django.views.generic import CreateView, UpdateView, DetailView, TemplateView, View
+from accounts.models import UserMarketingProfile
+
+
+def emp_registration(request):
+    
+    if request.method == 'POST':
+        form = AddEmployeeForm(request.POST)
+        if form.is_valid():
+            form  = form.save()
+            messages.success(request, 'You Have Successfuly Registered User Account..!!')
+            return redirect('centermanager:register-emp')
+        else:
+            messages.error(request, 'Account Registration Failed Try Again..!!!')
+            return redirect('centermanager:register-emp')
+    else:
+        form = AddEmployeeForm()
+
+    template_name = 'addemployer/create_employee.html'
+    context = {
+        "form":form,  
+    }
+    return render(request, template_name, context)
+    
+
+class EmployeeListView(ListView):
+    model = UserMarketingProfile
+    context_object_name = 'employee_list'
+    template_name = 'addemployer/add_cc_list.html'
+    queryset = UserMarketingProfile.objects.all()
+
 
 
 class SchoolYearList(TemplateView):
@@ -203,16 +233,11 @@ def create_target_sheet(request):
             higher_ed = form.cleaned_data['higher_ed']
 
             form = TargetSheet(
-
-                title=title,
-                start_date=start_date,
-                end_date=end_date,
                 corporate=corporate,
                 retail=retail,
                 owwa=owwa,
                 seniorhigh=seniorhigh,
                 higher_ed=higher_ed,
-
             )
 
             form.save()
@@ -221,9 +246,9 @@ def create_target_sheet(request):
             return redirect('centermanager:target_list')
     else:
         form = TargetSheetForm()
-    template_name = 'target_sheet/targetsheet_list.html'
+    template_name = 'target_sheet/targetsheet_details.html'
     context = {
-        'title': "Set New Target Details",
+        'form': form,
 
     }
 
@@ -439,7 +464,6 @@ def create_commission_setting(request):
 
         if form.is_valid():
 
-            title = form.cleaned_data['title']
             tuition_percentage = form.cleaned_data['tuition_percentage']
             misc_fee_status = form.cleaned_data['misc_fee_status']
             reg_fee_status = form.cleaned_data['reg_fee_status']
@@ -447,7 +471,6 @@ def create_commission_setting(request):
 
         create = CommissionSetting(
 
-            title=title,
             tuition_percentage=tuition_percentage,
             misc_fee_status=misc_fee_status,
             reg_fee_status=reg_fee_status,

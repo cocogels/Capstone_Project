@@ -43,13 +43,14 @@ INSTALLED_APPS = [
     # Handling all User Account
     'accounts.apps.AccountsConfig',
     
-    #Adds on
+    #Tools
     'crispy_forms',
     'bootstrap4',
     'bootstrap_datepicker_plus',
     'rest_framework',
     'django_filters',
     'bootstrap_modal_forms',
+    'taggit',
     #handling our crm content
     'crm_blog.apps.CrmBlogConfig',
     #handling  adding cm  set details
@@ -62,6 +63,7 @@ INSTALLED_APPS = [
     'partial_date',
     #phone
     'phonenumber_field',
+    
     
 ]
 
@@ -231,3 +233,5 @@ DEFAULT_AUTHENTICATION_CLASSES = (
 DEFAUKT_PERMISSION_CLASSES = (
     'rest_framework.permissions.AllowAny',
 )
+
+TAGGIT_CASE_INSENSITIVE = True

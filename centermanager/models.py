@@ -147,11 +147,11 @@ class PaymentDetails(models.Model):
 class SanctionSetting(models.Model):
     
     ss_id           = models.AutoField(primary_key=True)
-    first_sanction  = models.CharField(max_length=255, blank=False)
-    second_sanction = models.CharField(max_length=255, blank=False)
-    third_sanction  = models.CharField(max_length=255, blank=False)
-    fourth_sanction = models.CharField(max_length=255, blank=False)
-    fifth_sanction  = models.CharField(max_length=255, blank=False)
+    first_sanction  = models.CharField(max_length=255, blank=False, default="Verbal Warning")
+    second_sanction = models.CharField(max_length=255, blank=False, default="Written Explanation")
+    third_sanction  = models.CharField(max_length=255, blank=False, default="Three Days Suspension")
+    fourth_sanction = models.CharField(max_length=255, blank=False, default="Six Days Suspension")
+    fifth_sanction  = models.CharField(max_length=255, blank=False, default="Termination")
     date_created    = models.DateTimeField(auto_now_add=True)
     date_updated    = models.DateTimeField(auto_now=True)
     

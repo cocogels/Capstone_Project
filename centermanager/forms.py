@@ -7,7 +7,7 @@ from bootstrap_datepicker_plus import YearPickerInput
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
 from .serializers import SchoolYearSerializer
-
+from accounts.models import UserMarketingProfile
 
 """  TargetSheet Validation Form """
 
@@ -26,7 +26,6 @@ def present_or_future_date(value):
 
 
 class SchoolYearForm(forms.ModelForm):
-   
     class Meta:
         model  = SchoolYear
         fields = [
@@ -114,11 +113,11 @@ class PaymentDetailsForm(forms.ModelForm):
 
 
 class SanctionSettingForm(forms.ModelForm):
-    first_sanction      = forms.CharField(label='First Sanction',max_length=255,)
-    second_sanction     = forms.CharField(label='Second Sanction',max_length=255,)
-    third_sanction      = forms.CharField(label='Third Sanction',max_length=255,)
-    fourth_sanction     = forms.CharField(label='Fourth Sanction',max_length=255,)
-    fifth_sanction      = forms.CharField(label='Fifth Sanction',max_length=255,)
+    first_sanction      = forms.CharField(label='First Sanction')
+    second_sanction     = forms.CharField(label='Second Sanction')
+    third_sanction      = forms.CharField(label='Third Sanction')
+    fourth_sanction     = forms.CharField(label='Fourth Sanction')
+    fifth_sanction      = forms.CharField(label='Fifth Sanction')
 
     class Meta:
         model = SanctionSetting
@@ -129,13 +128,22 @@ class SanctionSettingForm(forms.ModelForm):
             'fourth_sanction',
             'fifth_sanction',
         )
-    
+        
+    def __init__(self, *args, **kwargs):
+        super(SanctionSettingForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['first_sanction'].widget.attrs['readonly']  = True
+            self.fields['second_sanction'].widget.attrs['readonly'] = True
+            self.fields['third_sanction'].widget.attrs['readonly']  = True
+            self.fields['fourth_sanction'].widget.attrs['readonly'] = True
+            self.fields['fifth_sanction'].widget.attrs['readonly']  = True
 
 class CommissionSettingForm(forms.ModelForm):
     title = forms.CharField(widget=forms.TextInput(),max_length=255, label='Title')
     class Meta:
         model = CommissionSetting
-        fields = {
+        fields = {  
             'title',
             'tuition_percentage',
             'misc_fee_status',
@@ -158,3 +166,45 @@ class CommissionSettingForm(forms.ModelForm):
             raise forms.ValidationError('This Title Has Already Been used')
         return title
     
+
+class AddEmployeeForm(forms.ModelForm):
+
+    email = forms.EmailField()
+    password = forms.CharField(
+        max_length=50, label='Password', widget=forms.PasswordInput())
+    is_budgetary = forms.BooleanField(required=False, label='BUDGETARY')
+    is_ihe = forms.BooleanField(required=False, label='IHE')
+    is_shs = forms.BooleanField(required=False, label='SHS')
+    is_icl = forms.BooleanField(required=False, label='ICL')
+    is_marketinghead = forms.BooleanField(required=False, label='Marketing Head')
+    is_centerbusinessmanager = forms.BooleanField(required=False, label='Center Business Manager')
+    
+    class Meta:
+        model = UserMarketingProfile
+        fields = (
+            'email',
+        )
+
+    def clean_email(self, *args, **kwargs):
+        email = self.cleaned_data.get('email')
+        query_set = UserMarketingProfile.objects.filter(email__iexact=email)
+        if query_set.exists():
+            raise forms.ValidationError('This email Already Registered..!!')
+        return email
+
+    def save(self, commit=True):
+        #This would save the provided password in hashed format
+        user = super(AddEmployeeForm, self).save(commit=False)
+        user = UserMarketingProfile(
+            email=self.cleaned_data['email'],
+            is_budgetary=self.cleaned_data['is_budgetary'],
+            is_ihe=self.cleaned_data['is_ihe'],
+            is_shs=self.cleaned_data['is_shs'],
+            is_icl=self.cleaned_data['is_icl'],
+            is_marketinghead=self.cleaned_data['is_marketinghead'],
+            is_centerbusinessmanager=self.cleaned_data['is_centerbusinessmanager'],
+        )
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user

@@ -62,6 +62,8 @@ class AssignQuotaForm(forms.ModelForm):
         model = AssignQuota
         fields = (
             'user_profile',
+            'start_month',
+            'end_month',
             'a_senior_high',
             'a_higher_education',
             'a_retail',

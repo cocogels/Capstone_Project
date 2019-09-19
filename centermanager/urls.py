@@ -9,6 +9,12 @@ app_name = 'centermanager'
 
 
 urlpatterns = [
+    
+    
+    path('add-employee/', views.EmployeeListView.as_view(), name='register-emp-list'),
+    path('add-employee/create/', views.emp_registration, name='register-emp'),
+
+
     path("school-year/", views.SchoolYearList.as_view(), name='school_year_list'),
     path("school-year/create/", views.SchoolYearCreateView.as_view(),name='create_school_year'),
     path("school-year/<int:id>/", views.SchoolYearView.as_view(), name='school_details'),

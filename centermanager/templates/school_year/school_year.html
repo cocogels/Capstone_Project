@@ -5,7 +5,7 @@
 {% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='full' %}
-{{ form.media }}
+{{ form.media }} 
 
 {% block title %}
 <title>Marketing | TargetSheet</title>
@@ -44,9 +44,14 @@
     </nav>
     <!-- End of Bread Crumb -->
     <span>
-        <button class="create-book btn btn-secondary">
-            <i class="far fa-plus-square"></i> <a href="{% url 'centermanager:create_school_year' %}">School Year</a>
-        </button>
+          <a href="{% url 'centermanager:create_school_year' %}" class="btn btn-success btn-icon-split">
+              <span class="icon text-white-50">
+
+                  <i class="fas fa-plus-circle"></i>
+              </span>
+              <span class="text">School Year</span>
+          </a>
+
               
     </span>
     <span class="float-right">
@@ -65,10 +70,10 @@
                 <div class="cad-body">
                     <center>    
                         <h2 class="mt-4">
-                            School Year:{{ school_year_list.start_year }} - {{ end_year|date:'Y' }}
+                             {% for school in school_year_list %}
+                             School Year: {{ school.start_year|date:'Y' }} - {{ school.end_year|date:'Y' }}
+                             {% endfor %}
                         </h2>
-                        
-                 
                     </center>
                 </div>
             </div>
@@ -83,21 +88,6 @@
 <br>
 <br>
 <br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock content %}
 
 {% block footer %}

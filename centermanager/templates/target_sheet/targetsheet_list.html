@@ -30,8 +30,8 @@
 
                 <i class="fas fa-chevron-right small"></i>
 
-                <a href="{% url 'centermanager:school_year_list' %}">
-                    General Information
+                <a href="{% url 'centermanager:target' %}">
+                   Target Sheet
                 </a>
 
             </li>
@@ -39,34 +39,23 @@
     </nav>
     <!-- End of Bread Crumb -->
     <span>
-        <button class="create-book btn btn-secondary">
-            <i class="far fa-plus-square"></i> <a href="{% url 'centermanager:create_school_year' %}">School Year</a>
-        </button>
-        
+  
+        <button class="btn btn-light">
+            <i class="far fa-plus-square"></i> <a href="{% url 'centermanager:target' %}">Target Sheet</a>
+        </button>        
     </span>
-    <span class="float-right">
-            <select class="form-control form-control-sm float-right" name="" id="">
-            {% for school in school_year_list %}
-            <option value="">
-                {{ school.start_year|date:'Y' }} - {{ school.end_year|date:'Y' }}
-            </option>
-            {% endfor %}
-        </select>
-    </span>
+ 
     <br>
     <div class="content-section">
         {% include 'messages.html' %}
         <div class="card" style="height:500px">
-            <div class="cad-body">
-                <div class="card-title">
-                    <a href="{% url 'centermanager:target' %}">
-                        Target Sheet
-                    </a>
-                </div>
+            <div class="cad-body"> 
                 <center>
                     <h2 class="mt-4">
                         School Year:{{ school_year_list.start_year }} - {{ end_year|date:'Y' }}
                     </h2>
+    
+                    {% include 'target_sheet/create_target._details.html' %}
                 </center>
             </div>
         </div>

@@ -49,7 +49,8 @@ class AssignQuota(models.Model):
 
    
     user_profile          = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
-    monthly               = models.DateField(auto_now_add=True)
+    start_month           = models.DateField(unique=True)
+    end_month             = models.DateField(unique=True)
     a_senior_high         = models.BigIntegerField(null=True)
     a_higher_education    = models.BigIntegerField(null=True)
     a_retail              = models.BigIntegerField(null=True)
@@ -59,7 +60,7 @@ class AssignQuota(models.Model):
     date_updated          = models.DateTimeField(auto_now=True)
     
     
- 
+    
  
 
     
