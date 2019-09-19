@@ -1,20 +1,121 @@
+from bootstrap_modal_forms.generic import BSModalCreateView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.forms import forms
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView 
-from django.http import HttpResponseRedirect, Http404
+from django.views.generic.edit import CreateView, UpdateView
+from django.http import HttpResponseRedirect, Http404, JsonResponse
 from .forms import TargetSheetForm, PaymentDetailsForm, SanctionSettingForm, CommissionSettingForm, SchoolYearForm
 from .models import TargetSheet, PaymentDetails, SanctionSetting, CommissionSetting, SchoolYear
 from django.views.generic.dates import YearArchiveView
 # Create your views here.
 
 
+from datetime import date
+from django.utils.translation import gettext as _
+from .serializers import SchoolYearSerializer
+# Rest Framework
+from rest_framework import generics
+from rest_framework import mixins
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.response import Response
+from .forms import SchoolYearForm
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic import ListView
+from django.views import generic
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
-""" SCHOOL YEAR """
+class AjaxTemplateMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if not hasattr(self, 'ajax_template_name'):
+            split = self.template_name.split('.html')
+            split[-1] = '_inner'
+            split.append('.html')
+            self.ajax_template_name = ''.join(split)
+        if request.is_ajax():
+            self.template_name = self.ajax_template_name
+        return super(AjaxTemplateMixin, self).dispatch(request, *args, **kwargs)
+
+
+class SchoolYearCreateView(CreateView):
+    template_name = 'school_year/create_school_year.html'
+    form_class = SchoolYearForm
+    success_message = 'Success: Book was created.'
+    success_url = reverse_lazy('centermanager:school_year')
+    def form_valid(self, form):
+        self.object = form.save()
+        
+        return render(self.request, template_name, {'SchoolYear': self.object})
+    
+
+
+# class SchoolYearCreateView(AjaxTemplateMixin, CreateView):
+#     model = SchoolYear
+#     form_class = SchoolYearForm
+#     template_name = 'school_year/create_schoolyear.html'  
+#     success_message = 'School Year Has Been Set'  
+#     success_url = reverse_lazy('centermanager:school_year_list')
+    
+#     def form_valid(self, form):
+#         self.object = form.save()
+            
+#         return render(self.request, template_name, {'SchoolYear': self.object})
+    
+class SchoolYearListView(ListView):
+    model       = SchoolYear
+    context_object_name = 'school_year_list'
+    template_name = 'school_year/school_year.html'
+
+
+    
+
+    
+# class SchoolYearAPIView(APIView):
+#     renderer_classes = [TemplateHTMLRenderer]
+#     template_name = 'school_year/create_school_year.html'
+
+#     def get(self, request):
+#         queryset = SchoolYear.objects.all()
+#         serializer = SchoolYearSerializer()
+#         return Response({'serializer': serializer, 'schoolyear': queryset})
+
+#     def post(self, request, pk):
+#         schoolyear = get_object_or_404(SchoolYear, pk=pk)
+#         serializer = SchoolYearSerializer(schoolyear, data=request.data)
+#         if not serializer.is_valid():
+#             return Response({'serializer':serializer, 'schoolyear': schoolyear})
+#         serializer.save()
+#         return redirect('create_school_year')
+
+            
+           
+            
+            
+            
+            
+            
+# class SchoolYearAPIView(generics.ListAPIView,YearArchiveView):
+#     lookup_field = 'id'   
+#     serializer_class = SchoolYearSerializer
+
+#     def get_queryset(self):
+#         return SchoolYear.objects.all()
+
+
+
+class SchoolYearView(generics.RetrieveUpdateDestroyAPIView,):
+    lookup_field        = 'id'
+    serializer_class    = SchoolYearSerializer
+    
+    def get_queryset(self):
+        return SchoolYear.objects.all()
+
 
 
 def create_school_year(request):
@@ -96,7 +197,6 @@ class TargetListView(ListView):
     model = TargetSheet
     template_name = 'target_sheet/targetsheet_list.html'
     queryset = TargetSheet.objects.all()
-
     
 
 

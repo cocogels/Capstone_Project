@@ -6,8 +6,8 @@ from django.core.exceptions import ValidationError
 from bootstrap_datepicker_plus import YearPickerInput
 from django.utils import timezone
 from django.utils.deprecation import MiddlewareMixin
-
-
+from .serializers import SchoolYearSerializer
+from bootstrap_modal_forms.forms import BSModalForm
 
 
 """  TargetSheet Validation Form """
@@ -19,15 +19,22 @@ def current_year():
 def year_choices():
     return[(r, r) for r in range(2017, datetime.date.today().year+4)]
 
+
+def present_or_future_date(value):
+    if value < datetime.date.today():
+        raise forms.ValidationError("The date cannot be in the past!")
+    return value
+
+
 class SchoolYearForm(forms.ModelForm):
-    
    
     class Meta:
-        model = SchoolYear
-        fields = (
+        model  = SchoolYear
+        fields = [
             'start_year',
-            'end_year',
-        )
+            'end_year'
+        ]
+        
         widgets = {
             'start_year': YearPickerInput(format='%Y').start_of('school year'),
             'end_year': YearPickerInput(format='%Y').end_of('school year'),
@@ -37,32 +44,25 @@ class SchoolYearForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['start_year'].label = "Start Year"
         self.fields['end_year'].label = "End Year"
-        self.fields['start_year'].required= True
-        self.fields['end_year'].required= True
-        
-    
-    # def clean(self):
-    #     cleaned_data = super(SchoolYearForm, self).clean()
-    #     start_year = self.cleaned_data.get('start_year')
-    #     end_year   = self.cleaned_data.get('end_year')
-        
-        
-    #     if start_year and end_year:
-    #         start_year = datetime.strpdate(start_year, '%Y-%m-%d')
-    #         end_year = datetime.strpdate(end_year, '%Y-%m-%d')
-            
-            
-    #         if start_year < end_year:
-    #             raise forms.ValidationError('Start Year Cannot Be Greater than End Year Try Again..!')
-            
-    #         if  datetime.date.today().year < start_year:
-    #             raise forms.ValidationError('Start Year Cannot be on Past')
+        self.fields['start_year'].required = True
+        self.fields['end_year'].required = True
 
-    
-    #         if  datetime.date.today().year+5 < end_year:
-    #             raise forms.ValidationError('Year Cannot More Than This.. Try Again.!')     
+    def clean(self):
+        cleaned_data = super(SchoolYearForm, self).clean()
+        start_year   = cleaned_data.get("start_year")
+        end_year     = cleaned_data.get("end_year")
         
-    #     return cleaned_data
+        if start_year and end_year: 
+            if start_year >  end_year:
+                    raise forms.ValidationError('Please Enter A Valid Date')
+                
+            if start_year < datetime.date.today():
+                raise forms.ValidationError('The Date Cannot be in the Past')
+            
+            if end_year < datetime.date.today():
+                raise forms.ValidationError('The Date Cannot be in the Past')
+        
+    
     
     
 class TargetSheetForm(forms.ModelForm):

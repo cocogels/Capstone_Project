@@ -41,8 +41,8 @@ from django.core.exceptions import ValidationError
 
 
 class SchoolYear(models.Model):
-    start_year   = models.DateField(unique=True)
-    end_year     = models.DateField(unique=True)
+    start_year   = models.DateField(unique_for_year='start_year')
+    end_year     = models.DateField(unique_for_year='end_year')
     date_created = models.DateField(auto_now_add=True, null=True)
     date_updated = models.DateField(auto_now=True, null=True)
     
@@ -54,9 +54,10 @@ class SchoolYear(models.Model):
     def date_created_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.date_created <= now
-
         
-    
+    def __str__(self):
+        return str("{0}-{1}".format(self.start_year, self.end_year))
+
 class TargetSheet(models.Model):
 
     ts_id           = models.AutoField(primary_key=True)

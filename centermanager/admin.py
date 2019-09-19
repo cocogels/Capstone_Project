@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import TargetSheet, PaymentDetails, SanctionSetting, CommissionSetting, SchoolYear
 from .forms import TargetSheetForm, SchoolYearForm, PaymentDetailsForm, SanctionSettingForm
+from .serializers import SchoolYearSerializer
 # Register your models here.
 
 class TargetSheetAdmin(admin.ModelAdmin):
@@ -40,17 +41,9 @@ class TargetSheetAdmin(admin.ModelAdmin):
     )
     
 
+ 
 
-class SchoolYearAdmin(admin.ModelAdmin):
-  
-    form = SchoolYearForm
-    list_display = (
-    'start_year',
-    'end_year',
 
-    )
-    
-    
   
 class PaymentDetailsAdmin(admin.ModelAdmin):
     form = PaymentDetailsForm
@@ -88,7 +81,7 @@ class SactionAdmin(admin.ModelAdmin):
     )
     
     
-admin.site.register(SchoolYear, SchoolYearAdmin)
+admin.site.register(SchoolYear)
 admin.site.register(PaymentDetails, PaymentDetailsAdmin)
 admin.site.register(SanctionSetting, SactionAdmin)
 admin.site.register(CommissionSetting)

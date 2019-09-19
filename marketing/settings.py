@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'bootstrap_datepicker_plus',
     'rest_framework',
+    'django_filters',
+    'bootstrap_modal_forms',
     #handling our crm content
     'crm_blog.apps.CrmBlogConfig',
     #handling  adding cm  set details
@@ -200,3 +202,32 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 BOOTSTRAP4 = {
     'include_jquery': True,
 }
+
+
+
+''' DJANGO REST SETTINGS  '''
+
+
+
+DEFAULT_RENDERER_CLASSES = (
+    'rest_framework.renderers.JSONRenderer',
+    'rest_framework.renderers.BrowsableAPIRenderer',
+)
+
+
+DEFAULT_PARSER_CLASSES = (
+    'rest_framework.parsers.JSONParser',
+    'rest_framework.parsers.FormParser',
+    'rest_framework.parsers.MultiPartParser'
+)
+
+
+DEFAULT_AUTHENTICATION_CLASSES = (
+    'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.BasicAuthentication'
+)
+
+
+DEFAUKT_PERMISSION_CLASSES = (
+    'rest_framework.permissions.AllowAny',
+)
