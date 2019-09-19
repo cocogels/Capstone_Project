@@ -85,7 +85,7 @@ def create_collateral(request):
              unit     = form.cleaned_data['unit']
              quantity = form.cleaned_data['quantity']
 
-        create = Budget(
+        create = Collateral(
             unit=unit,
             quantity=quantity,
         )
