@@ -101,7 +101,28 @@
             </strong>
         </a>
     </li>
-
+<hr class="sidebar-divider my-0">
+<li class="nav-item">
+    <a class="nav-link collapsed" href="{% url 'registrar:requirements' %}" aria-expanded="true"
+        aria-controls="collapseTwo">
+        <i class="fas fa-chess-bishop"></i>
+        <span>
+            <strong>
+                Requirements
+            </strong>
+        </span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" href="{% url 'registrar:available-course'%}" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-user-plus"></i>
+        <span>
+            <strong>
+                Available Course
+            </strong>
+        </span>
+    </a>
+</li>
 
     {% endif %}
 
@@ -112,14 +133,15 @@
     {% if request.user.is_bugetary and request.user.is_ihe and request.user.is_shs and request.user.is_icl %}
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'crm_blog:home' %}">
-            <strong>
+            <span>
+             <strong>
                 Career Consultant
-            </strong>
+             </strong>
+            </span>
         </a>
     </li>
 
     {% endif %}
-
 
     {% if request.user.is_bugetary %}
     <li class="nav-item active">
@@ -133,9 +155,10 @@
 
     {% if request.user.is_ihe %}
     <li class="nav-item active">
-        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+        <a class="nav-link" href="{% url 'careerconsultant:icl_contact' %}">
+            <i class="fas fa-user-plus"></i>
             <strong>
-                ihe
+                Colloge (IHE)
             </strong>
         </a>
     </li>
@@ -145,8 +168,9 @@
     {% if request.user.is_shs %}
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <i class="fas fa-user-plus"></i>
             <strong>
-                shs
+                Senior High Scholl (SHS)
             </strong>
         </a>
     </li>
@@ -155,8 +179,9 @@
     {% if request.user.is_icl %}
     <li class="nav-item active">
         <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <i class="fas fa-user-plus"></i>
             <strong>
-                icl
+                Informatics Corporate Lernning (ICL)
             </strong>
         </a>
     </li>

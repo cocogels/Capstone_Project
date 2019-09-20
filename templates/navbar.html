@@ -148,6 +148,11 @@
                 <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
                 {% endif %}
 
+                {% if request.user.is_registrar %}
+                {{ user.email }}
+                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
+                {% endif %}
+
                 {% if request.user.is_centerbusinessmanager %}
                 {{ user.email }}
                 <img class="img-profile rounded-circle" src="#">
@@ -155,10 +160,9 @@
 
 
 
-                {% if request.user.is_icl %}
+                {% if request.user.is_careerconsultant %}
                 {{ user.email }}
-                <img class="img-profile rounded-circle" src="#">
-
+                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
                 {% endif %}
                 </span>
                  
