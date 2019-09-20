@@ -68,7 +68,7 @@ class SchoolYearList(TemplateView):
     model = SchoolYear
     template_name = 'school_year/school_year.html'
     context_object_name = 'school_year_list'
-
+ 
     def get_queryset(self):
         queryset = self.model.objects.all()
         if(self.request.user.is_centermanager):
@@ -246,7 +246,7 @@ def create_target_sheet(request):
             return redirect('centermanager:target_list')
     else:
         form = TargetSheetForm()
-    template_name = 'target_sheet/targetsheet_details.html'
+    template_name = 'target_sheet/create_target._details.html'
     context = {
         'form': form,
 
@@ -322,7 +322,8 @@ def create_payment(request):
         form = PaymentDetailsForm(request.POST)
 
         if form.is_valid():
-
+            status= form.cleaned_data['status']
+            course= form.cleaned_data['course']
             cash_amount_per_unit = form.cleaned_data['cash_amount_per_unit']
             cash_miscellaneous_fee = form.cleaned_data['cash_miscellaneous_fee']
             cash_lab_fee = form.cleaned_data['cash_lab_fee']
@@ -332,6 +333,8 @@ def create_payment(request):
             ins_lab_fee = form.cleaned_data['ins_lab_fee']
 
         create = PaymentDetails(
+            status=status,
+            course=course,
             cash_amount_per_unit=cash_amount_per_unit,
             cash_miscellaneous_fee=cash_miscellaneous_fee,
             cash_lab_fee=cash_lab_fee,
@@ -427,6 +430,7 @@ def create_sanction_setting(request):
 class SanctionListView(ListView):
     modal = SanctionSetting
     template_name = 'sanction_setting/sanction_list.html'
+    context_object_name = 'sanction_list'
     queryset = SanctionSetting.objects.all()
 
 

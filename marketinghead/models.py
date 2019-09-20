@@ -8,13 +8,14 @@ from accounts.models import Profile
 class Collateral(models.Model):
     
     c_id          = models.AutoField(primary_key=True)
+    name          = models.CharField(max_length=255, blank=True)
     unit          = models.CharField(max_length=255, null=True) 
     quantity      = models.BigIntegerField(null=True)
     date_created  = models.DateTimeField(auto_now_add=True)
     date_updated  = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.unit
+        return self.name
     
     def date_created_recently(self):
         now = timezone.now()
@@ -28,7 +29,7 @@ class Budget(models.Model):
     
     b_id            = models.AutoField(primary_key=True)
     amount          = models.BigIntegerField(null=True)
-    arrival    = models.DateField(null=True, blank=True)
+    arrival         = models.DateField(null=True, blank=True)
     date_created    = models.DateTimeField(auto_now_add=True)
     date_updated    = models.DateTimeField(auto_now=True)
     

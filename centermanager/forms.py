@@ -34,8 +34,8 @@ class SchoolYearForm(forms.ModelForm):
         ]
         
         widgets = {
-            'start_year': YearPickerInput(format='%Y').start_of('school year'),
-            'end_year': YearPickerInput(format='%Y').end_of('school year'),
+            'start_year': YearPickerInput().start_of('school year'),
+            'end_year': YearPickerInput().end_of('school year'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -99,6 +99,8 @@ class PaymentDetailsForm(forms.ModelForm):
     class Meta:
         model   = PaymentDetails
         fields  = (
+            'status',
+            'course',
             'cash_amount_per_unit',
             'cash_miscellaneous_fee',
             'cash_lab_fee',
@@ -140,11 +142,9 @@ class SanctionSettingForm(forms.ModelForm):
             self.fields['fifth_sanction'].widget.attrs['readonly']  = True
 
 class CommissionSettingForm(forms.ModelForm):
-    title = forms.CharField(widget=forms.TextInput(),max_length=255, label='Title')
     class Meta:
         model = CommissionSetting
         fields = {  
-            'title',
             'tuition_percentage',
             'misc_fee_status',
             'reg_fee_status',
@@ -158,13 +158,13 @@ class CommissionSettingForm(forms.ModelForm):
             'reg_fee_status': 'Registration Fee Status',
             'stud_fee_status': 'Student Fee Status',
         }
-    def clean_title(self, *args, **kwargs):
+    # def clean_title(self, *args, **kwargs):
         
-        title = self.cleaned_data.get('title')
-        qs   = TargetSheet.objects.filter(atitle=title)
-        if qs.exists():
-            raise forms.ValidationError('This Title Has Already Been used')
-        return title
+    #     title = self.cleaned_data.get('title')
+    #     qs   = TargetSheet.objects.filter(atitle=title)
+    #     if qs.exists():
+    #         raise forms.ValidationError('This Title Has Already Been used')
+    #     return title
     
 
 class AddEmployeeForm(forms.ModelForm):

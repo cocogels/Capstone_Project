@@ -17,7 +17,51 @@
 {% endblock navbar %}
 
 {% block content %}
+<div class="container-fluid">
 
+    <!-- Start of Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page">
+                <a href="{% url 'crm_blog:home' %}">
+                    Overview
+                </a>
+
+                <i class="fas fa-chevron-right small"></i>
+
+                <a href="{% url 'centermanager:commission_list' %}">
+                    Commission
+                </a>
+            </li>
+        </ol>
+    </nav>
+    <!-- End of Bread Crumb -->
+
+    <br>
+    <div class="content-section">
+        {% include 'messages.html' %}
+        <div class="card" style="height:500px">
+            <div class="cad-body">
+                <center>
+                    <h2 class="mt-4">
+                        School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
+                    </h2>
+                </center>
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 {% endblock content %}
 

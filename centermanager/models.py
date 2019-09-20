@@ -81,9 +81,31 @@ class TargetSheet(models.Model):
         return now - datetime.timedelta(days=1) <= self.date_created <= now
 
 
+class MatriculationStatusCategory(models.Model):
 
+    name = models.CharField(max_length=255)
 
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Matriculation Status Category'
+        verbose_name_plural = 'Matriculation Status Categories'
 
+    def __str__(self):
+        return self.name
+        
+ 
+class MatriculationCourseCategory(models.Model):
+    
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'Matriculation Course Category'
+        verbose_name_plural = 'Matriculation Course Categories'
+
+    def __str__(self):
+        return self.name
+        
 
 class PaymentDetails(models.Model):
  
@@ -131,22 +153,16 @@ class PaymentDetails(models.Model):
     
     def get_update_url(self):
         self.slug = slugify(self.title)
-        super(Paymentdetails, self).save(*arggs,**kwargs)
+        super(Paymentdetails, self).save(*args,**kwargs)
         
     def date_created_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.date_created <= now
 
 
-        
-
-
-
-
-
 class SanctionSetting(models.Model):
-    
-    ss_id           = models.AutoField(primary_key=True)
+
+    ss_id = models.AutoField(primary_key=True)
     first_sanction  = models.CharField(max_length=255, blank=False, default="Verbal Warning")
     second_sanction = models.CharField(max_length=255, blank=False, default="Written Explanation")
     third_sanction  = models.CharField(max_length=255, blank=False, default="Three Days Suspension")
@@ -179,8 +195,6 @@ class SanctionSetting(models.Model):
 #                 params={'value': value},
 #             )
 class CommissionSetting(models.Model):
-    
-    title = models.CharField(max_length=255, null=True)
     fee_choices = (
                     (True, 'PAID'), 
                     (False ,'UNPAID'),

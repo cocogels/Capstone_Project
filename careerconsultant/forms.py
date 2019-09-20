@@ -18,7 +18,43 @@ class ICLContactForm(forms.ModelForm):
             'email',
             'c_person',
         )
-        
+
+
+class SHSContactForm(forms.ModelForm):
+    
+    email           = forms.EmailField(max_length=255, required=False)
+    phone_number    = forms.CharField(max_length=12, widget=forms.NumberInput(), label='Cellphone Number', required=False)
+    c_person        = forms.CharField(label='Contact Person', required=True)
+    class Meta:
+        model = SHS_ContactModel
+        fields = (
+            'name',
+            'org_type',
+            'telephone_number',
+            'phone_number',
+            'email',
+            'c_person',
+        )
+
+
+class IHEContactForm(forms.ModelForm):
+
+    email = forms.EmailField(max_length=255, required=False)
+    phone_number = forms.CharField(max_length=12, widget=forms.NumberInput(
+    ), label='Cellphone Number', required=False)
+    c_person = forms.CharField(label='Contact Person', required=True)
+
+    class Meta:
+        model = IHE_ContactModel
+        fields = (
+            'name',
+            'org_type',
+            'telephone_number',
+            'phone_number',
+            'email',
+            'c_person',
+        )
+
     
         
     

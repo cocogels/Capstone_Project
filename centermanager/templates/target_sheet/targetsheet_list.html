@@ -52,10 +52,8 @@
             <div class="cad-body"> 
                 <center>
                     <h2 class="mt-4">
-                        School Year:{{ school_year_list.start_year }} - {{ end_year|date:'Y' }}
+                        School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
                     </h2>
-    
-                    {% include 'target_sheet/create_target._details.html' %}
                 </center>
             </div>
         </div>

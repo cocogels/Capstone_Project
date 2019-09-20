@@ -8,7 +8,7 @@ from django.views.generic import (
 from django.http import JsonResponse
 from django.db.models import Q
 from django.template.loader import render_to_string
-from .forms import ICLContactForm
+from .forms import ICLContactForm, SHSContactForm, IHEContactForm
 from .models import IHE_ContactModel, ICL_ContactModel, SHS_ContactModel, IHE_ContactCategoryModel, ICL_ContactCategoryModel, SHS_ContactCategoryModel
 from accounts.models import Profile, UserMarketingProfile
 # Create your views here.
@@ -39,6 +39,58 @@ class ICLContactListView(ListView):
     model = ICL_ContactModel
     template_name = 'icl/icl_list.html'
     
+
+
+
+def create_ihe_contact(request):
+
+    if request.method == 'POST':
+        form = IHEContactForm(request.POST or None)
+
+        if form.is_valid():
+
+            form.save()
+            messages.success(request, "New Contact Detail Has Been Created.!")
+            return redirect('careerconsultant:icl_contact_list')
+    else:
+        form = IHEContactForm()
+    template_name = 'ihe/ihe_create.html'
+    context = {
+        'form': form
+    }
+
+    return render(request, template_name, context)
+
+
+class IHEContactListView(ListView):
+    model = IHE_ContactModel
+    template_name = 'ihe/ihe_list.html'
+
+
+def create_shs_contact(request):
+
+    if request.method == 'POST':
+        form = SHSContactForm(request.POST or None)
+
+        if form.is_valid():
+
+            form.save()
+            messages.success(request, "New Contact Detail Has Been Created.!")
+            return redirect('careerconsultant:icl_contact_list')
+    else:
+        form = SHSContactForm()
+    template_name = 'shs/shs_create.html'
+    context = {
+        'form': form
+    }
+
+    return render(request, template_name, context)
+
+
+class SHSContactListView(ListView):
+    model = SHS_ContactModel
+    template_name = 'shs/shs_list.html'
+
 #     def get_queryset(self):
 #         queryset = self.model.objects.all()
 #         if (
