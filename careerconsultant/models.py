@@ -59,8 +59,8 @@ class SHS_ContactCategoryModel(models.Model):
 class SHS_ContactModel(models.Model):
     
     shs_id          = models.AutoField(primary_key=True)
-    shs_name        = models.CharField(max_length=255)
-    shs_type        = models.ForeignKey(SHS_ContactCategoryModel, on_delete=models.CASCADE )
+    name        = models.CharField(max_length=255)
+    org_type        = models.ForeignKey(SHS_ContactCategoryModel, on_delete=models.CASCADE)
     c_number_tel    = models.BigIntegerField(null=True)
     c_number_cp     = models.BigIntegerField(null=True)
     email           = models.CharField(max_length=255, null=True)
@@ -100,8 +100,8 @@ class IHE_ContactCategoryModel(models.Model):
 class IHE_ContactModel(models.Model):
     
     ihe_id          = models.AutoField(primary_key=True)
-    ihe_name        = models.CharField(max_length=255)
-    ihe_type        = models.ForeignKey(IHE_ContactCategoryModel, on_delete=models.CASCADE )
+    name            = models.CharField(max_length=255)
+    org_type        = models.ForeignKey(IHE_ContactCategoryModel, on_delete=models.CASCADE )
     c_number_tel    = models.BigIntegerField(null=True)
     c_number_cp     = models.BigIntegerField(null=True)
     email           = models.CharField(max_length=255, null=True)

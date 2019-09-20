@@ -54,7 +54,7 @@
         <br>
         <div class="content-section">
                 {% include 'messages.html' %}
-                <div class="card" style="height:500px">
+                <div class="card">
                         <div class="cad-body">
                                 <center>
                                         <h2 class="mt-4">
@@ -65,7 +65,7 @@
                                         <form action="" method="POST">
                                                 {% csrf_token %}
                                                 <fieldset class="form-group">
-                                                        {{ form }}
+                                                        {{ form|crispy }}
                                                 </fieldset>
                                                 <div class="form-group">
                                                         <button class="btn btn-outline-info" type="submit">

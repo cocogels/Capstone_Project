@@ -37,6 +37,11 @@ class SchoolYearForm(forms.ModelForm):
             'start_year': YearPickerInput().start_of('school year'),
             'end_year': YearPickerInput().end_of('school year'),
         }
+        
+        validators = {
+            'start_year': [present_or_future_date],
+            'end_year': [present_or_future_date],
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

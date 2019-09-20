@@ -30,8 +30,8 @@ class SHSContactForm(forms.ModelForm):
         fields = (
             'name',
             'org_type',
-            'telephone_number',
-            'phone_number',
+            'c_number_tel',
+            'c_number_cp',
             'email',
             'c_person',
         )
@@ -40,8 +40,7 @@ class SHSContactForm(forms.ModelForm):
 class IHEContactForm(forms.ModelForm):
 
     email = forms.EmailField(max_length=255, required=False)
-    phone_number = forms.CharField(max_length=12, widget=forms.NumberInput(
-    ), label='Cellphone Number', required=False)
+    phone_number = forms.CharField(max_length=12, widget=forms.NumberInput(), label='Cellphone Number', required=False)
     c_person = forms.CharField(label='Contact Person', required=True)
 
     class Meta:
@@ -49,8 +48,8 @@ class IHEContactForm(forms.ModelForm):
         fields = (
             'name',
             'org_type',
-            'telephone_number',
-            'phone_number',
+            'c_number_tel',
+            'c_number_cp',
             'email',
             'c_person',
         )
