@@ -51,7 +51,7 @@ def create_ihe_contact(request):
 
             form.save()
             messages.success(request, "New Contact Detail Has Been Created.!")
-            return redirect('careerconsultant:icl_contact_list')
+            return redirect('careerconsultant:ihe_contact_list')
     else:
         form = IHEContactForm()
     template_name = 'ihe/ihe_create.html'
@@ -76,7 +76,7 @@ def create_shs_contact(request):
 
             form.save()
             messages.success(request, "New Contact Detail Has Been Created.!")
-            return redirect('careerconsultant:icl_contact_list')
+            return redirect('careerconsultant:shs_contact_list')
     else:
         form = SHSContactForm()
     template_name = 'shs/shs_create.html'

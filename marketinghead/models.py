@@ -1,7 +1,8 @@
 from django.db import models
-from accounts.models import Profile
+from accounts.models import UserMarketingProfile
 # Create your models here.
 
+from taggit.managers import TaggableManager
 
 
 
@@ -49,7 +50,7 @@ class Budget(models.Model):
 class AssignQuota(models.Model):
 
    
-    user_profile          = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    user_profile          = models.ForeignKey(UserMarketingProfile, on_delete=models.CASCADE, null=True)
     start_month           = models.DateField(unique=True)
     end_month             = models.DateField(unique=True)
     a_senior_high         = models.BigIntegerField(null=True)
@@ -59,7 +60,9 @@ class AssignQuota(models.Model):
     a_owwa                = models.BigIntegerField(null=True)
     date_created          = models.DateTimeField(auto_now_add=True)
     date_updated          = models.DateTimeField(auto_now=True)
-    
+
+    tags = TaggableManager()
+
     
     
  
@@ -77,7 +80,7 @@ class AssignTerritory(models.Model):
         ('DISTRICT VI', 'DISTRICT VI'),
 
     )
-    user_profile         = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    user_profile         = models.ForeignKey(UserMarketingProfile, on_delete=models.CASCADE, null=True)
     territory_choices    = models.CharField(max_length=100, choices=territory_choices, null=True)
     date_created         = models.DateTimeField(auto_now_add=True)
     date_updated         = models.DateTimeField(auto_now=True)

@@ -7,5 +7,5 @@ class AssignQuotaFilters(django_filters.FilterSet):
     class Meta:
         model = AssignQuota
         fields={
-            'user_profile',
+            'user_profile': ['icontains'],
         }
