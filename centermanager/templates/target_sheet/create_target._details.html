@@ -6,18 +6,90 @@
 
 
 {% load crispy_forms_tags %}
+
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+
+
+
 {% block content %}
-<div class="content-section">
-        <form action="" method="POST">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                        {{ form }}
-                </fieldset>
-                <div class="form-group">
-                        <button class="btn btn-outline-info" type="submit">
-                                Submit
-                        </button>
+<div class="container-fluid">
+
+        <!-- Start of Breadcrumb -->
+        <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page">
+                                <a href="{% url 'crm_blog:home' %}">
+                                        Overview
+                                </a>
+
+                                <i class="fas fa-chevron-right small"></i>
+
+                                <a href="{% url 'centermanager:target' %}">
+                                        Target Sheet
+                                </a>
+
+                        </li>
+                </ol>
+        </nav>
+        <!-- End of Bread Crumb -->
+        <span>
+
+                <button class="btn btn-light">
+                        <i class="far fa-plus-square"></i> <a href="{% url 'centermanager:target' %}">Target Sheet</a>
+                </button>
+        </span>
+
+        <br>
+        <div class="content-section">
+                {% include 'messages.html' %}
+                <div class="card" style="height:500px">
+                        <div class="cad-body">
+                                <center>
+                                        <h2 class="mt-4">
+                                                School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
+                                        </h2>
+                                </center>
+                                <div class="content-section">
+                                        <form action="" method="POST">
+                                                {% csrf_token %}
+                                                <fieldset class="form-group">
+                                                        {{ form }}
+                                                </fieldset>
+                                                <div class="form-group">
+                                                        <button class="btn btn-outline-info" type="submit">
+                                                                Submit
+                                                        </button>
+                                                </div>
+                                        </form>
+                                </div>
+                        </div>
                 </div>
-        </form>
+        </div>
+
 </div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 {% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

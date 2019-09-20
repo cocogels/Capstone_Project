@@ -1,11 +1,9 @@
-
-
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
 
 {% block header %}
-    {% include 'header.html' %}
+{% include 'header.html' %}
 {% endblock header %}
 
 {% block sidebar %}
@@ -17,7 +15,78 @@
 {% endblock navbar %}
 
 {% block content %}
+<div class="container-fluid">
 
+    <!-- Start of Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page">
+                <a href="{% url 'crm_blog:home' %}">
+                    Overview
+                </a>
+
+                <i class="fas fa-chevron-right small"></i>
+
+                <a href="{% url 'centermanager:sanction_list' %}">
+                    Sanction
+                </a>
+            </li>
+        </ol>
+    </nav>
+    <!-- End of Bread Crumb -->
+
+    <br>
+    <div class="content-section">
+        {% include 'messages.html' %}
+        <div class="card" style="height:500px">
+            <div class="cad-body">
+                <center>
+                    <h2 class="mt-4">
+                        School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
+                    </h2>
+                </center>
+                {% for sanction in sanction_list %}
+                <ul>
+                    <li>
+                        <strong>First Month:</strong>
+                        {{ sanction.first_sanction }}
+                    </li>
+                    <li>
+                        <strong>Second Month:</strong>
+
+                        {{ sanction.second_sanction }}
+                    </li>
+                    <li>
+                        <strong>Third Month:</strong>
+                        {{ sanction.third_sanction }}
+                    </li>
+                    <li>
+                        <strong>Fourth Month:</strong>
+                        {{ sanction.fourth_sanction }}
+                    </li>
+                    <li>
+                        <strong>Fifth Month:</strong>
+
+                        {{ sanction.fifth_sanction }}
+                    </li>
+                </ul>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 {% endblock content %}
 

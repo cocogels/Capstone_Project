@@ -76,6 +76,9 @@ class MarketingAdminUserChangeForm(UserChangeForm):
 class EmployeeCreationForm(forms.ModelForm):
     
     email        = forms.EmailField()
+    first_name   = forms.CharField(required=False)
+    last_name    = forms.CharField(required=False)
+    address      = forms.CharField(required=False)
     password     = forms.CharField(max_length=50,label='Password' , widget=forms.PasswordInput())
     is_budgetary = forms.BooleanField(required=False, label='BUDGETARY')
     is_ihe       = forms.BooleanField(required=False, label='IHE')

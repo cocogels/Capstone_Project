@@ -6,6 +6,7 @@ from django.utils.timezone import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractUser, User, Group
 from django.utils.translation import gettext, gettext_lazy as _
 from multiselectfield import MultiSelectField
+from taggit.managers import TaggableManager
 
 from django import forms
 
@@ -132,8 +133,11 @@ class MarketingUserManager(BaseUserManager):
 class UserMarketingProfile(AbstractUser):
     username=None
     email                           = models.EmailField(verbose_name='Email Address',max_length=50, unique=True) 
+    first_name                      = models.CharField(verbose_name="First Name", max_length=50, blank=True)                                   
+    last_name                       = models.CharField(verbose_name="Last Name", max_length=50, blank=True)                                    
+    address                         = models.CharField(verbose_name="Address", max_length=50, blank=True)        
     is_centermanager                = models.BooleanField(verbose_name='CenterManagerStatus', default=False)
-    is_centerbusinessmanager        = models.BooleanField(verbose_name='CBM_Status', default=False)
+    is_centerbusinessmanager        = models.BooleanField(verbose_name='CBM_Status', default=False) 
     is_marketinghead                = models.BooleanField(verbose_name='MarketingHeadStatus', default=False)
     is_registrar                    = models.BooleanField(verbose_name='Registrar Status', default=False)
     is_budgetary                    = models.BooleanField(verbose_name='BUDGETARY', default=False)
@@ -149,6 +153,7 @@ class UserMarketingProfile(AbstractUser):
     #Required Fields Optional
     REQUIRED_FIELDS = []
     
+    tags = TaggableManager()
     objects = MarketingUserManager()
     def __str__(self):
         return self.email
@@ -206,9 +211,6 @@ def is_staff(self):
 class Profile(models.Model):
     emp_id       = models.AutoField(primary_key=True)
     user         = models.OneToOneField(UserMarketingProfile, on_delete=models.CASCADE)
-    first_name   = models.CharField(max_length=100, null=False, blank=False, )
-    last_name    = models.CharField(max_length=100, null=False, blank=False, )
-    address      = models.CharField(max_length=100, null=False, blank=False, )
     contact_no   = models.BigIntegerField(null=True)
     birth_date   = models.DateField(max_length=100, null=False, blank=False)
     image        = models.ImageField(default='default.jpg', upload_to='profile_pics')

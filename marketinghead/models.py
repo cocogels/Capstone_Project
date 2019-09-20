@@ -1,20 +1,22 @@
 from django.db import models
-from accounts.models import Profile
+from accounts.models import UserMarketingProfile
 # Create your models here.
 
+from taggit.managers import TaggableManager
 
 
 
 class Collateral(models.Model):
     
     c_id          = models.AutoField(primary_key=True)
+    name          = models.CharField(max_length=255, blank=True)
     unit          = models.CharField(max_length=255, null=True) 
     quantity      = models.BigIntegerField(null=True)
     date_created  = models.DateTimeField(auto_now_add=True)
     date_updated  = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.unit
+        return self.name
     
     def date_created_recently(self):
         now = timezone.now()
@@ -28,7 +30,7 @@ class Budget(models.Model):
     
     b_id            = models.AutoField(primary_key=True)
     amount          = models.BigIntegerField(null=True)
-    arrival    = models.DateField(null=True, blank=True)
+    arrival         = models.DateField(null=True, blank=True)
     date_created    = models.DateTimeField(auto_now_add=True)
     date_updated    = models.DateTimeField(auto_now=True)
     
@@ -48,7 +50,7 @@ class Budget(models.Model):
 class AssignQuota(models.Model):
 
    
-    user_profile          = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    user_profile          = models.ForeignKey(UserMarketingProfile, on_delete=models.CASCADE, null=True)
     start_month           = models.DateField(unique=True)
     end_month             = models.DateField(unique=True)
     a_senior_high         = models.BigIntegerField(null=True)
@@ -58,7 +60,9 @@ class AssignQuota(models.Model):
     a_owwa                = models.BigIntegerField(null=True)
     date_created          = models.DateTimeField(auto_now_add=True)
     date_updated          = models.DateTimeField(auto_now=True)
-    
+
+    tags = TaggableManager()
+
     
     
  
@@ -76,7 +80,7 @@ class AssignTerritory(models.Model):
         ('DISTRICT VI', 'DISTRICT VI'),
 
     )
-    user_profile         = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    user_profile         = models.ForeignKey(UserMarketingProfile, on_delete=models.CASCADE, null=True)
     territory_choices    = models.CharField(max_length=100, choices=territory_choices, null=True)
     date_created         = models.DateTimeField(auto_now_add=True)
     date_updated         = models.DateTimeField(auto_now=True)

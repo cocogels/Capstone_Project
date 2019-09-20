@@ -8,13 +8,12 @@ from django.views.generic.edit import CreateView, UpdateView
 
 from .models import Budget, Collateral, AssignQuota, AssignTerritory
 from .forms  import BudgetForm, CollateralForm, AssignQuotaForm, AssignTerritoryForm
-
+from .filters import AssignQuotaFilters
 
 
 def create_budget(request):
     if request.method == 'POST':
         form = BudgetForm(request.POST)
-        
         if form.is_valid():
             
              arrival  = form.cleaned_data['arrival']
@@ -82,10 +81,12 @@ def create_collateral(request):
 
         if form.is_valid():
 
-             unit     = form.cleaned_data['unit']
-             quantity = form.cleaned_data['quantity']
+            name     = form.cleaned_data['name']
+            unit     = form.cleaned_data['unit']
+            quantity = form.cleaned_data['quantity']
 
         create = Collateral(
+            name=name,
             unit=unit,
             quantity=quantity,
         )
@@ -193,6 +194,10 @@ class AssignQuotaListView(ListView):
     template_name = 'quota/quota_list.html'
     queryset = AssignQuota.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = AssignQuotaFilters(self.request.GET, queryset=self.get_queryset())
+        return context
 
 class QuotaUpdateView(UpdateView):
     model = Budget
