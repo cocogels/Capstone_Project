@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'root.html' %}
 {% load rest_framework %}
 {% load static from staticfiles %}
 
@@ -7,42 +7,10 @@
 {% bootstrap_javascript jquery='full' %}
 {{ form.media }} 
 
-{% block title %}
-<title>Marketing | TargetSheet</title>
-{% endblock title %}
-
-{% block sidebar %}
-{% include 'sidebar.html' %}
-{% endblock sidebar %}
-
-{% block navbar %}
-{% include 'navbar.html' %}
-{% endblock navbar %}
-
-
 
 
 {% block content %}
-<div class="container-fluid">
-    
-    <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" aria-current="page">
-                <a href="{% url 'crm_blog:home' %}">
-                    Overview
-                </a>
-                
-                <i class="fas fa-chevron-right small"></i>
-                
-                <a href="{% url 'centermanager:school_year_list' %}">
-                    General Information
-                </a>
-                
-            </li>
-        </ol>
-    </nav>
-    <!-- End of Bread Crumb -->
+
     <span>
           <a href="{% url 'centermanager:create_school_year' %}" class="btn btn-success btn-icon-split">
               <span class="icon text-white-50">
@@ -56,11 +24,13 @@
     </span>
     <span class="float-right">
         <select class="form-control form-control-sm float-right" name="" id="">
-            {% for school in school_year_list %}
-                <option value="">
-                    {{ school.start_year|date:'Y' }} - {{ school.end_year|date:'Y' }}
-                </option>
-            {% endfor %}
+            {% for school in school_year_record %}
+            <a href="{% url 'centermanager:create_school_year'%}">
+                <option value="" href="{% url 'centermanager:create_school_year'%}">
+                      {{ school.start_year|date:'Y' }} - {{ school.end_year|date:'Y' }}
+                    </option>
+                </a>
+                    {% endfor %}
             </select>
     </span>
     <br>
@@ -68,10 +38,12 @@
         {% include 'messages.html' %}
         <div class="card" style="height:500px">
                 <div class="cad-body">
-                    <center>    
+                    <center>
+                        {% if school_year_record %}    
                         <h2 class="mt-4">
-                         School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
+                         School Year:{{ school_year_record.start_year|date:'Y' }} - {{ end_year|date:'Y' }}
                         </h2>
+                        {% endif %}
                     </center>
                 </div>
             </div>
@@ -91,18 +63,3 @@
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock footer %}
-
-<!-- <div class="content-section">
-    {% include 'messages.html' %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            {% bootstrap_form form %}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">
-                Submit
-            </button>
-        </div>
-    </form>
-</div> -->

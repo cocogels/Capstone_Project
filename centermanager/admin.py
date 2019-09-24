@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import TargetSheet, PaymentDetails, SanctionSetting, CommissionSetting, SchoolYear
-from .forms import TargetSheetForm, SchoolYearForm, PaymentDetailsForm, SanctionSettingForm
+from .models import TargetSheet, Matriculation, SanctionSetting, CommissionSetting, SchoolYear
+from .forms import TargetSheetForm, SchoolYearForm, MatriculationForm, SanctionSettingForm
 from .serializers import SchoolYearSerializer
 # Register your models here.
 
@@ -41,12 +41,12 @@ class TargetSheetAdmin(admin.ModelAdmin):
     )
     
 
- 
-
+Matriculation
+MatriculationForm
 
   
-class PaymentDetailsAdmin(admin.ModelAdmin):
-    form = PaymentDetailsForm
+class MatriculationAdmin(admin.ModelAdmin):
+    form = MatriculationForm
     fieldsets =(
         (
             "Matriculation",
@@ -82,7 +82,7 @@ class SactionAdmin(admin.ModelAdmin):
     
     
 admin.site.register(SchoolYear)
-admin.site.register(PaymentDetails, PaymentDetailsAdmin)
+admin.site.register(Matriculation, MatriculationAdmin)
 admin.site.register(SanctionSetting, SactionAdmin)
 admin.site.register(CommissionSetting)
 admin.site.register(TargetSheet, TargetSheetAdmin)

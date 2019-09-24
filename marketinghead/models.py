@@ -1,5 +1,8 @@
+
+import arrow
 from django.db import models
-from accounts.models import UserMarketingProfile
+from django.utils.translation import ugettext_lazy as _
+from accounts.models import User
 # Create your models here.
 
 from taggit.managers import TaggableManager
@@ -50,7 +53,8 @@ class Budget(models.Model):
 class AssignQuota(models.Model):
 
    
-    user_profile          = models.ForeignKey(UserMarketingProfile, on_delete=models.CASCADE, null=True)
+    assigned_to           = models.ManyToManyField(User, related_name="assign_user")
+    created_by            = models.ForeignKey(User, related_name='assign_created_by', on_delete=models.SET_NULL, null=True)
     start_month           = models.DateField(unique=True)
     end_month             = models.DateField(unique=True)
     a_senior_high         = models.BigIntegerField(null=True)
@@ -58,13 +62,23 @@ class AssignQuota(models.Model):
     a_retail              = models.BigIntegerField(null=True)
     a_corporate           = models.BigIntegerField(null=True)
     a_owwa                = models.BigIntegerField(null=True)
-    date_created          = models.DateTimeField(auto_now_add=True)
-    date_updated          = models.DateTimeField(auto_now=True)
+    is_active             = models.BooleanField(default=False)
+    date_created          = models.DateTimeField(_("Date Created"), auto_now_add=True)
+    date_updated          = models.DateTimeField(_("Date Updated"),auto_now=True)
 
-    tags = TaggableManager()
-
+    def __str__(self):
+        return self.assign_to
+    
+    @property
+    def created_on_arrow(self):
+        return arrow.get(self.date_created).humanize()
+    
+    def updatd_on_arrow(self):
+        return arrow.get(self.date_updated).humanize()
     
     
+    class Meta:
+        ordering = ['-date_created']    
  
 
     
@@ -80,7 +94,7 @@ class AssignTerritory(models.Model):
         ('DISTRICT VI', 'DISTRICT VI'),
 
     )
-    user_profile         = models.ForeignKey(UserMarketingProfile, on_delete=models.CASCADE, null=True)
+    user_profile         = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     territory_choices    = models.CharField(max_length=100, choices=territory_choices, null=True)
     date_created         = models.DateTimeField(auto_now_add=True)
     date_updated         = models.DateTimeField(auto_now=True)

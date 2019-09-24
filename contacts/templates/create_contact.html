@@ -1,0 +1,117 @@
+{% extends 'root.html' %}
+{% load static from staticfiles %}
+
+{% block breadcrumb %}
+{% block extralinks %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+{% endblock extralinks %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{% url 'contacts:list' %}">Contacts</a>
+        </li>
+        <li class="breadcrumb-item active">
+            {% if contact_obj %}
+            Update
+            {% else %}
+            Create
+            {% endif %}
+        </li>
+    </ol>
+</nav>
+
+{% endblock breadcrumb %}
+{% block content %}
+<form  method="POST" action="" id="add_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                {% if contact_obj %}
+                Update
+                {% else %}
+                Create
+                {% endif %}
+                CONTACT
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Organization Name:
+                    {% if contact_form.name.field.required %}
+                    <span class="error"></span>
+                    {% endif %}
+                </label>
+                    {{ contact_form.name }}
+                    <span class="error"> {{ contact_form.name.errors }} </span>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Organization Type:
+                    {% if contact_form.org_type.field.required %}
+                    <span class="error"></span>
+                    {% endif %}
+                </label>
+                    {{ contact_form.org_type }}
+                    <span class="error"> {{ contact_form.org_type.errors }} </span>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Telephone #:
+                    {% if contact_form.tel_number %}
+                    <span class="error" ></span>
+                    {% endif %}
+                </label>
+                {{ contact_form.tel_number }}
+                <span class="error"> {{ contact_form.tel_number.errors }} </span>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Phonenumber #:
+                    {% if contact_form.phone_number %}
+                    <span class="error"></span>
+                    {% endif %}
+                </label>
+                    {{ contact_form.phone_number }}
+                    <span class="error"> {{ contact_form.phone_number.errors }} </span>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Email Address:
+                    {% if contact_form.email %}
+                    <span class="error"></span>
+                    {% endif %}
+                </label>
+                {{ contact_form.email }}
+                <span class="error"> {{ contact_form.email.errors }} </span>
+            </div>
+            <div class="form-group">
+                <label for="">
+                    Contact Person:
+                    {% if contact_form.person %}
+                    <span class="error"></span>
+                    {% endif %}
+                </label>
+                {{ contact_form.person }}
+                <span class="error"> {{ contact_form.person.errors }} </span>
+            </div>
+              <div class="form-group">
+                <label for="">
+                    Organization Address:
+                    {% if contact_form.address %}
+                    <span class="error"></span>
+                    {% endif %}
+                </label>
+                {{ contact_form.address }}
+                <span class="error"> {{ contact_form.address.errors }} </span>
+            </div>
+            <input type="hidden" id="save_new_form" name="savenewform">
+            <div class="buttons_row form_btn_row">
+                <button class="btn btn-default save" type="submit">Save</button>
+                 {% if not contact_obj %}
+                 <button class="btn btn-success save savenew" type="submit">Save & New</button>
+                 {% endif %}
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock content %}

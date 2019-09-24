@@ -23,13 +23,13 @@
     {% include 'messages.html' %}
 
     <div class="float-left">
-        <h3> Budget Information </h3>
+        <h3> Collateral Information </h3>
     </div>
 
     <!-- <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target=".bd-target-modal-lg">
     </button>
      -->
-    <a href="{%  url 'marketing_head:budget' %}" class="btn btn-info float-right">
+    <a href="{%  url 'marketing_head:create_collateral' %}" class="btn btn-info float-right">
         Add New
     </a>
 
@@ -52,13 +52,13 @@
                     <td>{{ budget.date_created }}</td>
                     <td>{{ budget.b_amount }}</td>
                     <td> <a class="btn btn-secondary"
-                            href="{% url 'marketing_head:budget_update' budget.pk %}">Update</a> </td>
+                            href="{% url 'marketing_head:collateral_update' collateral.pk %}">Update</a> </td>
                 </tr>
             </tbody>
             {% endfor %}
     </ul>
     {% else %}
-    <p>No Budget Have Been Set</p>
+    <p>No Collateral Have Been Set</p>
     </table>
     {% endif %}
 </div>
@@ -66,15 +66,4 @@
 {% endif %}
 
 
-
-<div class="modal fade bd-target-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="container-fluid">
-            <div class="modal-content">
-
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock content  %}

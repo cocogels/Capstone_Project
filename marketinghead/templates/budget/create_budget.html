@@ -3,6 +3,17 @@
 {% block title %}
         <title>Marketing | Budget</title>
 {% endblock title %}
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
 
 {% load crispy_forms_tags %}
 {% block content %}
@@ -15,7 +26,7 @@
                                 {% if title %}
                                 <legend> <center>{{ title }}</center> </legend>
                                 {% endif %}
-                                {{ form.|crispy }}
+                                {{ form|crispy }}
                         </fieldset>
                         <div class="form-group">
                                 <button class="btn btn-outline-info" type="submit">
@@ -23,5 +34,9 @@
                                 </button>
                         </div>
                 </form>
-        </div>     
+        </div>
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+     
 {% endblock content %}

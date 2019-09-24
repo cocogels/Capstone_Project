@@ -1,38 +1,104 @@
-from bootstrap_modal_forms.generic import BSModalCreateView
-from django.shortcuts import render, redirect, get_object_or_404
-from django.forms import forms
+
+import json
+
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.shortcuts import render, redirect, get_object_or_404
+from centermanager.models import SchoolYear, TargetSheet, MatriculationStatusCategory, MatriculationCourseCategory, Matriculation, SanctionSetting, CommissionStudentType, CommissionSetting
+from centermanager.forms import SchoolYearForm, TargetSheetForm, MatriculationForm, SanctionSettingForm, CommissionSettingForm
 from django.http import HttpResponseRedirect, Http404, JsonResponse
-from .forms import TargetSheetForm, PaymentDetailsForm, SanctionSettingForm, CommissionSettingForm, SchoolYearForm, AddEmployeeForm
-from .models import TargetSheet, PaymentDetails, SanctionSetting, CommissionSetting, SchoolYear
-from django.views.generic.dates import YearArchiveView
-# Create your views here.
-from django.views.generic.detail import SingleObjectMixin
-
-
-from datetime import date
-from django.utils.translation import gettext as _
-from .serializers import SchoolYearSerializer
-# Rest Framework
-from rest_framework import generics
-from rest_framework import mixins
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.renderers import TemplateHTMLRenderer
-from rest_framework.response import Response
-from .forms import SchoolYearForm, AddEmployeeForm
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic import ListView
-from django.views import generic
-from django.http import JsonResponse
-from django.template.loader import render_to_string
+from django.views.generic import (
+    CreateView, UpdateView, DetailView, TemplateView, View, ListView)
+from django.urls import reverse
 from django.db.models import Q
-from django.views.generic import CreateView, UpdateView, DetailView, TemplateView, View
-from accounts.models import UserMarketingProfile
+from django.template.loader import render_to_string
+from accounts.models import User
+
+''' School Year Views '''    
+class SchoolYearCreateView(CreateView):
+    model = SchoolYear
+    form_class = SchoolYearForm
+    template_name = 'school_year/create_school_year.html'
+    success_url = reverse_lazy('centermanager:school_year_list')
+
+    def get_context_data(self, **kwargs):
+        context = super(SchoolYearCreateView, self).get_context_data(**kwargs)
+        context['school_year_form'] = context['form']
+        return context
+
+class SchoolYearListView(ListView):
+    model = SchoolYear
+    paginated_by = 1
+    context_object_name = 'school_year_record'
+    template_name = 'school_year/school_year.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['school_year_record'] = context['object_list']
+        return context
+
+
+class SchoolYearDetailView(DetailView):
+    model = SchoolYear
+    context_object_name = 'school_year_record'
+    template__name = 'school_year/school_year_detail.html'
+   # paginated_by = 1
+
+    def get_queryset(self):
+        queryset = super(SchoolYearDetailView, self).get_queryset()
+
+''' Target Sheet View '''
+class TargetSheetCreateView(CreateView):
+    model = TargetSheet
+    form_class = TargetSheetForm
+    template_name = 'target/create_target.html'
+    success_url = reverse_lazy('centermanager:add_target')
+
+    def get_context_data(self, **kwargs):
+        context = super(TargetSheetCreateView, self).get_context_data(**kwargs)
+        context['target_form'] = context['form']
+        return context
+
+
+class TargetSheetListView(ListView):
+    model = TargetSheet
+    paginated_by = 1
+    context_object_name = 'target_sheet_record'
+    template_name = 'school_year/school_year_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['target_sheet_record'] = context['object_list']
+        return context
+
+
+class SchoolYearDetailView(DetailView):
+    model = SchoolYear
+    context_object_name = 'school_year_record'
+    template__name = 'school_year/target.html'
+   # paginated_by = 1
+
+    def get_queryset(self):
+        queryset = super(SchoolYearDetailView, self).get_queryset()
+
+
+class TargetUpdateView(UpdateView):
+    model = TargetSheet
+    form_class = TargetSheetForm
+    template_name = 'target_sheet/create_target.html'
+    success_url = reverse_lazy('centermanager:target_list')
+
+    def form_valid(self, form):
+        form.save()
+        message_text = 'Your {} was Updated Successfully!'.format(
+            form.instance)
+        messages.success(self.request, message_text)
+        if 'continue' in self.request.POST:
+            return HttpResponseRedirect(
+                reverse_lazy('centermanager:update_target',
+                             kwargs={'pk': form.instance.pk}))
+        else:
+            return super().form_valid(form)
 
 
 def emp_registration(request):
@@ -57,170 +123,54 @@ def emp_registration(request):
     
 
 class EmployeeListView(ListView):
-    model = UserMarketingProfile
+    model = User
     context_object_name = 'employee_list'
     template_name = 'addemployer/add_cc_list.html'
-    queryset = UserMarketingProfile.objects.all()
+    queryset = User.objects.all()
 
 
 
-class SchoolYearList(TemplateView):
-    model = SchoolYear
-    template_name = 'school_year/school_year.html'
-    context_object_name = 'school_year_list'
- 
-    def get_queryset(self):
-        queryset = self.model.objects.all()
-        if(self.request.user.is_centermanager):
-
-            request_post = self.request.POST
-            if request_post:
-                if request_post.get('start_year'):
-                    queryset = queryset.filter(
-                        start_year__icontains=request_post.get('start_year'))
-
-                if request_post.get('end_year'):
-                    queryset = queryset.filter(
-                        start_year__icontains=request_post.get('end_year'))
-        return queryset.distinct()
-
-    def get_context_data(self, **kwargs):
-        context = super(SchoolYearList, self).get_context_data(**kwargs)
-        context['school_year_list'] = self.get_queryset()
-        search = False
-        if(
-            self.request.POST.get('start_year') or
-            self.request.POST.get('end_year')
-        ):
-            search = True
-        context['search'] = search
-        return context
-
-    def post(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
-
-
-class SchoolYearCreateView(CreateView):
-    form_class = SchoolYearForm
-    template_name = 'school_year/create_school_year.html'
-    success_url = reverse_lazy('centermanager:create_school_year')
-    
-class SchoolYearDetailView(DetailView):
-    model = SchoolYear
-    context_object_name = 'school_year_record'
-    template__name = 'school_year/school_year_detail.html'
-
-    def get_queryset(self):
-        queryset = super(SchoolYearDetailView, self).get_queryset()
-        return queryset.select_related('start_year')
-
-class SchoolYearUpdateView(UpdateView):
-    model = SchoolYear
-    form_class = SchoolYearForm
-    template_name = 'school/create_school_year.html'
-    success_url = reverse_lazy('centermanager:school_year_list')
-
-    def form_valid(self, form):
-        form.save()
-        message_text = 'Your {} was Updated Successfully!'.format(
-            form.instance)
-        messages.success(self.request, message_text)
-        if 'continue' in self.request.POST:
-            return HttpResponseRedirect(
-                reverse_lazy('centermanager:school_update',
-                                kwargs={'pk': form.instance.pk}))
-        else:
-            return super().form_valid(form)
-    
-        
-        
-# class SchoolYearCreateView(AjaxTemplateMixin, CreateView):
+# class SchoolYearList(TemplateView):
 #     model = SchoolYear
-#     form_class = SchoolYearForm
-#     template_name = 'school_year/create_schoolyear.html'
-#     success_message = 'School Year Has Been Set'
-#     success_url = reverse_lazy('centermanager:school_year_list')
-
-#     def form_valid(self, form):
-#         self.object = form.save()
-
-#         return render(self.request, template_name, {'SchoolYear': self.object})
-
-
-
-# class SchoolYearAPIView(APIView):
-#     renderer_classes = [TemplateHTMLRenderer]
-#     template_name = 'school_year/create_school_year.html'
-
-#     def get(self, request):
-#         queryset = SchoolYear.objects.all()
-#         serializer = SchoolYearSerializer()
-#         return Response({'serializer': serializer, 'schoolyear': queryset})
-
-#     def post(self, request, pk):
-#         schoolyear = get_object_or_404(SchoolYear, pk=pk)
-#         serializer = SchoolYearSerializer(schoolyear, data=request.data)
-#         if not serializer.is_valid():
-#             return Response({'serializer':serializer, 'schoolyear': schoolyear})
-#         serializer.save()
-#         return redirect('create_school_year')
-
-
-# class SchoolYearAPIView(generics.ListAPIView,YearArchiveView):
-#     lookup_field = 'id'
-#     serializer_class = SchoolYearSerializer
-
+#     template_name = 'school_year/school_year.html'
+#     context_object_name = 'school_year_list'
+ 
 #     def get_queryset(self):
-#         return SchoolYear.objects.all()
+#         queryset = self.model.objects.all()
+#         if(self.request.user.is_centermanager):
+
+#             request_post = self.request.POST
+#             if request_post:
+#                 if request_post.get('start_year'):
+#                     queryset = queryset.filter(
+#                         start_year__icontains=request_post.get('start_year'))
+
+#                 if request_post.get('end_year'):
+#                     queryset = queryset.filter(
+#                         start_year__icontains=request_post.get('end_year'))
+#         return queryset.distinct()
+
+#     def get_context_data(self, **kwargs):
+#         context = super(SchoolYearList, self).get_context_data(**kwargs)
+#         context['school_year_list'] = self.get_queryset()
+#         search = False
+#         if(
+#             self.request.POST.get('start_year') or
+#             self.request.POST.get('end_year')
+#         ):
+#             search = True
+#         context['search'] = search
+#         return context
+
+#     def post(self, request, *args, **kwargs):
+#         context = self.get_context_data(**kwargs)
+#         return self.render_to_response(context)
 
 
-class SchoolYearView(generics.RetrieveUpdateDestroyAPIView,):
-    lookup_field = 'id'
-    serializer_class = SchoolYearSerializer
 
-    def get_queryset(self):
-        return SchoolYear.objects.all()
-
-
-def create_school_year(request):
-
-    if request.method == 'POST':
-        form = SchoolYearForm(request.POST or None)
-        if form.is_valid():
-
-            start_year = form.cleaned_data['start_year']
-            end_year = form.cleaned_data['end_year']
-
-            form = SchoolYear(
-                start_year=start_year,
-                end_year=end_year,
-            )
-
-            form.save()
-            messages.success(request, 'You Have Successfully Set School Year')
-            return redirect('centermanager:target_list')
-    else:
-        form = SchoolYearForm()
-    template_name = 'school_year/school_year.html'
-    context = {
-        'form': form,
-        'title': "School Year",
-    }
-
-    return render(request, template_name, context)
-
-# class SchoolYearArchiveView(YearArchiveView):
-#     queryset            = SchoolYear.objects.all()
-#     date_field          = 'start_date'
-#     date_field          = 'end_date'
-#     make_object_list    = True
-#     allow_future        = True
 
 
 """ Target Sheet Details """
-
-
 def create_target_sheet(request):
     if request.method == 'POST':
         form = TargetSheetForm(request.POST or None)
@@ -359,34 +309,6 @@ def create_payment(request):
     return render(request, template_name, context)
 
 
-class PaymentListView(ListView):
-    model = PaymentDetails
-    template_name = 'payment/payment_list.html'
-    queryset = PaymentDetails.objects.all()
-
-
-class PaymentDetailView(DetailView):
-    model = PaymentDetails
-    template_name = 'payment/payment_details.html'
-
-
-class PaymentUpdateView(UpdateView):
-    model = PaymentDetails
-    form_class = PaymentDetailsForm
-    template_name = 'payment/create_payment.html'
-    success_url = reverse_lazy('centermanager:payment_list')
-
-    def form_valid(self, form):
-        form.save()
-        message_text = 'Your {} was Updated Successfully!'.format(
-            form.instance)
-        messages.success(self.request, message_text)
-        if 'continue' in self.request.POST:
-            return HttpResponseRedirect(
-                reverse_lazy('centermanager:payment_update',
-                             kwargs={'pk': form.instance.pk}))
-        else:
-            return super().form_valid(form)
 
 
 '''  SANCTION SETTING '''

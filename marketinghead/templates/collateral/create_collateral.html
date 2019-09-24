@@ -4,15 +4,28 @@
 <title>Marketing | Collateral </title>
 {% endblock title %}
 
+
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="content-section">
     {% include 'messages.html' %}
-
+    
     <form action="" method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
-
             {{ form|crispy }}
         </fieldset>
         <div class="form-group">
@@ -22,4 +35,10 @@
         </div>
     </form>
 </div>
-{% endblock content %}
+
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}
+
+{% endblock content  %}

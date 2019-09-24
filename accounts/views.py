@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib import messages
 
-from .models import UserMarketingProfile
+from accounts.models import User
 
 from django.urls import reverse
 
@@ -45,9 +45,9 @@ def user_registration(request):
 
 
 class RegistrationListView(ListView):
-    model = UserMarketingProfile
+    model = User
     template_name = 'registration/register_list.html'
-    queryset = UserMarketingProfile.objects.all()
+    queryset = User.objects.all()
 
 
 ''' ------------------------------------------------------------------------------ '''

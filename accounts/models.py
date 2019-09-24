@@ -7,7 +7,7 @@ from django.contrib.auth.models import BaseUserManager, AbstractUser, User, Grou
 from django.utils.translation import gettext, gettext_lazy as _
 from multiselectfield import MultiSelectField
 from taggit.managers import TaggableManager
-
+import arrow    
 from django import forms
 
 ''' 
@@ -130,7 +130,7 @@ class MarketingUserManager(BaseUserManager):
 
 
 
-class UserMarketingProfile(AbstractUser):
+class User(AbstractUser):
     username=None
     email                           = models.EmailField(verbose_name='Email Address',max_length=50, unique=True) 
     first_name                      = models.CharField(verbose_name="First Name", max_length=50, blank=True)                                   
@@ -144,7 +144,7 @@ class UserMarketingProfile(AbstractUser):
     is_ihe                          = models.BooleanField(verbose_name='IHE', default=False)
     is_shs                          = models.BooleanField(verbose_name='SHS', default=False)
     is_icl                          = models.BooleanField(verbose_name='ICL', default=False)        
-    timestamp                       = models.DateTimeField(auto_now_add=True)
+    date_joined                     = models.DateTimeField(_('Date Joined'),auto_now_add=True)
 
     
     
@@ -155,14 +155,25 @@ class UserMarketingProfile(AbstractUser):
     
     tags = TaggableManager()
     objects = MarketingUserManager()
+
+    def get_short_name(self):
+        return self.first_name
+
+    def get_full_name(self):
+        full_name = None
+        if self.first_name or self.last_name:
+            full_name = self.first_name + " " + self.last_name
+
+        else:
+            full_name = self.email
+
+        return full_name
+
     def __str__(self):
         return self.email
-    
-    def get_full_name(self):
-        return self.email   
-    
-    def get_short_name(self):
-        return self.email    
+
+    class Meta:
+        ordering = ['-is_active']
 
 ''' Additional Properties Method that will give same result .admin or something else '''
 @property
@@ -207,14 +218,14 @@ def is_staff(self):
 '''------------------------------------------------------------------------------'''
 
 
-    
 class Profile(models.Model):
-    emp_id       = models.AutoField(primary_key=True)
-    user         = models.OneToOneField(UserMarketingProfile, on_delete=models.CASCADE)
-    contact_no   = models.BigIntegerField(null=True)
-    birth_date   = models.DateField(max_length=100, null=False, blank=False)
-    image        = models.ImageField(default='default.jpg', upload_to='profile_pics')
-
-    def __str__(self):
-        return "{0}, {1}".format(self.last_name, self.first_name)
+    user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
+    contact_no = models.BigIntegerField(null=True)
+    birth_date = models.DateField(max_length=100, null=False, blank=False)
     
+    activation_key = models.CharField(max_length=50)
+    key_expires    = models.DateTimeField()
+    
+    def save(self, *args, **kwargs):
+        self.key_expires = timezone.now() + datetime.timedelta(hours=2)
+        super(Profile, self).save(*args, **kwargs)

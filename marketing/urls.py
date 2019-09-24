@@ -30,6 +30,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('crm_blog/', include('crm_blog.urls'),),
     path('center/', include('centermanager.urls'),),
+    path('contacts/', include('contacts.urls')),
     path('accounts/', include('accounts.urls'),),
     path('marketinghead/', include('marketinghead.urls')),
     path('careerconsultant/', include('careerconsultant.urls')),

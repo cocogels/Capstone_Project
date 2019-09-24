@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from .forms import ICLContactForm, SHSContactForm, IHEContactForm
 from .models import IHE_ContactModel, ICL_ContactModel, SHS_ContactModel, IHE_ContactCategoryModel, ICL_ContactCategoryModel, SHS_ContactCategoryModel
-from accounts.models import Profile, UserMarketingProfile
+from accounts.models import Profile, User
 # Create your views here.
 
 

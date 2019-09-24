@@ -3,7 +3,7 @@ from django.contrib.admin import AdminSite
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import ReadOnlyPasswordHashField, UserCreationForm, UserChangeForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import UserMarketingProfile, Profile
+from .models import User, Profile
 from .forms import EmployeeCreationForm, MarketingAdminUserChangeForm
 # Register your models here.
 
@@ -86,7 +86,7 @@ class UserAdmin(BaseUserAdmin):
 
 
 
-admin.site.register(UserMarketingProfile, UserAdmin)
+admin.site.register(User, UserAdmin)
 admin.site.register(Profile)
 admin.site.unregister(Group)
 
