@@ -26,9 +26,9 @@
                 {% csrf_token %}
                 <div class="card-body">
                     <div class="form-group">
-                        <label for="">Name</label>
-                        <input type="text" class="form-control" placeholder="Organization Name" name='name'
-                            value="{{ request.POST.name }}">
+                        <label for="">Search</label>
+                        <input type="text" class="form-control" placeholder="Search...." name='name'
+                            value="{{ request.POST.name }}" multiple='multiple'>
                     </div>
                     <div class="form-group buttons_row">
                         <button class="btn btn-primary save" type="submit">
@@ -113,9 +113,9 @@
                     {% endfor %}
                 </tbody>
             </table>
-             {% if equal contact_obj_list|length 0 %}
+             {% ifequal contact_obj_list|length 0 %}
              <h6 class="text-center">No Contact Records Found</h6>
-             {%endifequal%}
+             {% endifequal %}
              <div class="marl row text-center">
                  {% show_pages %}
              </div>

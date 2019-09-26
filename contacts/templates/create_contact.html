@@ -22,7 +22,7 @@
 
 {% endblock breadcrumb %}
 {% block content %}
-<form  method="POST" action="" id="add_form" enctype="multipart/form-data">
+<form method="POST" action="" id="add_form" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="card">
         <div class="card-body">
@@ -41,8 +41,8 @@
                     <span class="error"></span>
                     {% endif %}
                 </label>
-                    {{ contact_form.name }}
-                    <span class="error"> {{ contact_form.name.errors }} </span>
+                {{ contact_form.name }}
+                <span class="error"> {{ contact_form.name.errors }} </span>
             </div>
             <div class="form-group">
                 <label for="">
@@ -51,17 +51,22 @@
                     <span class="error"></span>
                     {% endif %}
                 </label>
-                    {{ contact_form.org_type }}
-                    <span class="error"> {{ contact_form.org_type.errors }} </span>
+                {{ contact_form.org_type }}
+                <span class="error"> {{ contact_form.org_type.errors }} </span>
             </div>
             <div class="form-group">
                 <label for="">
                     Telephone #:
+                    {% if contact_form.tel_area %}
+                    <div class="error"></div>
+                    {% endif %}
                     {% if contact_form.tel_number %}
-                    <span class="error" ></span>
+                    <span class="error"></span>
                     {% endif %}
                 </label>
-                {{ contact_form.tel_number }}
+                {{ contact_form.tel_area }} -
+                {{ contact_form.tel_num_digits }} -
+                {{ contact_form.tel_num }}
                 <span class="error"> {{ contact_form.tel_number.errors }} </span>
             </div>
             <div class="form-group">
@@ -71,8 +76,8 @@
                     <span class="error"></span>
                     {% endif %}
                 </label>
-                    {{ contact_form.phone_number }}
-                    <span class="error"> {{ contact_form.phone_number.errors }} </span>
+                {{ contact_form.phone_number }}
+                <span class="error"> {{ contact_form.phone_number.errors }} </span>
             </div>
             <div class="form-group">
                 <label for="">
@@ -94,7 +99,7 @@
                 {{ contact_form.person }}
                 <span class="error"> {{ contact_form.person.errors }} </span>
             </div>
-              <div class="form-group">
+            <div class="form-group">
                 <label for="">
                     Organization Address:
                     {% if contact_form.address %}
@@ -107,11 +112,23 @@
             <input type="hidden" id="save_new_form" name="savenewform">
             <div class="buttons_row form_btn_row">
                 <button class="btn btn-default save" type="submit">Save</button>
-                 {% if not contact_obj %}
-                 <button class="btn btn-success save savenew" type="submit">Save & New</button>
-                 {% endif %}
+                {% if not contact_obj %}
+                <button class="btn btn-success save savenew" id='save_new_form' type="submit">Save & New</button>
+                {% endif %}
+                <a href="{% url 'contacts:add_contact' %}" class="btn btn-default clear"> Clear </a>
+
             </div>
         </div>
     </div>
 </form>
 {% endblock content %}
+{% block js_block %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script>
+    $(".savenew").on('click', function (e) {
+        e.preventDefault()
+        $("#save_new_form").val('true')
+        $('#add_form').submit()
+    });
+</script>
+{% endblock js_block %}

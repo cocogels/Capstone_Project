@@ -1,5 +1,5 @@
 from django import forms
-
+import datetime
 from .models import Budget, Collateral, AssignQuota, AssignTerritory
 
 from accounts.models import Profile, User
@@ -60,7 +60,6 @@ def present_or_future_date(value):
 
 
 class AssignQuotaForm(forms.ModelForm):
-
     
 
     def __init__(self, *args, **kwargs):
@@ -71,7 +70,23 @@ class AssignQuotaForm(forms.ModelForm):
         
         if assigned_users:
             self.fields['assigned_to'].queryset = assigned_users
-        self.fields['assigned_to'].required = True
+        self.fields['assigned_to'].required = False
+        
+        self.fields['a_senior_high'].widget.attrs['placeholder'] = 'Number of Students'
+        self.fields['a_senior_high'].required = False
+        
+        self.fields['a_higher_education'].widget.attrs['placeholder'] = 'Number of Students'
+        self.fields['a_higher_education'].required = False
+        
+        self.fields['a_retail'].widget.attrs['placeholder'] = 'Amount Revenue'
+        self.fields['a_retail'].required = False
+
+        self.fields['a_corporate'].widget.attrs['placeholder'] = 'Amount Revenue'
+        self.fields['a_corporate'].required = False
+
+        self.fields['a_owwa'].widget.attrs['placeholder'] = 'Amount Revenue'
+        self.fields['a_owwa'].required = False
+
         
     class Meta:
         model = AssignQuota
@@ -87,20 +102,22 @@ class AssignQuotaForm(forms.ModelForm):
         )
         
         labels = {
-            'assigned_to': 'Assign To',
+            'assigned_to': 'Assign User ',
             'a_senior_high': 'Senior High',
             'a_higher_education': 'Higher Education',
             'a_retail': 'Retail',
             'a_corporate': 'Corporate',
             'a_owwa':'OWWA',
         }
+        
+        
 
         widgets ={
             'start_month': MonthPickerInput().start_of('Assign Quota'),
             'end_month': MonthPickerInput().end_of('Assign Quota'),
         }
         validators = {
-           ' start_month':[present_or_future_date],
+            'start_month':[present_or_future_date],
             'end_month':[present_or_future_date],
         }
         
@@ -111,18 +128,33 @@ class AssignQuotaForm(forms.ModelForm):
 
         if start_month and end_month:
             if start_month > end_month:
-                    raise forms.ValidationE('Please Enter A Valid Date')
-
+                raise forms.ValidationError('Please Enter A Valid Date')
+        
+            if start_month < datetime.date.today():
+                raise forms.ValidationError("The date cannot be in the past!")
+            
+            if end_month < datetime.date.today():
+                raise forms.ValidationError("The date cannot be in the past!")
 
 class AssignTerritoryForm(forms.ModelForm):
     
-    user_profile = forms.ModelChoiceField(queryset=Profile.objects.all(), label='Assign To:')
+    def __init__(self, *args, **kwargs):
+        assigned_users = kwargs.pop('assigned_to',[])
+        super(AssignQuotaForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs = {'class': "form-control"}
+        
+        if assigned_users:
+            self.fields['assigned_to'].queryset = assigned_users
+        self.fields['assigned_to'].required = False
+ 
     
     class Meta:
         model = AssignTerritory
         fields = (
             'user_profile',
             'territory_choices',
+            'assigned_to',
         )
     
     def save(self, commit=True):
