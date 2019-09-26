@@ -1,2 +1,10 @@
 /.vscode
 /accounts/migrations
+/category/migrations
+/centermanager/migrations
+/marketinghead/migrations
+/contacts/migrations
+/registrar/migrations
+/centerbusinessmanager/migrations
+/components/migrations
+/careerconsultant/migrations
