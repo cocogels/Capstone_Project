@@ -44,7 +44,8 @@ class Budget(models.Model):
     
     b_id            = models.AutoField(primary_key=True)
     amount          = models.BigIntegerField(null=True)
-    arrival         = models.DateField(null=True, blank=True)
+    arrival         = models.DateField(null=True, blank=True) 
+    created_by      = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     date_created    = models.DateTimeField(_("Date Created"),auto_now_add=True)
     date_updated    = models.DateTimeField(_("Date Updated"),auto_now=True)
     

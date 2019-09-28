@@ -264,7 +264,7 @@ class TerritoryListView(TemplateView):
         if request_post:
             if request_post.get('user_profile'):
                 queryset = queryset.filter(
-                    user_profile__icontains = request_post.get=('user_profile')
+                    user_profile__icontains = request_post.get('user_profile')
                 )
 
         return request.distinct()
@@ -289,7 +289,7 @@ class TerritoryListView(TemplateView):
         context['search'] = search
         return context
     
-    def post(self, request,, *args, **kawrgs):
+    def post(self, request, *args, **kawrgs):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
     
@@ -310,8 +310,8 @@ class TerritoryAssign(CreateView):
         form = self.get_form()
         if form.is_valid():
             assign_territory_obj = form.save(commit=False)
-            assign_territory_obj.created-by = self.request.user
-            assign_territory_obj..save()
+            assign_territory_obj.created_by = self.request.user
+            assign_territory_obj.save()
             
             return self.form_valid(form)
         return self.form_invalid(form)
@@ -423,7 +423,20 @@ class TerritoryUpdateView(UpdateView):
 
         return context
     
+""" BUDGET VIEWS """
 
+
+class BudgetListView(TemplateView):
+    model = Budget
+    context_object_name = 'budget_list_obj'
+    template_name = 'budget/budget_list.html'
+    
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        queryset = queryset.filter(
+            Q(created_by=self.request.user)
+        )
+        
 def create_budget(request):
     if request.method == 'POST':
         form = BudgetForm(request.POST)
@@ -458,11 +471,6 @@ def create_budget(request):
 
 
 
-class BudgetListView(ListView):
-    model           = Budget
-    template_name   = 'budget/budget_list.html'
-    queryset        = Budget.objects.all()
-    
 
 class BudgetDetailView(DetailView):
     model           = Budget
