@@ -562,7 +562,7 @@ class IHEContactCreateView(CreateView):
     def get_form_kwargs(self):
         kwargs = super(IHEContactCreateView, self).get_form_kwargs()
         self.users = User.objects.filter(is_active=True).order_by('email')
-        kwargs.update({ 'assigbed_to': self.users })
+        kwargs.update({ 'assigned_to': self.users })
         return kwargs
     
     def post(self, request, *args, **kwargs):
@@ -666,7 +666,7 @@ class IHEContactUpdateView(UpdateView):
                 'assigned_to'
             ).values_list('id', flat=True)
             all_members_list = list(
-                set(list(assignned_form_users) - set(list(assigned_to_ids)))
+                set(list(assigned_form_users) - set(list(assigned_to_ids)))
                 
             )
             contact_obj.assigned_to.clear()

@@ -244,82 +244,185 @@ class AssignQuotaUpdateView(LoginRequiredMixin, UpdateView):
             ]
             return context
             
-# def create_assign_quota(request):
-#     if request.method == 'POST':
-#         form = AssignQuotaForm(request.POST or None)
-
-#         if form.is_valid():
-            
-#             user_profile        = form.cleaned_data['user_profile']
-#             a_senior_high       = form.cleaned_data['a_senior_high']
-#             a_higher_education  = form.cleaned_data['a_higher_education']
-#             a_retail            = form.cleaned_data['a_retail']
-#             a_corporate         = form.cleaned_data['a_corporate']
-#             a_owwa              = form.cleaned_data['a_owwa']
-
-#             form = AssignQuota(
-                
-#                 user_profile        = user_profile,
-#                 a_senior_high       = a_senior_high,
-#                 a_higher_education  = a_higher_education,
-#                 a_retail            = a_retail,
-#                 a_corporate         = a_corporate,
-#                 a_owwa              = a_owwa,
-                
-
-#             )
-            
-
-#             form.save()
-
-#             messages.success(request, 'You Have Successfully Assign Quota')
-#             return redirect('marketing_head:assign_list')
-#     else:
-#         form  = AssignQuotaForm()
-
-        
-
-#     template_name = 'quota/create_quota.html'
-#     context = {
-#         'form': form,
-  
-#     }
-    
-#     return render(request, template_name, context)
 
 ''' Territory '''
 
-def assign_territory(request):
-    if request.method == 'POST':
-        form = AssignTerritoryForm(request.POST or None)
 
-        if form.is_valid():
-
-            user_profile        = form.cleaned_data['user_profile']
-            territory_choices   = form.cleaned_data['territory_choices']
-
-    
-
-            form = AssignTerritory(
-                user_profile        = user_profile,
-                territory_choices   = territory_choices,
-            )
-
-            form.save()
-            messages.success(request, 'You Have Successfully Assigned Territory')
-            return redirect('marketing_head:assign_list')
-    else:
-        form = AssignTerritoryForm()
-
+class TerritoryListView(TemplateView):
+    model = AssignTerritory
+    context_object_name = 'assign_territory_obj'
     template_name = 'territory/territory.html'
-    territory = AssignTerritory.objects.all()
-    context = {
-        'form': form,
-        'territory': territory
-    }
-    return render(request, template_name, context)
+    
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        queryset = queryset.filter(
+            Q(assignedd_to__in=[self.request.user])|
+            Q(created_by=self.request.user)
+        )
+        
+        request_post = self.request.POST
+        if request_post:
+            if request_post.get('user_profile'):
+                queryset = queryset.filter(
+                    user_profile__icontains = request_post.get=('user_profile')
+                )
+
+        return request.distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super(AssignTerritory, self).get_context_data(**kwargs)
+        ccontext['assign_territory_obj'] = self.get_queryset()
+        context['per_page'] = self.request.POST.get('per_page')
+        context['users'] = User.objects.filter(
+            is_active=True
+        ).order_by('last_name')
+        
+        context['assignedto_list'] = [
+            int(i) for i in self.request.POST.getlist('assigned_to', []) if i
+        ]
+        
+        search = False
+        if (
+            self.request.POST.get('user_profile')
+        ):
+            search = True
+        context['search'] = search
+        return context
+    
+    def post(self, request,, *args, **kawrgs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+    
+    
+class TerritoryAssign(CreateView):
+    model = AssignTerritory
+    form_class = AssignTerritoryForm
+    template_name = 'territory/territory_create.html'
+
+    def get_form_kwargs(self):
+        kwargs = super(TerritoryAssign, self).get_form_kwargs()
+        self.users = User.objects.filter(is_active=True).order_by('email')
+        kwargs.update({'assigned_to': self.users})
+        return kwargs
+    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            assign_territory_obj = form.save(commit=False)
+            assign_territory_obj.created-by = self.request.user
+            assign_territory_obj..save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self, form):
+        assign_territory_obj = form.save(commit=False)
+        if self.request.POST.getlist('assigned_to', []):
+            contact_obj.assigned_to.add(
+                *self.request.POST.getlist('assiged_to')
+            )
+        
+        assigned_to_list = list(assign_territory_obj.assigned_to.all().values_list('id', flat=True))
+        current_site = get_current_site(self.request)
+        
+        if self.request.is_ajax():
+            return JsonResponse({{'error': False}})
+        
+        
+        if self.request.POST.get('savenewform'):
+            return redirect('marketing_head:add_territory')
+        return redirect('marketing_head:a_list')
+        
+    def get_context_data(self, **kwargs):
+        context = super(TerritoryAssign, self).get_context_data(**kwargs)
+        context['territory_form'] = context['form']
+        context['users'] = self.users
+        context['assignedto_list'] = [
+            int(i) for i in self.request.POST.getlist('assigned_to', [])
+        ]
+        
+        return context
 
 
+class TerritoryUpdateView(UpdateView):
+    model = AssignTerritory
+    form_class = AssignTerritoryForm
+    template_name = 'territory/territory_create.html'
+    
+    def get_form_kwargs(self):
+        kwargs = super(TerritoryUpdateView, self).get_form_kwargs()
+        self.users = User.objects.filter(is_active=True).order_by('email')    
+        kwargs.update({'assigned_to': self.users})
+        return kwargs
+        
+        
+    def post(self, request, *args, **kwargs):
+        self.object = se;f.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            assign_territory_obj = form.save(commit=False)
+            assign_territory_obj.save()
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self, form):
+        assigned_to_ids = self.get_object().assigned_to.all().values_list('id', flat=True)
+        assign_territory_obj = form.save(commit=False)
+        previous_assigned_to_users = list(assign_territory_obj.assigned_to.all().values_list('id', flat=True))
+        all_members_list = []
+        if self.request.POST.getlist('assigned_to', []):
+            current_site = get_current_site(self.request)
+            assigned_form_users = form.cleaned_data.get(
+                'assigned_to'
+            ).values_list('id', flat=True)
+            all_members_list = list(
+                set(list(assigned_form_users)) - set(list(assigned_to_ids))
+            )
+            assign_territory_obj.assigned_to.clear()
+            assign_territory_obj.assigned_to.add(
+                *self.request.POST.getlist('assigned_to')
+            )
+        else:
+            assign_territory_obj.assigned_to.clear()
+
+        current_site = get_current_site(self.request)
+        assigned_to_list = list(assign_territory_obj.assigned_to.all().values_list('id', flat=True))
+        
+        if self.request.is_ajax():
+            return JsonResponse({
+                'error': False
+            })
+        return redirect('marketing_head:a_list')
+    
+    def form_invalid(self, **kwargs):
+        if self.request.os_ajax():
+            return JsonResponse(
+                {
+                    'error': True,
+                    'territory_errors': form.errors,
+                }
+            )
+            return self.render_to_response(
+                self.get_context_data(form=form)
+            )
+    def get_context_data(self, **kwargs):
+        context = super(TerritoryUpdateView, self).get_context_data(**kwargs)
+        context['territory_obj'] = self.object
+        user_assign_list = [
+            assigned_to.id for assigned_to in context['territory_obj'].assigned_to.all()
+        ]
+        if self.reqest.user == context['territory_obj'].created_by:
+            user_assign_list.append(self.request.user.id)
+            
+        context['territory_form'] = context['form']
+        context['users'] = self.users
+        context['assignedto_list'] = [
+            int(i) for i in self.request.POST.getlist('assigned_to', []) if i
+        ]   
+
+        return context
+    
 
 def create_budget(request):
     if request.method == 'POST':
@@ -347,6 +450,11 @@ def create_budget(request):
     }
     
     return render(request, template_name, context)
+
+
+
+
+
 
 
 
