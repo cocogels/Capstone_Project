@@ -437,67 +437,145 @@ class BudgetListView(TemplateView):
             Q(created_by=self.request.user)
         )
         
-def create_budget(request):
-    if request.method == 'POST':
-        form = BudgetForm(request.POST)
-        if form.is_valid():
-            
-             amount   = form.cleaned_data['amount']
-             arrival  = form.cleaned_data['arrival']
-             
-        create = Budget(
-            amount=amount,
-            arrival=arrival,
-        )
+        request_post = self.request.POST
+        if request_post:
+            if request_post.getlist('arrival'):
+                queryset = querset.filter(
+                    arrival_icontains=request_post.getlist(arrival)
+                )
+                
+            return queryset.distinct()
         
-        create.save()
-        messages.success(request, 'You Have Successfully Added Budget Details' )
-        return redirect('marketing_head:budget_list')
+    def get_context_data(self, **kwargs):
+        context = super(BudgetListView, self)/get_context_data(**kwargs)
+        context['budget_list_obj'] = self.get_queryset()
+        
+        search = False
+        if(
+            self.request.POST.get(
+                'arrival'
+            ) 
+        ):
+            search = True
+        context['search'] = search
+        return context
     
-    else:
-        form = BudgetForm()
-    
+    def post(self, request,*args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+class BudgetCreateView(CreateView):
+    model = Budget
+    form_class = BudgetForm
     template_name = 'budget/create_budget.html'
-    context = {
-        'form':form
-    }
     
-    return render(request, template_name, context)
-
-
-
-
-
-
-
-
-
-class BudgetDetailView(DetailView):
-    model           = Budget
-    template_name   = 'budget/budget_detail.html'
-    
-
-class BudgetUpdateView(UpdateView):
-    model  = Budget 
-    template_name = 'budget/create_budget.html'
-    form_class = BudgetForm 
-    success_url = reverse_lazy('marketing_head:budget_list')
-    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            budget_obj = form.save(commit=False)
+            budget_obj.created_by = self.request.user
+            budget_obj.save()
+            return self.form_valid(form)
+        return self.form_invalid(form)
     
     def form_valid(self, form):
-        form.save()
-        messages_text = 'Your {} was Updated Successfully!'.format(form.instance)
-        messages.success(self.request, message_text)
-        if 'continue' in self.request.POST:
-            return HttpResponseRedirect(
-                reverse_lazy(
-                    'marketing_head:budget_update',
-                    kwargs={'pk': form.instance.pk}         
-                             )
-            )
+        current_site = get_current_site(self.request)
         
-        else:
-            return super().form_valid(form)    
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False
+                }
+            )
+        if self.request.POST.get('savenewform'):
+            return redirect("marketing_head:budget")
+        return redirect('marketing_head:budget_list')
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'budget_errors': form.errors
+                }
+            )
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+        
+    def get_context_data(self, **kwargs):
+        context = super(BudgetCreateView, self).get_context_data(**kwargs)
+        context['budget_form'] = context['form']
+        context['users'] = self.users
+        
+        return context
+    
+
+class BudgetDetailView(DetailView):
+    model               =  Budget
+    context_object_name = 'budget_record'
+    template_name       = 'budget/budget_detail.html'
+    
+   
+    def get_queryset(self):
+        queryset = super(BudgetDetailView, self).get_queryset()
+        return queryset.select_related('arrival')
+    
+    def get_context_data(self, **kwargs):
+        context = super(BudgetDetailView, self).get_context_data(**kwargs)
+        context['budget_record'] = self.object 
+        context['users'] = self.users
+        return context 
+        
+                   
+class BudgetUpdateView(UpdateView):
+    model  = Budget 
+    form_class = BudgetForm 
+    template_name = 'budget/create_budget.html'
+ 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            budget_obj = form.save(commit=False)
+            budget_obj.save()
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self, form):
+        budget_obj = form.save(commit=False)
+        currrent_site = get_current_site(self.request)
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error': False,
+                }
+            )
+            
+    def form_invalid(self, form):
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'budget_errors': form.errors
+                }
+            )
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+    
+    def get_context_data(self, **kwargs):
+        context = super(BudgetUpdateView, self).get_context_data(**kwargs)
+        context['budget_obj'] = self.object
+        context['users'] = self.users_mention
+        context['budget_form'] = context['form']
+        
+        return context
+    
+        
         
         
 def create_collateral(request):
