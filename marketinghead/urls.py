@@ -27,5 +27,5 @@ urlpatterns = [
     
     path('assign-territory/', views.TerritoryAssign.as_view(), name='add_territory'),
     path('territory/list/', views.TerritoryListView.as_view(), name='a_list'),
-    path('territory/edit/', views.TerritoryUpdateView.as_view(), name='a_edit'),
+    path('territory/edit/<int:pk>/', views.TerritoryUpdateView.as_view(), name='a_edit'),
 ]

@@ -45,10 +45,10 @@ class CollateralForm(forms.ModelForm):
             'quantity',
         )
     
-    def clean_title(self, *args, **kwargs):
+    def clean_name(self, *args, **kwargs):
         collateral = self.cleaned_data.get('name')
-        qs = TargetSheet.objects.filter(name=collateral)
-        if qs.exists():
+        queryset = Collateral.objects.filter(name=collateral)
+        if queryset.exists():
             raise forms.ValidationError('This Name Has Already Been used')
         return collateral
     
