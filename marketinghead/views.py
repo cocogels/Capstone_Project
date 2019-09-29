@@ -576,8 +576,198 @@ class BudgetUpdateView(UpdateView):
         return context
     
         
+
+""" Colateral Views """
+
+class CollateralListView(TemplateView):
+    model = Collateral
+    context_object_name = "collateral_obj_list"
+    template_name = 'collateral/collateral_list.html'
+    
+    def get_queryset(self):
+        queryset = self.models.objects.all()
+        
+        request_post = self.request.POST
+        if request_post:
+            if request_post.get('name'):
+                queryset = queryset.filter(
+                    name__icontains=request.post.get('name')
+                )
+            
+        return queryset.distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super(CollateralListView, self).get_context_data(**kwargs)
+        context['collateral_obj_list'] = self.get_queryset()
+        context['per_page'] = self.request.POST.get('per_page')
+        
+        search = False
+        if(
+            self.request.POST.get('name')
+        ):
+            search = True 
+        context['search'] = search
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+    
+
+class CollateralCreateView(CreateView):
+    model = Collateral
+    form_class = CollateralForm
+    template_name = 'collatera/create_collateral.html'
+    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            collateral_obj = form.save(commit=False)
+            collateral_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    
+    def form_valid(self, form):
+        collateral_obj = form.save(commit=False)
+        current_site = get_current_site(self.request)
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False,
+                }
+            )
+        
+        if self.request.POST.get("savenewform"):
+            return redirect('marketing_head:create_collateral')
+
+        return redirect('marketing_head:collateral_list.html')
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error': True,
+                    'collateral_errors': form.errors
+                }
+            )
+        
+        return self.render_to_response(
+            self.get_context_data(form=form))
+    
+    def get_context_data(self, **kwargs):
+        context = super(CollateralCreateView, self).get_context_data(**kwargs)
+        context['collateral_form'] = context['form']
+        
+        return context
+    
+            
+class CollateralDetailView(DetailView):
+    model = Collateral
+    context_object_name = 'collateral_record'
+    template_name = 'collateral/collateral_detail.html'
+    
+    def get_queryset(self):
+        queryset = super(CollateralDetailView, self).get_queryset()
+        return queryset.select_related('name')
+    
+    def get_context_data(self, **kwargs):
+        context = super(CollateralDetailView, self).get_context_data(**kwargs)
+        context['collateral_record'] = self.object 
+        
+        return context
+    
+
+class CollateralUpdateView(UpdateView):
+    model = Collateral
+    form_class = CollateralForm
+    template_name = 'collateral/create_colalteral'
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            collateral_obj = form.save(commit=False)
+            collateral_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    
+    def form_valid(self, form):
+        collateral_obj = form.save(commit=False)
+        current_site = get_current_site(self.request)
         
         
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False,
+                }
+            )
+        return redirect('marketing_head:collateral_list')
+    
+    def form_invalid(self, form):
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'collateral_errors': form.errors,
+                }
+            )         
+            
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+        
+    def get_context_data(self, **kwargs):
+        context = super(CollateralUpdateVoew, self).get_context_data(**kwargs)
+        context['collateral_obj'] = self.object
+        context['collateral_form'] = context['form']
+        
+        return context
+        
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 def create_collateral(request):
     if request.method == 'POST':
         form = CollateralForm(request.POST)

@@ -14,9 +14,9 @@ urlpatterns = [
     
     
     path('collateral/list/', views.CollateralListView.as_view(), name='collateral_list'),
-    path('create/collateral/', views.create_collateral, name='create_collateral'),
+    path('create/collateral/', views.CollateralCreateView.as_view(), name='create_collateral'),
     path('collateral/detail/<int:pk>/', views.CollateralDetailView.as_view(), name='collateral_detail'),
-    path('collateral/update/<int:pk>/', views.CollateralUpdateView.as_view(), name='collateral_update'),
+    path('collateral/edit/<int:pk>/', views.CollateralUpdateView.as_view(), name='collateral_update'),
     
     
     path('assign-quota/', views.CreateAssignQuota.as_view(), name='assign_quota'),
