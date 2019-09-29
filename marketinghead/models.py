@@ -51,7 +51,7 @@ class Budget(models.Model):
     
 
     def __str__(self):
-        return self.assigned_to
+        return str(self.arrival)
     
     @property
     def created_on_arrow(self):
