@@ -1,4 +1,18 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
 
 {% block title %}
         <title>Marketing | TargetSheet</title>
@@ -6,19 +20,44 @@
 
 
 {% load crispy_forms_tags %}
-{% block content %}
+{% block content %} 
+        <!-- Start of Breadcrumb -->
+        <nav aria-label="breadcrumb">
+                <h4>Add Sanction</h4>        
+            </nav>
+            <!-- End of Bread Crumb -->
+        
         <div class="content-section">
                {% include 'messages.html' %}
-                <form action="" method="POST">
+                
+          <center><div class="card w-75"> 
+                <form action="" method="POST">                      
                         {% csrf_token %}
-                        <fieldset class="form-group">
+                        
+                        <fieldset class="form-group row " style="padding-top: 5%; padding-right: 5%; padding-bottom: 0%; padding-left: 5%;">
                                 {{ form|crispy }}
-                        </fieldset>
-                        <div class="form-group">
-                                <button class="btn btn-outline-info" type="submit">
-                                        Submit
-                                </button>
+                        </fieldset> 
+
+                  <div class="row float-right " style="padding-right: 5%;">        
+                        <div class="form-group ">
+                                <button class="btn btn-outline-info" type="submit">Submit</button>                   
                         </div>
-                </form>
-        </div>     
+                        &nbsp
+                        <div class="form-group float-left">
+                            <a href="{% url 'centermanager:sanction_list'%}" class="btn btn-outline-info">
+                                       Cancel
+                             </a>    
+                        </div>
+
+                        </div>               
+                </form>                             
+                </div></center>
+
+
+                
+        </div>   
 {% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

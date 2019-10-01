@@ -1,50 +1,50 @@
 
 {% block head %}
-    {% include 'head.html' %}
+{% include 'head.html' %}
 {% endblock head %}
 
 <bod id="page-top">
 
 
-    <div id="wrapper">
-        {% block sidebar %}
+<div id="wrapper">
+    {% block sidebar %}
+
+    {% endblock sidebar %}
+
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+            {% block navbar %}
     
-        {% endblock sidebar %}
+            {% endblock navbar %}
 
-        <div id="content-wrapper" class="d-flex flex-column">
+            <div class="container-fluid">
+            {% block content %}
 
-            <!-- Main Content -->
-            <div id="content">
-                {% block navbar %}
-        
-                {% endblock navbar %}
-
-                <div class="container-fluid">
-                {% block content %}
-
-                {% endblock content %}
-                <!-- End of Container Fluid -->
-                </div>
-                <!-- End of Main Content -->
+            {% endblock content %}
+            <!-- End of Container Fluid -->
             </div>
-            <!-- End of Content Wrapper -->
+            <!-- End of Main Content -->
+        </div>
+        <!-- End of Content Wrapper -->
 
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            {% block footer %}
-            
-            {% endblock footer %}
-        </footer>
-        <!-- End of Footer -->
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        {% block footer %}
         
-    </div>
+        {% endblock footer %}
+    </footer>
+    <!-- End of Footer -->
+    
+</div>
 
 
-    {% block js_block %}
-    {% endblock js_block %}
-    {% block scripts  %}
-        {% include 'script.html' %}
-    {% endblock scripts %}
+{% block js_block %}
+{% endblock js_block %}
+{% block scripts  %}
+    {% include 'script.html' %}
+{% endblock scripts %}
 </body>
 
 </html>

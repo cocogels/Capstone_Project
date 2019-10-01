@@ -5,7 +5,7 @@ from centermanager.models import TargetSheet
 
 @login_required
 def blog_home_view(request):
-    template_name = 'home.html'
+    template_name = 'overview/overview.html' #will direct in this page after login
     
     return render(request, template_name, {'title': 'Home'})
 

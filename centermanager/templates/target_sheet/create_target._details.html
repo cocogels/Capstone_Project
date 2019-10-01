@@ -1,11 +1,5 @@
 {% extends 'base.html' %}
-
-{% block title %}
-<title>Marketing | TargetSheet</title>
-{% endblock title %}
-
-
-{% load crispy_forms_tags %}
+{% load bootstrap4 %}
 
 
 {% block header %}
@@ -13,81 +7,64 @@
 {% endblock header %}
 
 {% block sidebar %}
-{% include 'sidebar.html' %}
+
 {% endblock sidebar %}
 
 {% block navbar %}
 {% include 'navbar.html' %}
 {% endblock navbar %}
 
+{% block title %}
+        <title>Marketing | Target Sheet</title>
+{% endblock title %}
 
 
+{% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container-fluid">
 
-        <!-- Start of Breadcrumb -->
-        <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                        <li class="breadcrumb-item" aria-current="page">
-                                <a href="{% url 'crm_blog:home' %}">
-                                        Overview
-                                </a>
-
-                                <i class="fas fa-chevron-right small"></i>
-
-                                <a href="{% url 'centermanager:target' %}">
-                                        Target Sheet
-                                </a>
-
-                        </li>
-                </ol>
-        </nav>
-        <!-- End of Bread Crumb -->
-        <span>
-
-                <button class="btn btn-light">
-                        <i class="far fa-plus-square"></i> <a href="{% url 'centermanager:target' %}">Target Sheet</a>
-                </button>
-        </span>
-
-        <br>
-        <div class="content-section">
-                {% include 'messages.html' %}
-                <div class="card">
-                        <div class="cad-body">
-                                <center>
-                                        <h2 class="mt-4">
-                                                School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
-                                        </h2>
-                                </center>
-                                <div class="content-section">
-                                        <form action="" method="POST">
-                                                {% csrf_token %}
-                                                <fieldset class="form-group">
-                                                        {{ form|crispy }}
-                                                </fieldset>
-                                                <div class="form-group">
-                                                        <button class="btn btn-outline-info" type="submit">
-                                                                Submit
-                                                        </button>
-                                                </div>
-                                        </form>
-                                </div>
-                        </div>
+      <!-- Start of Breadcrumb -->
+    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
+            <h4>Target Sheet</h4>   
+    <!-- search field -->
+        <div class="topbar-divider d-none d-sm-block" style="padding-right:73%"></div>
+     <div class="input-group float-right" style="max-width: 20%;">            
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+                <div class="input-group-prepend" >
+                  <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
                 </div>
-        </div>
-
-</div>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+              </div>                
+        </nav>
+    
+    <!-- End of Bread Crumb -->
+    <br>
+    
+    <div class="content-section">
+                {% include 'messages.html' %}
+                 
+           <center><div class="card w-75"> 
+                 <form action="" method="POST">                      
+                         {% csrf_token %}
+                         
+                         <fieldset class="form-group row " style="padding-top: 5%; padding-right: 5%; padding-bottom: 0%; padding-left: 5%;">
+                                 {{ form|crispy }}
+                         </fieldset> 
+ 
+                   <div class="row float-right " style="padding-right: 5%;">        
+                         <div class="form-group ">
+                                 <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                         </div>
+                         &nbsp
+                         <div class="form-group float-left">
+                             <a href="{% url 'centermanager:sanction_list'%}" class="btn btn-outline-info">
+                                        Cancel
+                              </a>    
+                         </div>
+ 
+                         </div>               
+                 </form>                             
+                 </div></center>
+         </div>   
 {% endblock content %}
 
 {% block footer %}

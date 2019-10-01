@@ -14,11 +14,41 @@ from django.db.models import Q
 from django.template.loader import render_to_string
 from accounts.models import User
 
+
+#-------------------------SCHOOL YEAR----------------------------------------------
+def create_schoolYear(request):
+
+    if request.method == 'POST':
+        form = SchoolYearForm(request.POST)
+
+        if form.is_valid():
+            start_year = form.cleaned_data['start_year']
+            end_year = form.cleaned_data['end_year']
+            
+        create = SchoolYear(
+            start_year=start_year,
+            end_year=end_year,
+        )
+
+        create.save()
+        messages.success(
+            request, 'You have successfully added new School Year details.!')
+        return redirect('centermanager:school_year_list')
+
+    else:
+        form = SchoolYearForm()
+    template_name = 'school_year/school_year.html'
+    context = {
+        'form': form
+    }
+
+    return render(request, template_name, context)
+
 ''' School Year Views '''    
 class SchoolYearCreateView(CreateView):
     model = SchoolYear
     form_class = SchoolYearForm
-    template_name = 'school_year/create_school_year.html'
+    template_name = 'school_year/school_year.html'
     success_url = reverse_lazy('centermanager:school_year_list')
 
     def get_context_data(self, **kwargs):
@@ -31,6 +61,7 @@ class SchoolYearListView(ListView):
     paginated_by = 1
     context_object_name = 'school_year_record'
     template_name = 'school_year/school_year.html'
+    queryset = SchoolYear.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -46,6 +77,45 @@ class SchoolYearDetailView(DetailView):
 
     def get_queryset(self):
         queryset = super(SchoolYearDetailView, self).get_queryset()
+
+
+
+
+#-------------------------TARGET SHEET----------------------------------------------
+
+def create_targetSheet(request):
+
+    if request.method == 'POST':
+        form = TargetSheetForm(request.POST)
+
+        if form.is_valid():           
+            corporate   = form.cleaned_data['corporate']
+            retail      = form.cleaned_data['retail']
+            owwa        = form.cleaned_data['owwa']
+            seniorhigh  = form.cleaned_data['seniorhigh']
+            higher_ed   = form.cleaned_data['higher_ed']
+
+        create = TargetSheetForm(
+             corporate  = corporate,
+             retail     = retail,
+             owwa       = owwa ,
+             seniorhigh = seniorhigh,
+             higher_ed  = higher_ed ,
+        )
+
+        create.save()
+        messages.success(
+            request, 'You Have Successfully Added Target Sheet Details.!')
+        return redirect('centermanager:target_list')
+
+    else:
+        form = TargetSheetForm()
+    template_name = 'target_sheet/targetsheet_list.html'
+    context = {
+        'form': form
+    }
+
+    return render(request, template_name, context)
 
 ''' Target Sheet View '''
 class TargetSheetCreateView(CreateView):
@@ -64,23 +134,13 @@ class TargetSheetListView(ListView):
     model = TargetSheet
     paginated_by = 1
     context_object_name = 'target_sheet_record'
-    template_name = 'school_year/school_year_list.html'
+    template_name = 'target_sheet/targetsheet_list.html'
+    queryset = TargetSheet.objects.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['target_sheet_record'] = context['object_list']
         return context
-
-
-class SchoolYearDetailView(DetailView):
-    model = SchoolYear
-    context_object_name = 'school_year_record'
-    template__name = 'school_year/target.html'
-   # paginated_by = 1
-
-    def get_queryset(self):
-        queryset = super(SchoolYearDetailView, self).get_queryset()
-
 
 class TargetUpdateView(UpdateView):
     model = TargetSheet
@@ -130,52 +190,13 @@ class EmployeeListView(ListView):
 
 
 
-# class SchoolYearList(TemplateView):
-#     model = SchoolYear
-#     template_name = 'school_year/school_year.html'
-#     context_object_name = 'school_year_list'
- 
-#     def get_queryset(self):
-#         queryset = self.model.objects.all()
-#         if(self.request.user.is_centermanager):
-
-#             request_post = self.request.POST
-#             if request_post:
-#                 if request_post.get('start_year'):
-#                     queryset = queryset.filter(
-#                         start_year__icontains=request_post.get('start_year'))
-
-#                 if request_post.get('end_year'):
-#                     queryset = queryset.filter(
-#                         start_year__icontains=request_post.get('end_year'))
-#         return queryset.distinct()
-
-#     def get_context_data(self, **kwargs):
-#         context = super(SchoolYearList, self).get_context_data(**kwargs)
-#         context['school_year_list'] = self.get_queryset()
-#         search = False
-#         if(
-#             self.request.POST.get('start_year') or
-#             self.request.POST.get('end_year')
-#         ):
-#             search = True
-#         context['search'] = search
-#         return context
-
-#     def post(self, request, *args, **kwargs):
-#         context = self.get_context_data(**kwargs)
-#         return self.render_to_response(context)
-
-
-
-
 
 """ Target Sheet Details """
+
 def create_target_sheet(request):
     if request.method == 'POST':
         form = TargetSheetForm(request.POST or None)
-        if form.is_valid():
-
+    if form.is_valid():
             corporate = form.cleaned_data['corporate']
             retail = form.cleaned_data['retail']
             owwa = form.cleaned_data['owwa']
@@ -187,7 +208,7 @@ def create_target_sheet(request):
                 retail=retail,
                 owwa=owwa,
                 seniorhigh=seniorhigh,
-                higher_ed=higher_ed,
+               higher_ed=higher_ed,
             )
 
             form.save()
@@ -196,7 +217,7 @@ def create_target_sheet(request):
             return redirect('centermanager:target_list')
     else:
         form = TargetSheetForm()
-    template_name = 'target_sheet/create_target._details.html'
+    template_name = 'target_sheet/targetsheet_list.html'
     context = {
         'form': form,
 
@@ -209,21 +230,20 @@ def create_target_sheet(request):
 
 
 class TargetListView(ListView):
-    model = TargetSheet
-    context_object_name = 'target_sheet_list'
+    modal = TargetSheet
     template_name = 'target_sheet/targetsheet_list.html'
+    context_object_name = 'target_sheet_list'
     queryset = TargetSheet.objects.all()
-
 
 ''' Creating Target Detail View '''
 
 
 class TargetDetailView(DetailView):
-    model = TargetSheet
+    modal = TargetSheet
     template_name = 'target_sheet/target_details.html'
 
 
-# def target_sheet_detail_view(request, target_slug):
+ # def target_sheet_detail_view(request, target_slug):
 #     obj = get_object_or_404(TargetSheet, target_slug=target_slug)
 #     template_name = 'target_sheet/target_details.html'
 #     context = {'object': obj }
@@ -251,7 +271,7 @@ class TargetUpdateView(UpdateView):
             return super().form_valid(form)
         
         
-# def target_sheet_update_view(request, slug):
+ # def target_sheet_update_view(request, slug):
 #     obj = get_object_or_404(TargetSheet, slug=slug)
 #     form = TargetSheetForm(request.POST or None, instance=obj)
 #     if form.is_valid():
@@ -264,12 +284,16 @@ class TargetUpdateView(UpdateView):
 #     return render(request, template_name, context)
 
 
-'''Payment Details '''
 
+
+
+
+#-------------------------MATRICULATION----------------------------------------------
 
 def create_payment(request):
+
     if request.method == 'POST':
-        form = PaymentDetailsForm(request.POST)
+        form = MatriculationForm(request.POST)
 
         if form.is_valid():
             status= form.cleaned_data['status']
@@ -282,7 +306,7 @@ def create_payment(request):
             ins_miscellaneous_fee = form.cleaned_data['ins_miscellaneous_fee']
             ins_lab_fee = form.cleaned_data['ins_lab_fee']
 
-        create = PaymentDetails(
+        create = Matriculation(
             status=status,
             course=course,
             cash_amount_per_unit=cash_amount_per_unit,
@@ -292,24 +316,31 @@ def create_payment(request):
             ins_amount_unit=ins_amount_unit,
             ins_miscellaneous_fee=ins_miscellaneous_fee,
             ins_lab_fee=ins_lab_fee,
-
         )
 
         create.save()
         messages.success(
-            request, 'You Have Successfully Added Payment Details')
-        return redirect('centermanager:payment_list')
+            request, 'You Have Successfully Matriculation Details')
+        return redirect('centermanager:matriculation')
+
     else:
-        form = PaymentDetailsForm()
-    template_name = 'payment/create_payment.html'
+        form = MatriculationForm()
+    template_name = 'payment/payment_list.html'
     context = {
         'form': form
     }
 
     return render(request, template_name, context)
 
+class matriculationListView(ListView):
+    modal = Matriculation
+    template_name = 'payment/payment_list.html'
+    context_object_name = 'matriculation_list'
+    queryset = Matriculation.objects.all()
 
 
+
+#-------------------------TARGET SHEET----------------------------------------------
 
 '''  SANCTION SETTING '''
 
@@ -341,7 +372,7 @@ def create_sanction_setting(request):
 
     else:
         form = SanctionSettingForm()
-    template_name = 'sanction_setting/create_sanction.html'
+    template_name = 'sanction_setting/sanction_list.html'
     context = {
         'form': form
     }
@@ -380,8 +411,6 @@ class SanctionUpdateView(UpdateView):
             return super().form_valid(form)
 
 
-''' Comission Create View '''
-
 
 def create_commission_setting(request):
 
@@ -401,15 +430,16 @@ def create_commission_setting(request):
             misc_fee_status=misc_fee_status,
             reg_fee_status=reg_fee_status,
             stud_fee_status=stud_fee_status,
-
         )
+
         create.save()
         messages.success(
-            request, 'You Have Successfully Added Commission Details..!')
-        return redirect('centermanager:commission')
+            request, 'You Have Successfully Added Commission Details.!')
+        return redirect('centermanager:commission_list')
+
     else:
         form = CommissionSettingForm()
-    template_name = 'com_setting/create_commission.html'
+    template_name = 'com_setting/commission_list.html'
     context = {
         'form': form
     }
@@ -420,6 +450,7 @@ def create_commission_setting(request):
 class CommissionListView(ListView):
     model = CommissionSetting
     template_name = 'com_setting/commission_list.html'
+    context_object_name= 'commission_list'
     queryset = CommissionSetting.objects.all()
 
 
@@ -446,3 +477,7 @@ class CommissionUpdateView(UpdateView):
             )
         else:
             return super().form_valid(form)
+
+#-------------------------OVERVIEW----------------------------------------------
+def overview(request):
+       return render(request,'overview/overview.html')

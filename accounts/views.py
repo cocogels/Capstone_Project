@@ -34,7 +34,7 @@ def user_registration(request):
     else:
         form = EmployeeCreationForm()
 
-    template_name = 'registration/register.html'
+    template_name = 'registration/register_list.html'
 
     context = {
         "form":form,  
@@ -47,6 +47,7 @@ def user_registration(request):
 class RegistrationListView(ListView):
     model = User
     template_name = 'registration/register_list.html'
+    context_object_name='user_list'
     queryset = User.objects.all()
 
 

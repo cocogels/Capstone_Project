@@ -45,6 +45,11 @@ class CollateralForm(forms.ModelForm):
             'quantity',
         )
     
+        labels = {
+            'name' : 'Collateral Name',
+            'unit' : 'Unit',
+            'quantity' : 'Quantity'
+                }
     def clean_title(self, *args, **kwargs):
         collateral = self.cleaned_data.get('name')
         qs = TargetSheet.objects.filter(name=collateral)
@@ -136,3 +141,5 @@ class AssignTerritoryForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+#----------------------------------
+

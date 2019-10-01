@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-<!--{% block header %}
+
+{% block header %}
 {% include 'header.html' %}
 {% endblock header %}
--->
 
 {% block sidebar %}
 
@@ -12,18 +12,19 @@
 
 {% block navbar %}
 {% include 'navbar.html' %}
+
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Student Requirements</title>
+        <title>Marketing | Overview</title>
 {% endblock title %}
-{% load crispy_forms_tags %}
 
+
+{% load crispy_forms_tags %}
 {% block content %} 
-div class="card min-vh-100">
+        <div class="card min-vh-100">
                 
         </div>
-
 {% endblock content %}
 
 {% block footer %}

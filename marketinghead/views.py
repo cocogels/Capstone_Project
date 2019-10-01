@@ -37,7 +37,7 @@ def create_budget(request):
     else:
         form = BudgetForm()
     
-    template_name = 'budget/create_budget.html'
+    template_name = 'budget/budget_list.html'
     context = {
         'form':form
     }
@@ -49,6 +49,7 @@ def create_budget(request):
 class BudgetListView(ListView):
     model           = Budget
     template_name   = 'budget/budget_list.html'
+    context_object_name='Budget'
     queryset        = Budget.objects.all()
     
 
@@ -100,7 +101,7 @@ def create_collateral(request):
     else:
         form = CollateralForm()
 
-    template_name = 'collateral/create_collateral.html'
+    template_name = 'collateral/collateral_list.html'
     context = {
         'form': form
     }
@@ -110,7 +111,9 @@ def create_collateral(request):
 class CollateralListView(ListView):
     model = Collateral
     template_name = 'collateral/collateral_list.html'
+    context_object_name = 'Collateral'
     queryset = Collateral.objects.all()
+
 
 
 class CollateralDetailView(DetailView):
@@ -418,10 +421,13 @@ def assign_territory(request):
     else:
         form = AssignTerritoryForm()
 
-    template_name = 'territory/territory.html'
+    template_name = 'registration/register_list.html'
     territory = AssignTerritory.objects.all()
     context = {
         'form': form,
         'territory': territory
     }
     return render(request, template_name, context)
+
+    #--------------------------------------------
+ 

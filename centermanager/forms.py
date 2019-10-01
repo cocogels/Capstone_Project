@@ -36,7 +36,7 @@ class SchoolYearForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(SchoolYearForm, self).__init__(*args, **kwargs)
         self.fields['start_year'].label = "Start Year"
         self.fields['end_year'].label = "End Year"
         self.fields['start_year'].required = True
@@ -73,6 +73,7 @@ class TargetSheetForm(forms.ModelForm):
     higher_ed = forms.CharField(widget=forms.NumberInput(
         attrs={'placeholder': 'Student'}), label='Higher Education', required=False, )
 
+
     class Meta:
         model = TargetSheet
         fields = [
@@ -86,6 +87,47 @@ class TargetSheetForm(forms.ModelForm):
 
 ''' Matriculation Form '''
 
+class MatriculationForm(forms.ModelForm):
+    cash_amount_per_unit = forms.CharField(
+        label='Cash Amount Per Unit', widget=forms.NumberInput(),)
+    cash_miscellaneous_fee = forms.CharField(
+        label='Cash Miscellaneous Fee', widget=forms.NumberInput(),)
+    cash_lab_fee = forms.CharField(
+        label='Cash Laboratory Fee', widget=forms.NumberInput(),)
+    cash_registration_fee = forms.CharField(
+        label='Cash Registration Fee', widget=forms.NumberInput(),)
+    ins_amount_unit = forms.CharField(
+        label='Installment Amount Per Unit', widget=forms.NumberInput(),)
+    ins_miscellaneous_fee = forms.CharField(
+        label='Installment Miscellaneous Fee', widget=forms.NumberInput(),)
+    ins_lab_fee = forms.CharField(
+        label='Installment Laboratory Fee', widget=forms.NumberInput(),)
+
+    class Meta:
+        model = Matriculation
+        fields = (
+            'status',
+            'course',
+            'cash_amount_per_unit',
+            'cash_miscellaneous_fee',
+            'cash_lab_fee',
+            'cash_registration_fee',
+            'ins_amount_unit',
+            'ins_miscellaneous_fee',
+            'ins_lab_fee'
+        )
+
+    def __init__(self, *args, **kwargs):
+            super(MatriculationForm, self).__init__(*args, **kwargs)
+            self.fields['status'].label = 'Student Type'
+            self.fields['course'].label = 'Course'
+            self.fields['cash_amount_per_unit'].label = 'Cash Amount Per Unit'
+            self.fields['cash_lab_fee'].label = 'Cash Laboratory Fee'
+            self.fields['cash_miscellaneous_fee'].label = 'Cash Miscellaneous Fee'
+            self.fields['cash_registration_fee'].label = 'Cash Registration Fee'
+            self.fields['ins_amount_unit'].label = 'Installment Amount Per Unit'
+            self.fields['ins_miscellaneous_fee'].label = 'Installment Miscellaneous Fee'
+            self.fields['ins_lab_fee'].label = 'Installment Laboratory Fee'
 
 class MatriculationForm(forms.ModelForm):
 

@@ -65,9 +65,9 @@ INSTALLED_APPS = [
     'category',
     'components',
     'schedule',
-    #phone
+    #'phone',
     'phonenumber_field',
-    'phone_field',
+    #'phone_field',
 
     
 ]

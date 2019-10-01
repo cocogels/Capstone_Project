@@ -1,4 +1,6 @@
 <!-- Sidebar -->
+{% load crispy_forms_tags %}
+
 <ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
 
@@ -32,55 +34,19 @@
         </a>
     </li>
 <hr class="sidebar-divider my-0">
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'marketing_head:budget_list' %}" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <i class="fas fa-file-invoice"></i>
-            <span>
-                <strong>
-                    Budget
-                </strong>
-            </span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'accounts:register'%}" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-user-plus"></i>
-            <span>
-                <strong>
-                    Add Employer
-                </strong>
-            </span>
-        </a>
-    </li>
+
+    <!------------------------------------- DIV FOR ADDING career consultant------------------------------------------------->
+  
     
-    <li class="nav-item">
-    
-    
-        <a class="nav-link collapsed" href="{% url 'marketing_head:collateral_list' %}" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <i class="fas fa-book-open"></i>
-            <span>
-                <strong>
-                    Collateral
-                </strong>
-            </span>
-        </a>
-    </li>
-    
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="{% url 'marketing_head:assign_list' %}" aria-expanded="true"
-            aria-controls="collapseTwo">
-            <i class="fas fa-share"></i>
-            <span>
-                <strong>
-                    Quota
-                </strong>
-            </span>
-        </a>
-    </li>
+  
+        <!------------------------------------- END OF DIV FOR ADDING career consultant------------------------------------------------->
+        
 
     {% endif %}
+
+
+
+
 
     {% if request.user.is_centerbusinessmanager %}
 
@@ -302,7 +268,7 @@
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        <button class="rounded-circle border-0" id="sidebarToggle">close</button>
     </div>
 
 </ul>

@@ -220,6 +220,7 @@ class CommissionStudentType(models.Model):
 class CommissionSetting(models.Model):
 
     student_type = models.ForeignKey(CommissionStudentType, on_delete=models.CASCADE)
+    
     fee_choices = (
         (True, 'PAID'),
         (False, 'UNPAID'),
