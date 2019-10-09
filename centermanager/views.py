@@ -4,7 +4,7 @@ import json
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
-from centermanager.models import SchoolYear, TargetSheet, MatriculationStatusCategory, MatriculationCourseCategory, Matriculation, SanctionSetting, CommissionStudentType, CommissionSetting
+from centermanager.models import SchoolYearModel, TargetSheet, MatriculationStatusCategory, MatriculationCourseCategory, Matriculation, SanctionSetting, CommissionSetting
 from centermanager.forms import SchoolYearForm, TargetSheetForm, MatriculationForm, SanctionSettingForm, CommissionSettingForm
 from django.http import HttpResponseRedirect, Http404, JsonResponse
 from django.views.generic import (
@@ -13,120 +13,425 @@ from django.urls import reverse
 from django.db.models import Q
 from django.template.loader import render_to_string
 from accounts.models import User
+from centermanager.forms import EmployeeRegistrationForm
 
+
+
+
+
+class EmployeeListView(TemplateView):
+    model = User
+    context_object_name = "employee_obj_list"
+    template_name = 'employer/employee_list.html'
+    
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        
+        request_post = self.request.POST
+        if request_post:
+            if request_post.get('first_name'):
+                queryset = queryset.filter(
+                    first_name__icontains=request_post.get('first_name')
+                )
+                
+            if request_post.get('last_name'):
+                queryset = queryset.filter(
+                    last_name___icontains=request_post.get('last_name')
+                )
+            
+            if request_post.get('email'):
+                queryset = queryset.filter(
+                    email__icontains=request_post.get('email')
+                )
+        return queryset.distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeListView, self).get_context_data(**kwargs)
+        context['employee_obj_list'] = self.get_queryset
+        context['per_page'] = self.request.POST.get('per_page')    
+        context['users'] = User.objects.filter(is_active=True).order_by('email')
+        
+        search = False
+        if (
+            self.request.POST.get('first_name') or
+            self.request.POST.get('last_name') or
+            self.request.POST.get('email')
+        ):
+            search = True
+        context['search'] = search
+        return context
+    
+    def post(self, request, *args ,**kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+    
+
+    
+
+class EmployeeRegistration(CreateView):
+    model = User
+    form_class = EmployeeRegistrationForm
+    template_name = 'employer/create_employee.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(EmployeeRegistration, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            employee_obj = form.save(commit=False)
+            employee_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+
+    def form_valid(self, form):
+        employee_obj = form.save(commit=False)
+
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False,
+                }
+            )
+
+        if self.request.POST.get("savenewform"):
+            return redirect("centermanager:add_employee")
+        return redirect("centermanager:employee_list")
+
+
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'employee_errors': form.errors,
+                }
+            )
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+    
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeRegistration, self).get_context_data(**kwargs)
+        context['employee_form'] = context["form"]
+        context['users'] = self.users
+        return context
+    
+
+class EmployeeDetailView(DetailView):
+    model = User
+    context_object_name = "employee_record"
+    template_name = 'employer/employee_detail.html'
+    
+    def get_queryset(self):
+        queryset = super(EmployeeDetailView, self).get_queryset(**kwargs)
+        return queryset.select_related('email')
+
+    
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeDetailView, self).get_context_data(**kwargs)
+        return context
+    
+    
+class EmployeeUpdateView(UpdateView):
+    model = User
+    form_class = EmployeeRegistrationForm
+    template_name = "employer/create_empoyee.html"
+    
+    def dispatch(self, request, *args, **kwargs):
+        if (self.request.user.is_centerbusinessmanager or
+            self.request.user.is_marketinghead or
+            self.request.user.is_registrar
+            ):
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centerbusinessmanager=True,
+                                             is_marketinghead=True,
+                                             is_registrar=True
+                                             )    
+        return super(EmployeeUpdateView, self).dispatch(request, *args, **kwargs)
+    
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            employee_obj = form.save(commit=False)
+            employee_obj.save()
+
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self, form):
+        employee_obj = form.save(commit=False)
+        if self.request.is_ajax():
+            return JsonResponse({
+                'error':False,
+            })    
+        return redirect('centermanager:employee_list')
+    
+    
+    def form_invalid(self, form):
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'employee_errors': form.errors
+                }
+            )
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+    
+    def get_context_data(self, **kwargs):
+        context = super(EmployeeUpdateView, self).get_context_data(**kwargs)
+        context['employee_obj'] = self.object
+        context['employee_form'] = context['form']
+        
+        return context
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 ''' School Year Views '''    
+
+
+
 class SchoolYearCreateView(CreateView):
-    model = SchoolYear
+    model = SchoolYearModel
     form_class = SchoolYearForm
     template_name = 'school_year/create_school_year.html'
     success_url = reverse_lazy('centermanager:school_year_list')
-
+    
+    
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(SchoolYearCreateView, self).dispatch(request, *args, **kwargs)    
+    
+    def post(self,request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            school_year_obj = form.save(commit=False)
+            school_year_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self, form):
+        school_year_obj = form.save(commit=False)
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False,
+                }
+            )
+        return redirect("centermanager:target_list")
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'school_year_errors':form.errors
+                }
+            )
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+    
     def get_context_data(self, **kwargs):
         context = super(SchoolYearCreateView, self).get_context_data(**kwargs)
         context['school_year_form'] = context['form']
         return context
 
-class SchoolYearListView(ListView):
-    model = SchoolYear
-    paginated_by = 1
-    context_object_name = 'school_year_record'
-    template_name = 'school_year/school_year.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['school_year_record'] = context['object_list']
-        return context
-
-
-class SchoolYearDetailView(DetailView):
-    model = SchoolYear
-    context_object_name = 'school_year_record'
-    template__name = 'school_year/school_year_detail.html'
-   # paginated_by = 1
-
-    def get_queryset(self):
-        queryset = super(SchoolYearDetailView, self).get_queryset()
 
 ''' Target Sheet View '''
+
+class TargetSheetListView(TemplateView):
+    model = TargetSheet
+    context_object_name = 'target_sheet_obj'
+    template_name = 'school_year/school_year_list.html'
+
+    
+    def get_queryset(self):
+        queryset = self.models.objects.all()
+         
+        request_post = self.request.POST
+        if request_post:
+            if request_post.get('school_year'):
+                queryset = queryset.filter(
+                    school_year__icontains=request_post.get('school_year')
+                )
+        return queryset.distinct()
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super(TargetSheetListView, self).get_context_data(**kwargs)
+        context['target_sheet_obj'] = self.get_queryset()
+        context['per_page'] = self.request.POST.get('per_page')
+        
+        search = False
+        if (
+            self.request.POST.get('school_year')
+        ):
+            search = True
+        context['search'] = search
+        return context
+    
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)        
+        
+
 class TargetSheetCreateView(CreateView):
     model = TargetSheet
     form_class = TargetSheetForm
-    template_name = 'target/create_target.html'
-    success_url = reverse_lazy('centermanager:add_target')
+    template_name = 'target_sheet/create_target.html'
+    
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(TargetSheetCreateView, self).dispatch(
+            request, *args, **kwargs
+        )
+    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            target_sheet_obj = form.save(commit=False)
+            target_sheet_obj.save()
+            
+            return self.form.valid(form)
+        return self.form_invalid(form)
+    
+    
+    
+    def form_valid(self, form):
+        target_sheet_obj = form.save(commit=False)
+        
+        current_site = get_current_site(self.request)
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error': False,
+                }
+            )
+        return redirect('centermanager:create_target')
 
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error': True,
+                    'target_sheet_errors': form.errors
+                }
+            )
+            
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+        
     def get_context_data(self, **kwargs):
         context = super(TargetSheetCreateView, self).get_context_data(**kwargs)
         context['target_form'] = context['form']
         return context
 
 
-class TargetSheetListView(ListView):
+ 
+class TargetSheetDetailView(DetailView):
     model = TargetSheet
-    paginated_by = 1
-    context_object_name = 'target_sheet_record'
-    template_name = 'school_year/school_year_list.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['target_sheet_record'] = context['object_list']
-        return context
-
-
-class SchoolYearDetailView(DetailView):
-    model = SchoolYear
-    context_object_name = 'school_year_record'
-    template__name = 'school_year/target.html'
-   # paginated_by = 1
-
-    def get_queryset(self):
-        queryset = super(SchoolYearDetailView, self).get_queryset()
-
-
+    form_class = TargetSheetForm
+    template_name = 'target_sheet/target_details.html'
+    
+    
 class TargetUpdateView(UpdateView):
     model = TargetSheet
     form_class = TargetSheetForm
     template_name = 'target_sheet/create_target.html'
-    success_url = reverse_lazy('centermanager:target_list')
-
-    def form_valid(self, form):
-        form.save()
-        message_text = 'Your {} was Updated Successfully!'.format(
-            form.instance)
-        messages.success(self.request, message_text)
-        if 'continue' in self.request.POST:
-            return HttpResponseRedirect(
-                reverse_lazy('centermanager:update_target',
-                             kwargs={'pk': form.instance.pk}))
-        else:
-            return super().form_valid(form)
-
-
-def emp_registration(request):
     
-    if request.method == 'POST':
-        form = AddEmployeeForm(request.POST)
+    
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
         if form.is_valid():
-            form  = form.save()
-            messages.success(request, 'You Have Successfuly Registered User Account..!!')
-            return redirect('centermanager:register-emp')
-        else:
-            messages.error(request, 'Account Registration Failed Try Again..!!!')
-            return redirect('centermanager:register-emp')
-    else:
-        form = AddEmployeeForm()
-
-    template_name = 'addemployer/create_employee.html'
-    context = {
-        "form":form,  
-    }
-    return render(request, template_name, context)
+            target_sheet_obj = form.save(commit=False)
+            target_sheet_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
     
+    
+    def form_valid(self):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False,
+                }
+            )
+        return redirect('centermanager:target_update')
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'target_sheet_error': form.errors,
+                }
+            )
+        return redirect('centermanager:create_target')
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super(TargetUpdateView, self).get_context_data(**kwargs)
+        context['target_sheet_obj'] = self.object
+        context['target_sheet_form'] = context['form']
+        
+        return context
+    
+    
+# class TargetUpdateView(UpdateView):
+#     model = TargetSheet
+#     form_class = TargetSheetForm
+#     template_name = 'target_sheet/create_target.html'
+#     success_url = reverse_lazy('centermanager:target_list')
 
-class EmployeeListView(ListView):
-    model = User
-    context_object_name = 'employee_list'
-    template_name = 'addemployer/add_cc_list.html'
-    queryset = User.objects.all()
+#     def form_valid(self, form):
+#         form.save()
+#         message_text = 'Your {} was Updated Successfully!'.format(
+#             form.instance)
+#         messages.success(self.request, message_text)
+#         if 'continue' in self.request.POST:
+#             return HttpResponseRedirect(
+#                 reverse_lazy('centermanager:update_target',
+#                              kwargs={'pk': form.instance.pk}))
+#         else:
+#             return super().form_valid(form)
+
 
 
 
@@ -168,281 +473,480 @@ class EmployeeListView(ListView):
 
 
 
-
-
-""" Target Sheet Details """
-def create_target_sheet(request):
-    if request.method == 'POST':
-        form = TargetSheetForm(request.POST or None)
-        if form.is_valid():
-
-            corporate = form.cleaned_data['corporate']
-            retail = form.cleaned_data['retail']
-            owwa = form.cleaned_data['owwa']
-            seniorhigh = form.cleaned_data['seniorhigh']
-            higher_ed = form.cleaned_data['higher_ed']
-
-            form = TargetSheet(
-                corporate=corporate,
-                retail=retail,
-                owwa=owwa,
-                seniorhigh=seniorhigh,
-                higher_ed=higher_ed,
-            )
-
-            form.save()
-            messages.success(
-                request, 'You Have Successfully Set New Target for Year')
-            return redirect('centermanager:target_list')
-    else:
-        form = TargetSheetForm()
-    template_name = 'target_sheet/create_target._details.html'
-    context = {
-        'form': form,
-
-    }
-
-    return render(request, template_name, context)
-
-
-'''   Creating List of TargetSheet Added in Data Base  '''
-
-
-class TargetListView(ListView):
-    model = TargetSheet
-    context_object_name = 'target_sheet_list'
-    template_name = 'target_sheet/targetsheet_list.html'
-    queryset = TargetSheet.objects.all()
-
-
-''' Creating Target Detail View '''
-
-
-class TargetDetailView(DetailView):
-    model = TargetSheet
-    template_name = 'target_sheet/target_details.html'
-
-
-# def target_sheet_detail_view(request, target_slug):
-#     obj = get_object_or_404(TargetSheet, target_slug=target_slug)
-#     template_name = 'target_sheet/target_details.html'
-#     context = {'object': obj }
-
-#     return render(request, template_name, context)
-''' Updating Target Details '''
-
-
-class TargetUpdateView(UpdateView):
-    model = TargetSheet
-    form_class = TargetSheetForm
-    template_name = 'target_sheet/create_target._details.html'
-    success_url = reverse_lazy('centermanager:target_list')
-
-    def form_valid(self, form):
-        form.save()
-        message_text = 'Your {} was Updated Successfully!'.format(
-            form.instance)
-        messages.success(self.request, message_text)
-        if 'continue' in self.request.POST:
-            return HttpResponseRedirect(
-                reverse_lazy('centermanager:target_update',
-                             kwargs={'pk': form.instance.pk}))
-        else:
-            return super().form_valid(form)
-        
-        
-# def target_sheet_update_view(request, slug):
-#     obj = get_object_or_404(TargetSheet, slug=slug)
-#     form = TargetSheetForm(request.POST or None, instance=obj)
-#     if form.is_valid():
-#         form.save()
-#     template_name =  'target_sheet/create_target._details.html'
-#     context = {
-#         'title': "Update Target Details",
-#         "form": form
-#     }
-#     return render(request, template_name, context)
-
-
 '''Payment Details '''
 
+class PaymentListView(TemplateView):
+    model = Matriculation
+    context_object_name = 'payment_obj_list'
+    template_name = 'payment/payment_list.html'
+    
+    def get_queryset(self):
+        queryset = self.models.objects.all()
 
-def create_payment(request):
-    if request.method == 'POST':
-        form = PaymentDetailsForm(request.POST)
+        
+        request_post = self.request.POST
+        if request_post:
+            if request_post.get('status'):
+                queryset = queryset.filter(
+                    status__icontains=request_post.get('status')
+                )
+        return queryset.distinct()
+    
+    def get_context_data(self, **kwargs):
+        context = super(PaymentListView, self).get_context_data(**kwargs)
+        context['payment_obj_list'] = self.get_queryset()
+        context['per_page'] = self.request.POST.get('per_page')
+        
+        search = False
+        if (
+            self.request.POST.get('status')
+        ):
+            search = True
+        context['search'] = search
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+    
 
-        if form.is_valid():
-            status= form.cleaned_data['status']
-            course= form.cleaned_data['course']
-            cash_amount_per_unit = form.cleaned_data['cash_amount_per_unit']
-            cash_miscellaneous_fee = form.cleaned_data['cash_miscellaneous_fee']
-            cash_lab_fee = form.cleaned_data['cash_lab_fee']
-            cash_registration_fee = form.cleaned_data['cash_registration_fee']
-            ins_amount_unit = form.cleaned_data['ins_amount_unit']
-            ins_miscellaneous_fee = form.cleaned_data['ins_miscellaneous_fee']
-            ins_lab_fee = form.cleaned_data['ins_lab_fee']
-
-        create = PaymentDetails(
-            status=status,
-            course=course,
-            cash_amount_per_unit=cash_amount_per_unit,
-            cash_miscellaneous_fee=cash_miscellaneous_fee,
-            cash_lab_fee=cash_lab_fee,
-            cash_registration_fee=cash_registration_fee,
-            ins_amount_unit=ins_amount_unit,
-            ins_miscellaneous_fee=ins_miscellaneous_fee,
-            ins_lab_fee=ins_lab_fee,
-
-        )
-
-        create.save()
-        messages.success(
-            request, 'You Have Successfully Added Payment Details')
-        return redirect('centermanager:payment_list')
-    else:
-        form = PaymentDetailsForm()
+class PaymentCreateView(CreateView):
+    model = Matriculation
+    form_class = MatriculationForm
     template_name = 'payment/create_payment.html'
-    context = {
-        'form': form
-    }
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(PaymentCreateView, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            payment_obj = form.save(commit=False)
+            payment_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def from_valid(self, form):
+        payment_obj = form.save(commit=False)
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False
+                }
+            )
+        if self.request.POST.get("savenewform"):
+            return redirect('centermanager:create_payment')
+    
+        return redirect('centermanager:payment_list')
+    
+    def form_invalid(self, form):
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'payment_errors':form.errors,
+                }
+            )        
 
-    return render(request, template_name, context)
+    def get_context_data(self, **kwargs):
+        context = super(PaymentCreateView, self).get_context_data(**kwargs)
+        context['payment_form'] = context['form']
+        return context
 
 
+class PaymentDetailView(DetailView):
+    model = Matriculation
+    context_object_name = 'payment_record'
+    template_name = 'payment/payment_details.html'
+    
+    def get_queryset(self):
+        queryset =  super(PaymentDetailView, self).get_queryset()
+        return queryset.select_related('status')
+    
+    def get_context_data(self, **kwargs):
+        context = super(PaymentDetailView, self).get_context_data(**kwargs)
+        return context
 
 
+class PaymentUpdateView(UpdateView):
+    model = Matriculation
+    form_class = MatriculationForm
+    template_name = 'payment/create_payment.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_centermanger:
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(PaymentUpdateView, self).dispatch(request, *args, **kwargs)
+    
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            payment_obj = form.save(commit=False)
+            payment_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    
+    def form_valid(self, form):
+        payment_obj = form.save(commit=False)
+        
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True
+                }
+            )
+        return redirect('centermanager:payment_list')
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error': True,
+                    'payment_errors': form.errors,
+                }
+            )
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+            
+    def get_context_data(self, **kwargs):
+        context = super(PaymentUpdateView, self).get_context_data(**kwargs)
+        context['payment_obj'] = self.object
+        context['payment_form'] = context=['form']
+        
+        return context  
+    
+    
+      
 '''  SANCTION SETTING '''
 
+class SanctionSettingListView(TemplateView):
+    model = SanctionSetting
+    context_object_name = 'sanction_obj_list'
+    template_name = 'sanction/sacntion_list.html'
+    
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super(SanctionSettingListView, self).get_context_data(**kwargs)
+        context['per_page'] = self.request.POST.get('per_page')
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+    
 
-def create_sanction_setting(request):
-
-    if request.method == 'POST':
-        form = SanctionSettingForm(request.POST)
-
-        if form.is_valid():
-            first_sanction = form.cleaned_data['first_sanction']
-            second_sanction = form.cleaned_data['second_sanction']
-            third_sanction = form.cleaned_data['third_sanction']
-            fourth_sanction = form.cleaned_data['fourth_sanction']
-            fifth_sanction = form.cleaned_data['fifth_sanction']
-
-        create = SanctionSetting(
-            first_sanction=first_sanction,
-            second_sanction=second_sanction,
-            third_sanction=third_sanction,
-            fourth_sanction=fourth_sanction,
-            fifth_sanction=fifth_sanction,
-        )
-
-        create.save()
-        messages.success(
-            request, 'You Have Successfully Added Sanction Details.!')
-        return redirect('centermanager:sanction_list')
-
-    else:
-        form = SanctionSettingForm()
-    template_name = 'sanction_setting/create_sanction.html'
-    context = {
-        'form': form
-    }
-
-    return render(request, template_name, context)
-
-
-class SanctionListView(ListView):
-    modal = SanctionSetting
-    template_name = 'sanction_setting/sanction_list.html'
-    context_object_name = 'sanction_list'
-    queryset = SanctionSetting.objects.all()
-
-
-class SanctionDetailView(DetailView):
-    modal = SanctionSetting
-    template_name = 'sanction_setting/sanction_detail.html'
-
-
-class SanctionUpdateView(UpdateView):
+class SanctionSettingCreateView(CreateView):
     model = SanctionSetting
     form_class = SanctionSettingForm
-    template_name = 'sanction_setting/create_sanction.html'
-    success_url = reverse_lazy('centermanager:sanction_list')
-
-    def form_valid(self, form):
-        form.save()
-        message_text = 'Your {} was Updated Successfully!'.format(
-            form.instance)
-        messages.success(self.request, message_text)
-        if 'continue' in self.request.POST:
-            return HttpResponseRedirect(
-                reverse_lazy('centermanager:sanction_update',
-                             kwargs={'pk': form.instance.pk}))
+    template_name = 'sanction/create_sanction.html'
+    
+    def dispatch(self, request, *args,  **kwargs):
+        if self.request.user.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
         else:
-            return super().form_valid(form)
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(SanctionSettingCreateView, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+
+        if form.is_valid():
+            sanction_obj = form.save(commit=False)
+            sanction_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    
+    def form_valid(self, form):
+        sanction_obj = form.save(commit=False)
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False,
+                }
+            )
+        if self.request.POST.get("savenewform"):
+            return redirect('sanction:create_sanction')
+        return redirect('sanction:sanction_list')
+    
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'sanction_errors': form.errors
+                }
+            )
+            
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+        
+    def def_context_data(self, **kwargs):
+        context = super(SanctionSettingCreateView, self).get_context_data(**kwargs)
+        context['sanction_form'] = context['form']
+        return context
+            
+    
+            
+
+
+class SanctionSettingDetailView(DetailView):
+    model = SanctionSetting
+    context_object_name = 'sanction_record'
+    template_name = 'sanction/sanction_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SanctionSettingDetailView, self).get_context_data(**kwargs)
+        return context
+
+
+class SanctionSettingUpdateView(UpdateView):
+    model = SanctionSetting
+    form_class = SanctionSettingForm
+    template_name = 'sanction/create_sanction.html'
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(SanctionSettingUpdateView, self).dispatch(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            sanction_obj = form.save(commit=False)
+            sanction_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':False,
+                }
+            )
+        return redirect('centermanager:sanction_list')
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'sanction_error': form.errors,
+                }
+            )
+        return redirect('centermanager:create_sanction')
+    
+    def get_context_data(self, **kwargs):
+        context = super(SanctionSettingUpdateView, self).get_context_data(**kwargs)
+        context['sanction_obj'] = self.object
+        context['sanction_form'] = context['form']
+        
+        return context            
+
+# class SanctionUpdateView(UpdateView):
+#     model = SanctionSetting
+#     form_class = SanctionSettingForm
+#     template_name = 'sanction_setting/create_sanction.html'
+#     success_url = reverse_lazy('centermanager:sanction_list')
+
+#     def form_valid(self, form):
+#         form.save()
+#         message_text = 'Your {} was Updated Successfully!'.format(
+#             form.instance)
+#         messages.success(self.request, message_text)
+#         if 'continue' in self.request.POST:
+#             return HttpResponseRedirect(
+#                 reverse_lazy('centermanager:sanction_update',
+#                              kwargs={'pk': form.instance.pk}))
+#         else:
+#             return super().form_valid(form)
 
 
 ''' Comission Create View '''
 
-
-def create_commission_setting(request):
-
-    if request.method == 'POST':
-        form = CommissionSettingForm(request.POST)
-
-        if form.is_valid():
-
-            tuition_percentage = form.cleaned_data['tuition_percentage']
-            misc_fee_status = form.cleaned_data['misc_fee_status']
-            reg_fee_status = form.cleaned_data['reg_fee_status']
-            stud_fee_status = form.cleaned_data['stud_fee_status']
-
-        create = CommissionSetting(
-
-            tuition_percentage=tuition_percentage,
-            misc_fee_status=misc_fee_status,
-            reg_fee_status=reg_fee_status,
-            stud_fee_status=stud_fee_status,
-
-        )
-        create.save()
-        messages.success(
-            request, 'You Have Successfully Added Commission Details..!')
-        return redirect('centermanager:commission')
-    else:
-        form = CommissionSettingForm()
-    template_name = 'com_setting/create_commission.html'
-    context = {
-        'form': form
-    }
-
-    return render(request, template_name, context)
-
-
-class CommissionListView(ListView):
+class CommissionSettingListView(TemplateView):
     model = CommissionSetting
-    template_name = 'com_setting/commission_list.html'
-    queryset = CommissionSetting.objects.all()
+    context_object_name = 'commission_obj_list'
+    template_name = 'commission/commission_list.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(CommissionSettingListView, self).get_context_data(**kwargs)
+        context['commission_obj_list'] = self.get_queryset()
+        context['per_page'] = self.request.POST.get('per_page')
+        
+        return context
+    
 
+
+
+class CommissionSettingCreateView(CreateView):
+    model = CommissionSetting
+    form_class = CommissionSettingForm
+    template_name = 'commission/create_commission.html' 
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.requesst.user.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
+        else:
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(CommissionSettingCreateViiew, self).dispatch(
+            request, *args, **kwargs
+        )
+        
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            commission_obj = form.save(commit=False)
+            commission_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True
+                }
+            )
+        return redirect('centermanager:create_commission')
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'commission_errors': form.errors
+                }
+            )
+
+        return self.render_to_response(
+            self.get_context_data(form=form)
+        )
+        
+        
+    def get_context_data(self, **kwargs):
+        context = super(CommissionSettingCreateViiew, self).get_context_data(**kwargs)
+        context['commission_form'] = context['form']
+        return context
+    
+    
+        
+        
 
 class CommissionDetailView(DetailView):
     model = CommissionSetting
-    template_name = 'com_setting/commission_detail.html'
+    context_object_name = 'commission_obj'
+    template_name = 'commission/commission_detail.html'
 
-
+    
+    def get_context_data(self, **kwargs): 
+        context = super(CommissionDetailView, self).get_context_data(**kwargs)
+        return context
+    
+    
+    
+    
 class CommissionUpdateView(UpdateView):
     model = CommissionSetting
-    template_name = 'com_setting/create_commission.html'
     form_class = CommissionSettingForm
-    success_url = reverse_lazy('centermanager:commission_list')
-
-    def form_valid(self, form):
-        form.save()
-        messages_text = 'Your {} was Updated Successfully!'.format(
-            form.instance)
-        messages.success(self.request, messages_text)
-        if 'continue' in self.request.POST:
-            return HttpResponseRedirect(
-                reverse_lazy('centermanager:commission_update',
-                             kwargs={'pk': form.instance.pk})
-            )
+    template_name = 'commission/create_commission.html'    
+    
+    
+    
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_centermanager:
+            self.users = User.objects.filter(is_active=True).order_by('email')
         else:
-            return super().form_valid(form)
+            self.users = User.objects.filter(is_centermanager=True).order_by('email')
+        return super(CommissionUpdateView, self).dispatch(
+            request, *args, **kwargs
+        )    
+            
+    
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            commission_obj = form.save(commit=False)
+            commission_obj.save()
+            
+            return self.form_valid(form)
+        return self.form_invalid(form)
+    
+    def form_valid(self, form):
+        if self.request.is_akax():
+            return JsonResponse(
+                {
+                    'error':True,
+                }
+            )
+        return redirect('centermanager:commission_update')
+    
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(
+                {
+                    'error':True,
+                    'commission_error': form.errors
+                }
+            )
+        return redirect('centermanager:create_commission')
+                        
+    def get_context_data(self, **kwargs):
+        context = super(CommissionUpdateView, self).get_context_data(**kwargs)
+        context['commission_obj'] = self.get_object
+        context['commission_form'] = context['form']
+        
+        return context    
+    
+    
+    
+    
+    
+    
+    
+# class CommissionUpdateView(UpdateView):
+#     model = CommissionSetting
+#     template_name = 'com_setting/create_commission.html'
+#     form_class = CommissionSettingForm
+#     success_url = reverse_lazy('centermanager:commission_list')
+
+#     def form_valid(self, form):
+#         form.save()
+#         messages_text = 'Your {} was Updated Successfully!'.format(
+#             form.instance)
+#         messages.success(self.request, messages_text)
+#         if 'continue' in self.request.POST:
+#             return HttpResponseRedirect(
+#                 reverse_lazy('centermanager:commission_update',
+#                              kwargs={'pk': form.instance.pk})
+#             )
+#         else:
+#             return super().form_valid(form)

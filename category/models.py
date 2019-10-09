@@ -44,3 +44,7 @@ class IHE_ContactCategoryModel(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+

@@ -26,9 +26,9 @@ class RequirementsForm(forms.ModelForm):
 
 class AvailableCourseForm(forms.ModelForm):
     
-    class meta:
+    class Meta:
         model = AvailableCourseModel
-        feilds = (
+        fields = (
             'course_name',
             'category',
         )

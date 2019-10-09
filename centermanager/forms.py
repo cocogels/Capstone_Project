@@ -5,21 +5,57 @@ from django.core.exceptions import ValidationError
 from bootstrap_datepicker_plus import YearPickerInput
 from accounts.models import User
 from django.utils import timezone
-from centermanager.models import SchoolYear, TargetSheet, MatriculationStatusCategory, MatriculationCourseCategory, Matriculation, SanctionSetting, CommissionStudentType, CommissionSetting
+from centermanager.models import SchoolYearModel, TargetSheet, MatriculationStatusCategory, MatriculationCourseCategory, Matriculation, SanctionSetting, CommissionSetting
 
 
 ''' School Year Form '''
 
 
-def present_or_future_date(value):
-    if value < datetime.date.today():
-        raise forms.ValidationError("The date cannot be in the past!")
-    return value
+class EmployeeRegistrationForm(forms.ModelForm):
+    
+    email                       = forms.EmailField()
+    password                    = forms.CharField(max_length=50,label='Password' , widget=forms.PasswordInput())    
+    is_marketinghead            = forms.BooleanField(required=False, label='Marketing Head')
+    is_centerbusinessmanager    = forms.BooleanField(required=False, label='Center Business Manager')
+    is_registrar                = forms.BooleanField(required=False, label='Registrar')  
+    first_name                  = forms.CharField(required=False)
+    last_name                   = forms.CharField(required=False)
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'is_marketinghead',
+            'is_centerbusinessmanager',
+            'is_registrar',
+        ]
 
+    def clean_email(self, *args, **kwargs):
+        email = self.cleaned_data.get('email')
+        queryset = User.objects.fitler(email__iexact=email)
+        if queryset.exists():
+            raise forms.ValidationError('This Email Already Registered')
+        return email
+
+    def save(self, commit=True):
+        user = super(EmployeeRegistrationForm, self).save(commit=False)
+        user = User(
+            email                       = self.cleaned_data['email'],
+            first_name                  = self.cleaned_data['first_name'],
+            last_name                   = self.cleaned_data['last_name'],
+            is_centerbusinessmanager    = self.cleaned_data['is_centerbusinessmanager'],
+            is_marketinghead            = self.cleaned_data['is_marketinghead'],
+            is_registrar                = self.cleaned_data['is_register']
+        )
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+    
+    
 
 class SchoolYearForm(forms.ModelForm):
     class Meta:
-        model = SchoolYear
+        model = SchoolYearModel
         fields = [
             'start_year',
             'end_year',
@@ -30,10 +66,6 @@ class SchoolYearForm(forms.ModelForm):
             'end_year': YearPickerInput().end_of('school year'),
         }
 
-        validators = {
-            'start_year': [present_or_future_date],
-            'end_year': [present_or_future_date],
-        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,20 +74,11 @@ class SchoolYearForm(forms.ModelForm):
         self.fields['start_year'].required = True
         self.fields['end_year'].required = True
 
-    def clean(self):
-        cleaned_data = super(SchoolYearForm, self).clean()
-        start_year = cleaned_data.get("start_year")
-        end_year = cleaned_data.get("end_year")
-
-        if start_year and end_year:
-            if start_year > end_year:
-                    raise forms.ValidationError('Please Enter A Valid Date')
-            
-            if start_year < datetime.date.today():
-                raise forms.ValidationError("The date cannot be in the past!")
-
-            if end_year < datetime.date.today():
-                raise forms.ValidationError("The date cannot be in the past!")
+    def clean_start_year(self):
+        return int(self.cleaned_data['start_year'])
+    
+    def clean_end_year(self):
+        return int(self.cleaned_data['end_year'])
 
 ''' Target Sheet Form '''
 
@@ -78,13 +101,22 @@ class TargetSheetForm(forms.ModelForm):
         fields = [
             'corporate',
             'retail',
+            'school_year',
             'owwa',
             'seniorhigh',
             'higher_ed',
         ]
 
+    def clean(self):
+        years = school_year.cleaned_data.get('school_year')
+        queryset = SchoolYear.objects.filter(start_year__gte=school_year, end_year__lte=school_year)
+        if queryset.exists():
+            raise forms.ValidationError('Target Sheet Already Have This Date')
+        super(TargetSheetForm, self).clean()
+             
 
 ''' Matriculation Form '''
+
 
 
 class MatriculationForm(forms.ModelForm):
@@ -201,7 +233,11 @@ class SanctionSettingForm(forms.ModelForm):
 ''' Commission Setting Form '''
 
 
+
+    
+
 class CommissionSettingForm(forms.ModelForm):
+    
     class Meta:
         model = CommissionSetting
         fields = {

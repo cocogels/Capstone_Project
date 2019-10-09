@@ -575,7 +575,6 @@ class BudgetUpdateView(UpdateView):
             )
             
     def form_invalid(self, form):
-        
         if self.request.is_ajax():
             return JsonResponse(
                 {

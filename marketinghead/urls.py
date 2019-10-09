@@ -7,6 +7,7 @@ app_name = 'marketing_head'
 
 urlpatterns = [
     
+    
     path('budget/list/', views.BudgetListView.as_view(), name='budget_list'),
     path('budget/create/', views.BudgetCreateView.as_view(), name='budget'),
     path('budget/detail/<int:pk>/', views.BudgetDetailView.as_view(), name='budget_detail'),

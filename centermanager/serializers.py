@@ -4,7 +4,7 @@ from rest_framework.validators import UniqueForYearValidator
 from django.db.models import Q
 from rest_framework import serializers
 from bootstrap_datepicker_plus import YearPickerInput
-from .models import SchoolYear
+from .models import SchoolYearModel
 from django.utils.translation import gettext as _
 
 
@@ -20,7 +20,7 @@ class SchoolYearSerializer(serializers.ModelSerializer):
 
 
     class Meta:
-        model= SchoolYear
+        model= SchoolYearModel
         fields = [
             'start_year',
             'end_year',

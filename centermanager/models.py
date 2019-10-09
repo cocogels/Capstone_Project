@@ -1,8 +1,9 @@
 import datetime
 #rom django.core.validators import MaxValueValidator, MinValueValidator
 import calendar 
-
+from datetime import date
 import arrow
+import re
 from django.urls import reverse
 from django.db import models    
 from django.utils import timezone
@@ -13,21 +14,66 @@ from django.core.exceptions import ValidationError
 
 from django.conf import settings
 
- 
-''' School Year Database Table '''
 
+def validate_year(year):
+    pattern = re.compile('^\d{8}%')
+    if not pattern.match(year):
+        raise ValidationError("{year} is not a valid year".format(year=year))
+    
+def validate_start_year(start_year):
+    latest_start_year = SchoolYear.objects.aggregate(Max('start_year'))["start_year__max"]
+    latest_start_year = int(latest_start_year or 0)
+    
+    if start_year <= latest_start_year:
+        raise ValidationError(
+            'Start year {start_year} must be greater than most recent'
+            'School Year start year{latest_start_year}'.format(
+                start_year=start_year, latest_start_year=latest_start_year
+            )
+        )
+def validate_end_year(end_year):
+    latest_end_year = SchoolYear.objects.aggregate(Max('end_year'))["end_year__max"]
+    latest_end_year = int(latest_end_year or 1)
+    if end_year <= latest_end_year:
+        raise ValidationError(
+            'End year {end_year} must be grater than most recent'
+            'School Year end year {latest_end_year}'.format(
+                end_year=end_year, latest_end_year=latest_end_year
+            )
+        )
+    
 
-class SchoolYear(models.Model):
-    start_year      = models.DateField(unique=True, validators=settings.DATE_VALIDATORS)
-    end_year        = models.DateField(unique=True, validators=settings.DATE_VALIDATORS)
+class SchoolYearQuerySet(models.QuerySet):
+    
+    def start_year(self):
+        return self.filter(start_year__gte=start_year)
+    
+    def end_year(self):
+        return self.filter(end_year__lte=end_year)
+    
+    def school_year_range(self):
+        return self.filter(school_year__range=(start_year(datetime.date.today().year-1, end_year(datetime.date.today().year+1 ))))
+        
+class SchoolYearManager(models.Manager):
+
+    def get_queryset(self):
+        return SchoolYearQuerySet(self.model, using=self._db)
+
+    
+class SchoolYearModel(models.Model):
+    start_year      = models.DateField(unique=True, validators=[validate_start_year ,validate_year])
+    end_year        = models.DateField(unique=True, validators=[validate_end_year ,validate_year])
     active_year     = models.BooleanField(default=False, help_text="This is Current School Year. There Can Only be one.")
     date_created    = models.DateField(_("Date Created"), auto_now_add=True,)
+    
+    school_year = SchoolYearManager()
     
 
     @property
     def created_on_arrow(self):
         return arrow.get(self.date_created).humanize()
 
+    @property
     def date_created_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.date_created <= now
@@ -35,20 +81,13 @@ class SchoolYear(models.Model):
     def __str__(self):
         return str("{0}-{1}".format(self.start_year, self.end_year))
 
-    def get_absolute_url(self):
-        return reverse('view_year', kwargs={
-            'pk': self.pk
-        })
 
-    def get_update_url(self):
-        return reverse('update_year', kwargs={
-            'pk': self.pk
-        })
 
     def save(self, *args, **kwargs):
-        super(SchoolYear, self).save(*args, **kwargs)
+        super(SchoolYearModel, self).save(*args, **kwargs)
         if self.active_year:
             all = SchoolYear.objects.exclude(id=self.id).update(active_year=False)
+    
     class Meta:
         verbose_name_plural = 'School Year'
         ordering = ['-date_created', ]
@@ -65,14 +104,19 @@ class TargetSheet(models.Model):
     owwa            = models.BigIntegerField(null=True,)
     seniorhigh      = models.BigIntegerField(null=True,)
     higher_ed       = models.BigIntegerField(null=True,)
+    school_year     = models.ForeignKey(SchoolYearModel, on_delete=models.CASCADE, null=True)
+    active          = models.BooleanField(default=False)
     date_created    = models.DateTimeField(_("Date Created"),auto_now_add=True)
     date_updated    = models.DateTimeField(_("Date Updated"),auto_now=True)
+    
+    
     
     
     @property
     def created_on_arrow(self):
         return arrow.get(self.date_created).humanize()
     
+    @property
     def updated_on_arrow(self):
         return arrow.get(self.date_updated).humanize()
     
@@ -204,22 +248,13 @@ class SanctionSetting(models.Model):
 ''' Commission Setting Database Table '''
 
 
-class CommissionStudentType(models.Model):
-
-    name = models.CharField(max_length=255)
-
-    class Meta:
-        ordering = ('name',)
-        verbose_name_plural = 'Student Type'
-
-    def __str__(self):
-        return self.name
-
-
 
 class CommissionSetting(models.Model):
-
-    student_type = models.ForeignKey(CommissionStudentType, on_delete=models.CASCADE)
+    student_choices = (
+    (1, 'SHS'),
+    (2, 'RegularClass'),
+    (3, 'NightCLass'),
+    )
     fee_choices = (
         (True, 'PAID'),
         (False, 'UNPAID'),
@@ -228,6 +263,7 @@ class CommissionSetting(models.Model):
         (True, 'ENROLLED'),
         (False, 'DROP'),
     )
+    student_type = models.BooleanField(choices=student_choices)
     tuition_percentage = models.SmallIntegerField(null=True)
     misc_fee_status = models.BooleanField(choices=fee_choices,)
     reg_fee_status = models.BooleanField(choices=fee_choices,)

@@ -128,8 +128,6 @@ class MarketingUserManager(BaseUserManager):
 
 
 
-
-
 class User(AbstractUser):
     username=None
     email                           = models.EmailField(verbose_name='Email Address',max_length=50, unique=True) 

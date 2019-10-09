@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import TargetSheet, Matriculation, SanctionSetting, CommissionSetting, SchoolYear
+from .models import TargetSheet, Matriculation, SanctionSetting, CommissionSetting, SchoolYearManager
 from .forms import TargetSheetForm, SchoolYearForm, MatriculationForm, SanctionSettingForm
 from .serializers import SchoolYearSerializer
 # Register your models here.
@@ -81,7 +81,7 @@ class SactionAdmin(admin.ModelAdmin):
     )
     
     
-admin.site.register(SchoolYear)
+#admin.site.register(SchoolYear)
 admin.site.register(Matriculation, MatriculationAdmin)
 admin.site.register(SanctionSetting, SactionAdmin)
 admin.site.register(CommissionSetting)

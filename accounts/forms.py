@@ -1,42 +1,20 @@
-from django import forms
-from django.db import transaction
-from django.shortcuts import redirect, render
 #Using built in forms function in django
 import re
+
+from accounts.models import Profile, User
 from django import forms
-from django.contrib.auth import authenticate
-from django.contrib.auth import password_validation
-from django.contrib.auth.forms import PasswordResetForm
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, ReadOnlyPasswordHashField, AuthenticationForm
-from accounts.models import Profile,User
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext as _ 
 from django.contrib import messages
+from django.contrib.auth import authenticate, password_validation
+from django.contrib.auth.forms import (AuthenticationForm, PasswordResetForm,
+                                       ReadOnlyPasswordHashField,
+                                       UserChangeForm, UserCreationForm)
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from django.shortcuts import redirect, render
+from django.utils.translation import gettext as _
 from multiselectfield import MultiSelectField
 
 
-                
-class MinimumLengthValidator:
-    def __init__(self, min_length=8):
-        self.min_length = min_length
-
-
-    def validate(self, password, user=None):
-        if len(password)< self.min_length:
-           
-            raise ValidationError(
-                _("Passsword Must Contain at least %(min_length)d characters."),
-                code='password_too_short',
-                params={
-                    'min_length': self.min_length
-                },
-            )
-    def get_help_text(self):
-        return _(
-            "Your password must contain atleast %(min_length)d characters"%
-            {'min_length': self.min_length}
-        ) 
-        
 class UserForm(forms.ModelForm):
     password = forms.CharField(max_length=100, required=False)
     class Meta:
@@ -82,9 +60,73 @@ class UserForm(forms.ModelForm):
                     )
             
 
+class ChangePassword(forms.Form):
+    new_password = forms.CharField(max_length=100)
+    confirm_password = forms.CharField(max_length=100)
+    
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ChangePassword, self).__init__(*args, **kwargs)
+        
+    
+    def clean_confirm(self):
+        
+        if self.data.get('confirm_password') != self.cleaned_data.get('new_password'):
+            raise forms.ValidationError(
+                'Confirm password do not match with new password'
+            )
+            
+            password_validation.validate_password(
+                self.cleaned_data.get('new_password'), user=self.user
+            )
+            
+            return self.data.get('confirm_password')
+        
+        
+        
+
+class LoginForm(forms.ModelForm):
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput)
+        
+    
+    class Meta:
+        model = User
+        fields = [
+            'email',
+            'password'
+        ]
+        
+    
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request, None')
+        super(LoginForm, self).__init__(*args, **kwargs)
+        
+
+    # def clean_password(self):
+    #     password = self.cleaned_data.get('password')
+    #     if password:
+    #         if len(password) < 8 (
+    #             'Password must be at least 8 Characters Long!'
+    #         )
+    #     return password
+    
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+        
+        if email and password:
+            self.user = authenticate(username=email, password=password)
+            if self.user:
+                if not self.user.is_active:
+                    raise forms.ValidationError('User is Inactive')
+            else:
+                raise forms.ValidationError('Invalid Email and Password')
+        return self.cleaned_data 
+ 
 class MarketingAdminUserChangeForm(UserChangeForm):
     """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
+    the user, but replacNes the password field with admin's
     password hash display field.
     """
 

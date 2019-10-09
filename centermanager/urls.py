@@ -3,45 +3,48 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 
 from . import views
-from centermanager.views import SchoolYearCreateView, SchoolYearListView, SchoolYearDetailView
+from centermanager.views import SchoolYearCreateView
 
 app_name = 'centermanager'
 
 
 urlpatterns = [
     
+    path('add/employee/', views.EmployeeRegistration.as_view(), name='add_employee'),
+    path('employee/list/', views.EmployeeListView.as_view(), name='employee_list'),
+    path('employee/<int:pk>/details/', views.EmployeeDetailView.as_view(), name='employee_detial'),
+    path('employee/<int:pk>/edit/', views.EmployeeUpdateView.as_view(), name='employee_update'),
     
-    path('add-employee/', views.EmployeeListView.as_view(), name='register-emp-list'),
-    path('add-employee/create/', views.emp_registration, name='register-emp'),
+    path('create/payment/', views.PaymentCreateView.as_view(), name='create_payment'),
+    path('payment/list/', views.PaymentListView.as_view(), name='payment_list'),
+    path('payment/<int:pk>/details/', views.PaymentDetailView.as_view(), name='payment_detail'),
+    path('payment/<int:pk>/edit/', views.PaymentUpdateView.as_view(), name='payment_update'),
+    
+    
+    path('create/commission/', views.CommissionSettingCreateView.as_view(), name='create_commission'),
+    path('commission/list/', views.CommissionSettingListView.as_view(), name='commission_list'),  
+    path('commission/<int:pk>/details/', views.CommissionDetailView.as_view(), name='commission_detial'),
+    path('commission/<int:pk>/edit/', views.CommissionUpdateView.as_view(), name='commission_update'),
+
+    
+    path('create/sanction/', views.SanctionSettingCreateView.as_view(), name='create_sanction'),
+    path('sanction/list/', views.SanctionSettingListView.as_view(), name='sanction_list'),   
+    path('sanction/<int:pk>/details/', views.SanctionSettingDetailView.as_view(), name='sanction_detial'),
+    path('sanction/<int:pk>/edit/', views.SanctionSettingUpdateView.as_view(), name='sanction_update'),
 
 
-    path("school-year/", SchoolYearListView.as_view(), name='school_year_list'),
-    path("school-year/create/", SchoolYearCreateView.as_view(),name='create_school_year'),
-    path("school-year/<int:id>/", SchoolYearDetailView.as_view(), name='school_details'),
     
-    path('target-list/', views.TargetListView.as_view(), name='target_list'),
-    path('create-target-details/', views.create_target_sheet, name='target' ),
+    path('create/school-year/', views.SchoolYearCreateView.as_view(), name='create_school_year'),
     
-    #path('add-school-year/', views.SchoolYearArchiveView.as_view(), name='school_year'),
-    path('target-details/<int:pk>/', views.TargetDetailView.as_view(), name="target_details"),
-    path('update-target-detail/<int:pk>', views.TargetUpdateView.as_view(), name='target_update'),
-    
-    # path('payment-list/', views.PaymentListView.as_view(), name='payment_list'),
-    # path('create-payment-details/', views.create_payment, name='payment'),
-    # path('payment-details/<int:pk>/', views.PaymentDetailView.as_view(), name='payment_detail'),
-    # path('payment-update/<int:pk>/', views.PaymentUpdateView.as_view(), name='payment_update'),
-    
-    path('sanction-list/', views.SanctionListView.as_view(), name='sanction_list'),
-    path('create-sanction-details/', views.create_sanction_setting, name='sanction'),
-    path('sanction-detail/<int:pk>/', views.SanctionDetailView.as_view(), name='sanction_detail'),
-    path('sanction-update/<int:pk>/', views.SanctionUpdateView.as_view(), name='sanction_update'),
-    
-    path('commission-list/', views.CommissionListView.as_view(), name='commission_list'),
-    path('create-commission-details/', views.create_commission_setting, name='commission'),
-    path('commission-detail/<int:pk>/', views.CommissionDetailView.as_view(), name='commission_detail'),
-    path('commission-update/<int:pk>/', views.CommissionUpdateView.as_view(), name='commission_update'),
-    
+
+    path('create/target-sheet/', views.TargetSheetCreateView.as_view(), name='create_target'),
+    path('target-sheet/', views.TargetSheetListView.as_view(), name='target_list'),
+    path('target-sheet/<int:pk>/details/', views.TargetSheetDetailView.as_view(), name='target_details'),
+    path('target-sheet/<int:pk>/edit/', views.TargetUpdateView.as_view(), name='target_update'),
+         
 ]
+
+
 
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -12,4 +12,11 @@ urlpatterns = [
     path('registration/', user_registration, name='register'),
     path('user-profile/', user_profile, name='profile' ),
     
+    
+    path('add/user/', views.CreateUserView.as_view(), name='create_user'),
+    path('user/list/', views.UsersListView.as_view(), name='user_list'),
+    path('user/<int:pk>/detail', views.UserDetailView.as_view(), name='user_details'),
+    path('user/<int:pk>/edit', views.UpdateUserView.as_view(), name='user_update'),
+
 ]
+
