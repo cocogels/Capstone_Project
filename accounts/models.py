@@ -151,7 +151,6 @@ class User(AbstractUser):
     #Required Fields Optional
     REQUIRED_FIELDS = []
     
-    tags = TaggableManager()
     objects = MarketingUserManager()
 
     def get_short_name(self):

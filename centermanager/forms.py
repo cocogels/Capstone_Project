@@ -31,7 +31,7 @@ class EmployeeRegistrationForm(forms.ModelForm):
 
     def clean_email(self, *args, **kwargs):
         email = self.cleaned_data.get('email')
-        queryset = User.objects.fitler(email__iexact=email)
+        queryset = User.objects.filter(email__iexact=email)
         if queryset.exists():
             raise forms.ValidationError('This Email Already Registered')
         return email
@@ -44,7 +44,7 @@ class EmployeeRegistrationForm(forms.ModelForm):
             last_name                   = self.cleaned_data['last_name'],
             is_centerbusinessmanager    = self.cleaned_data['is_centerbusinessmanager'],
             is_marketinghead            = self.cleaned_data['is_marketinghead'],
-            is_registrar                = self.cleaned_data['is_register']
+            is_registrar                = self.cleaned_data['is_registrar']
         )
         user.set_password(self.cleaned_data['password'])
         if commit:
@@ -75,10 +75,10 @@ class SchoolYearForm(forms.ModelForm):
         self.fields['end_year'].required = True
 
     def clean_start_year(self):
-        return int(self.cleaned_data['start_year'])
+        return str(self.cleaned_data['start_year'])
     
     def clean_end_year(self):
-        return int(self.cleaned_data['end_year'])
+        return str(self.cleaned_data['end_year'])
 
 ''' Target Sheet Form '''
 

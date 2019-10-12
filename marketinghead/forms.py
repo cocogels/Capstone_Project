@@ -3,7 +3,7 @@ import datetime
 from .models import Budget, Collateral, AssignQuota, AssignTerritory
 
 from accounts.models import Profile, User
-from bootstrap_datepicker_plus import MonthPickerInput
+from bootstrap_datepicker_plus import MonthPickerInput, DatePickerInput
 # class AssignIHEForm(forms.ModelForm):
     
 #     class Meta:
@@ -23,15 +23,14 @@ class BudgetForm(forms.ModelForm):
     
 
     amount = forms.CharField( label='Budget Amount', widget=forms.NumberInput(),)
-    arrival  = forms.DateField(widget=forms.widgets.DateInput(attrs={'type': 'date'}), label='Arrival')
+    arrival  = forms.DateField(widget=DatePickerInput(), label='Arrival')
     class Meta:
         model   = Budget
         fields  = (
             'amount',
             'arrival',
         ) 
-        
-        
+    
         
     
 
@@ -140,7 +139,7 @@ class AssignTerritoryForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         assigned_users = kwargs.pop('assigned_to',[])
-        super(AssignQuotaForm, self).__init__(*args, **kwargs)
+        super(AssignTerritoryForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs = {'class': "form-control"}
         
@@ -152,7 +151,6 @@ class AssignTerritoryForm(forms.ModelForm):
     class Meta:
         model = AssignTerritory
         fields = (
-            'user_profile',
             'territory_choices',
             'assigned_to',
         )

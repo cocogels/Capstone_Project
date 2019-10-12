@@ -38,7 +38,7 @@ urlpatterns = [
     
 
     path('create/target-sheet/', views.TargetSheetCreateView.as_view(), name='create_target'),
-    path('target-sheet/', views.TargetSheetListView.as_view(), name='target_list'),
+    path('target-sheet/', views.TargetSheetListView.as_view(), name='target'),
     path('target-sheet/<int:pk>/details/', views.TargetSheetDetailView.as_view(), name='target_details'),
     path('target-sheet/<int:pk>/edit/', views.TargetUpdateView.as_view(), name='target_update'),
          

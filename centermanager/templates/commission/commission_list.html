@@ -1,67 +1,107 @@
-
-
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
 
 {% block header %}
-    {% include 'header.html' %}
+{% include 'header.html' %}
 {% endblock header %}
 
 {% block sidebar %}
-{% include 'sidebar.html' %}
+
 {% endblock sidebar %}
 
 {% block navbar %}
 {% include 'navbar.html' %}
 {% endblock navbar %}
 
+{% block title %}
+        <title>Marketing | Commission</title>
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+
 {% block content %}
 <div class="container-fluid">
 
     <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" aria-current="page">
-                <a href="{% url 'crm_blog:home' %}">
-                    Overview
-                </a>
-
-                <i class="fas fa-chevron-right small"></i>
-
-                <a href="{% url 'centermanager:commission_list' %}">
-                    Commission
-                </a>
-            </li>
-        </ol>
+    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
+        <h4>Commission</h4>   
+<!-- search field -->
+    <div class="topbar-divider d-none d-sm-block" style="padding-right:71%"></div>
+ <div class="input-group float-right" style="max-width: 20%;">            
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+            <div class="input-group-prepend" >
+              <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
+            </div>
+          </div>                
     </nav>
+    
     <!-- End of Bread Crumb -->
-
     <br>
+
+<!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
-        <div class="card" style="height:500px">
-            <div class="cad-body">
-                <center>
-                    <h2 class="mt-4">
-                        School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
-                    </h2>
-                </center>
-                
+    
 
-            </div>
+<!-- DIV FOR ADDING SANCTION-->
+
+  
+<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
+    <!-- BUTTON ADD SANCTION-->
+    <div class="card-body">          
+    <a href="{% url 'centermanager:create_commission' %}" class="btn float-left" >
+        <span class="text btn btn-info">Add Commission</span>
+    </a>
+    
+              </div>                   
         </div>
+
+<!-- DIV THAT SHOWS ALL THE ADDED SANCTION-->       
+<div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; max-width: 70%; ">
+    
+        <div class="row mx-3 my-3">
+                <div class="card border-primary " >
+                <div class="card-body text-primary">
+                <div class="card-title">Senior High School</div>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+                </div>
+                <div class="card border-primary " >
+                <div class="card-body text-primary">                                 
+                    <div class="card-title">Informatics Corporate Learning</div>                                
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+                </div>
+                                      
+                        
+            <div class="row  mx-3 mb-3">
+                    <div class="card border-primary " >
+                        <div class="card-body text-primary">
+                        <div class="card-title">Informatics Higher Education: Regular Class</div>                                                 
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                        </div>
+
+                        <div class="card border-primary " >
+                                <div class="card-body text-primary">
+                                <div class="card-title">Infortmatics Higher Education: Night Class</div>                                                 
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                                </div>
+            </div>            
+            </div>
+</div> 
+<br><br>
+
+
+</div>
     </div>
 </div>
+<br>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 
 {% endblock content %}
 

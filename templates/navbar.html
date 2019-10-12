@@ -1,135 +1,136 @@
 {% load static from staticfiles %}
 
 <!-- Topbar -->
-<nav class="navbar navbar-expand ndavbar-light bg-dark topbar mb-4 static-top shadow">
+<nav class="navbar navbar-expand ndavbar-light topbar mb-4 static-top shadow" style="background-color:#272727; max-height: 10%;">
 
     <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-        <i class="fa fa-bars"></i>
-    </button>
-
-    <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
-        <img src="{% static '/marketing_design/img/ICMarketing1.png' %}" alt="" width='200px' >
-    </div>
- 
+   
  
     <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-        
-        
-        <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+    {% if request.user.is_centermanager %}
+    <li class="nav-item active">
+            <a class="nav-link" href="#">
+                <strong>
+                    <center style="color:white;">
+                        Center Manager
+                    </center>
+                </strong>
             </a>
-            <!-- Dropdown - Alerts -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                    Alerts Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-success">
-                            <i class="fas fa-donate text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 7, 2019</div>
-                        $290.29 has been deposited into your account!
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-warning">
-                            <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 2, 2019</div>
-                        Spending Alert: We've noticed unusually high spending for your account.
-                    </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-            </div>
         </li>
+      &nbsp
+      &nbsp
+      &nbsp
+      &nbsp
+    <ul class="navbar-nav mr-auto float-left">
+        <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp 
+        <li>
+            <div class="btn-group">
+                <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         Marketing Information
+                </button>
+                    <div class="dropdown-menu" style="background-color: #272727; border: white;">
+                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:target'%}"><i class="fas fa-folder-plus"></i>&nbsp Target Sheet</a>
+                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:payment_list'%}"><i class="fas fa-file-invoice"></i>&nbsp Matriculations</a>
+                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:sanction_list'%}"><i class="fas fa-gavel"></i>&nbsp Sanction</a>
+                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:commission_list'%}"><i class="fas fa-hand-holding-usd"></i>&nbsp Commission</a>
+                    </div>
+            </div>
+        </li>&nbsp
+        <li><a class="btn btn-outline-light" href="{% url 'centermanager:employee_list' %}">Accounts</a></li>&nbsp
+        <li><a class="btn btn-outline-light" href="#">Contact</a></li>&nbsp
+        <li><a class="btn btn-outline-light" href="#">Leads</a></li>&nbsp
+        
+    </ul>
+    {% endif %}
 
-        <!-- Nav Item - Messages -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
+    {% if request.user.is_marketinghead %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong>
+                <center style="color:white;">
+                    Marketing Head
+                </center>
+            </strong>
+        </a>
+    </li>
+  &nbsp
+  &nbsp     
+  &nbsp
+  &nbsp
+    <ul class="navbar-nav mr-auto float-left">
+        <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp
+        <li><a class="btn btn-outline-light" href="{% url 'accounts:user_list' %}">Career Consultant</a></li>&nbsp
+        <li><a class="btn btn-outline-light" href="{% url 'marketing_head:collateral_list' %}">Collateral</a></li>&nbsp
+        <li><a class="btn btn-outline-light" href="{% url 'marketing_head:budget_list' %}">Budget</a></li>&nbsp       
+    </ul>
+    {% endif %}
+
+    {% if request.user.is_superuser %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong>
+                <center style="color:white;">
+                    Admin
+                </center>
+            </strong>
+        </a>
+    </li>
+  &nbsp
+  &nbsp     
+  &nbsp
+  &nbsp
+    <ul class="navbar-nav mr-auto float-left">
+        <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp
+        <li><a class="btn btn-outline-light" href="{% url 'admin:index' %}">
+               Admin Panel
             </a>
-            <!-- Dropdown - Messages -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                    Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div class="font-weight-bold">
-                        <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
-                            having.</div>
-                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                        <div class="status-indicator"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">I have the photos that you ordered last month, how would you like
-                            them sent to you?</div>
-                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                        <div class="status-indicator bg-warning"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">Last month's report looks great, I am very happy with the progress so
-                            far, keep up the good work!</div>
-                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that
-                            people say this to all dogs, even if they aren't good...</div>
-                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                    </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-            </div>
-        </li>
+        </li>&nbsp
+    </ul>
+    {% endif %}
 
+    {% if request.user.is_registrar %}
+    <li class="nav-item active">
+            <a class="nav-link" href="{% url 'crm_blog:home' %}">
+                <strong>
+                    <center style="color:white;">
+                        Registrar
+                    </center>
+                </strong>
+            </a>
+        </li>
+      &nbsp
+      &nbsp     
+      &nbsp
+      &nbsp
+        <ul class="navbar-nav mr-auto float-left">
+            <li><a class="btn btn-outline-light" href="{% url 'registrar:course_list' %}">Course</a></li> &nbsp
+            <li><a class="btn btn-outline-light" href="{% url 'registrar:requirements_list' %}">Requirements</a></li>&nbsp
+            <li><a class="btn btn-outline-light" href="#">Students</a></li>&nbsp
+        </ul>
+    {% endif %}
+
+    {% if request.user.is_icl %}
+    <li class="nav-item active">
+            <a class="nav-link" href="{% url 'crm_blog:home' %}">
+                <strong>
+                    <center style="color:white;">
+                        ICL
+                    </center>
+                </strong>
+            </a>
+        </li>
+      &nbsp
+      &nbsp     
+      &nbsp
+      &nbsp
+        <ul class="navbar-nav mr-auto float-left">
+            <li><a class="btn btn-outline-light" href="#">Overview</a></li> &nbsp
+            <li><a class="btn btn-outline-light" href="{% url 'contacts:list' %}">Contacts</a></li>&nbsp
+            <li><a class="btn btn-outline-light" href="#">Profile</a></li>&nbsp
+        </ul>
+    {% endif %}
+
+<ul class="navbar-nav ml-auto">
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
@@ -137,12 +138,16 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> 
-                    {% if request.user.is_centermanager %}
+                {% if request.user.is_centermanager %}
                         {{ user.email }}
-                 <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
-
+                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
                 {% endif %}
                 
+                {% if request.user.is_superuser %}
+                        {{ user.email }}
+                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
+                {% endif %}
+
                 {% if request.user.is_marketinghead %}
                 {{ user.email }}
                 <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
@@ -169,18 +174,23 @@
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                {% if request.user.is_superuser %}
+                <!--
+                    {% if request.user.is_superuser %}
+
                 <a class="dropdown-item" href="{% url 'accounts:profile' %}">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
-                {% endif %}
+                {% endif %} 
+                -->
+               
                 {% if request.user.is_centermanager %}
                     <a class="dropdown-item" href="{% url 'accounts:profile' %}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>
                 {% endif %}
+                
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

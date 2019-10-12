@@ -1,134 +1,129 @@
-{% extends 'root.html' %}
-{% load static from staticfiles %}
+{% extends 'base.html' %}
+{% load bootstrap4 %}
 
-{% block breadcrumb %}
-{% block extralinks %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-{% endblock extralinks %}
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{% url 'contacts:list' %}">Contacts</a>
-        </li>
-        <li class="breadcrumb-item active">
-            {% if contact_obj %}
-            Update
-            {% else %}
-            Create
-            {% endif %}
-        </li>
-    </ol>
-</nav>
+<!--{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+-->
 
-{% endblock breadcrumb %}
-{% block content %}
-<form method="POST" action="" id="add_form" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="card">
-        <div class="card-body">
-            <div class="card-title">
-                {% if contact_obj %}
-                Update
-                {% else %}
-                Create
-                {% endif %}
-                CONTACT
-            </div>
-            <div class="form-group">
-                <label for="">
-                    Organization Name:
-                    {% if contact_form.name.field.required %}
-                    <span class="error"></span>
-                    {% endif %}
-                </label>
-                {{ contact_form.name }}
-                <span class="error"> {{ contact_form.name.errors }} </span>
-            </div>
-            <div class="form-group">
-                <label for="">
-                    Organization Type:
-                    {% if contact_form.org_type.field.required %}
-                    <span class="error"></span>
-                    {% endif %}
-                </label>
-                {{ contact_form.org_type }}
-                <span class="error"> {{ contact_form.org_type.errors }} </span>
-            </div>
-            <div class="form-group">
-                <label for="">
-                    Telephone #:
-                    {% if contact_form.tel_area %}
-                    <div class="error"></div>
-                    {% endif %}
-                    {% if contact_form.tel_number %}
-                    <span class="error"></span>
-                    {% endif %}
-                </label>
-                {{ contact_form.tel_area }} -
-                {{ contact_form.tel_num_digits }} -
-                {{ contact_form.tel_num }}
-                <span class="error"> {{ contact_form.tel_number.errors }} </span>
-            </div>
-            <div class="form-group">
-                <label for="">
-                    Phonenumber #:
-                    {% if contact_form.phone_number %}
-                    <span class="error"></span>
-                    {% endif %}
-                </label>
-                {{ contact_form.phone_number }}
-                <span class="error"> {{ contact_form.phone_number.errors }} </span>
-            </div>
-            <div class="form-group">
-                <label for="">
-                    Email Address:
-                    {% if contact_form.email %}
-                    <span class="error"></span>
-                    {% endif %}
-                </label>
-                {{ contact_form.email }}
-                <span class="error"> {{ contact_form.email.errors }} </span>
-            </div>
-            <div class="form-group">
-                <label for="">
-                    Contact Person:
-                    {% if contact_form.person %}
-                    <span class="error"></span>
-                    {% endif %}
-                </label>
-                {{ contact_form.person }}
-                <span class="error"> {{ contact_form.person.errors }} </span>
-            </div>
-            <div class="form-group">
-                <label for="">
-                    Organization Address:
-                    {% if contact_form.address %}
-                    <span class="error"></span>
-                    {% endif %}
-                </label>
-                {{ contact_form.address }}
-                <span class="error"> {{ contact_form.address.errors }} </span>
-            </div>
-            <input type="hidden" id="save_new_form" name="savenewform">
-            <div class="buttons_row form_btn_row">
-                <button class="btn btn-default save" type="submit">Save</button>
-                {% if not contact_obj %}
-                <button class="btn btn-success save savenew" id='save_new_form' type="submit">Save & New</button>
-                {% endif %}
-                <a href="{% url 'contacts:add_contact' %}" class="btn btn-default clear"> Clear </a>
+{% block sidebar %}
 
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}
+        <title>Marketing | Budget</title>
+{% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+      <div class="container-fluid">
+
+    <!-- Start of Breadcrumb -->
+    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
+        <h4>Contacts</h4>   
+<!-- search field -->
+    <div class="topbar-divider d-none d-sm-block" style="padding-right:73%"></div>
+ <div class="input-group float-right" style="max-width: 20%;">            
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+            <div class="input-group-prepend" >
+              <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
             </div>
+          </div>                
+    </nav>
+    
+    <!-- End of Bread Crumb -->
+    <br>
+
+<!-- page content -->
+    <div class="content-section">
+        {% include 'messages.html' %}
+    
+<!--DIV FOR ADDING SANCTION-->
+
+
+
+<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
+    <!----------------------- BUTTON ADD SANCTION-------------->
+    <div class="card-body">          
+
+    
+           <div class="card-body">
+             <form action="" method="POST" enctype="multipart/form-data">                      
+                     {% csrf_token %}
+                                    
+                <fieldset class="form-group" >
+                            {{ form|crispy }}
+                </fieldset> 
+            
+                <div class="row float-right " style="padding-right: 5%;">        
+                    <div class="form-group ">
+                        <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                     </div>
+                                    &nbsp
+                <div class="form-group float-left">            
+                    <a href="{% url 'contacts:list'%}" class="btn btn-outline-info">
+                                    Cancel
+                    </a>    
+                                    
+
+             </div>  
+                </div>
+                </div>               
+                </form>
+              </div>                   
         </div>
+         
+ <!--DIV THAT SHOWS ALL THE ADDED SANCTION-->       
+ <div class=" card card-deck float-right min-vh-100" style="min-width:70%;">
+        
+        <table class="table table-hover">
+            
+                <thead class="bg-active text-dark" >
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Date of Arrival</th>
+                        <th scope="col">Date of Added</th>
+                    </tr>
+                </thead>
+                {% for Budget in Budget %}
+                <tbody >   
+                <tr class=" border border-dark">
+                        <td scope="row">{{ Budget.b_id }}</td>
+                        <td>{{ Budget.amount }}</td>
+                        <td>{{ Budget.arrival }}</td>
+                        <td>{{ Budget.date_created }}</td>
+                    </tr>
+                </tbody>
+           {% endfor %}
+        </table> 
+</div>
+    <br>
+        </div>
+    </div> 
+    <br>
+
+<br>
+<!--LIST OF CAREER CONSULTANT WITH SANCTION-->
     </div>
-</form>
+
+<!--END LIST OF CAREER CONSULTANT WITH SANCTION-->
+
+<br><br>
+
+
+      </div>
+    </div>
+</div>
+<br>
+
+
 {% endblock content %}
-{% block js_block %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<script>
-    $(".savenew").on('click', function (e) {
-        e.preventDefault()
-        $("#save_new_form").val('true')
-        $('#add_form').submit()
-    });
-</script>
-{% endblock js_block %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

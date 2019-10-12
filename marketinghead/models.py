@@ -171,9 +171,10 @@ class AssignTerritory(models.Model):
         (6 , 'DISTRICT VI'),
 
     )
-    user_profile         = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user_profile         = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='user_profile' )
     assigned_to          = models.ManyToManyField(User, related_name="assign_territory_user")
     territory_choices    = models.CharField(max_length=100, choices=territory_choices, null=True)
+    created_by           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_by_user')
     date_created         = models.DateTimeField(_("Date Created"),auto_now_add=True)
     date_updated         = models.DateTimeField(_("Date Updated"),auto_now=True)
 

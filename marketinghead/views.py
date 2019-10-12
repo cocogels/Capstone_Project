@@ -60,7 +60,7 @@ class AssignQuotaListView(LoginRequiredMixin, TemplateView):
 class CreateAssignQuota(LoginRequiredMixin, CreateView):
     model = AssignQuota
     form_class = AssignQuotaForm
-    template_name = 'quota/create_quota.html'
+    template_name = 'registration/register.html'
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_marketinghead:
@@ -259,7 +259,7 @@ class TerritoryListView(TemplateView):
     def get_queryset(self):
         queryset = self.model.objects.all()
         queryset = queryset.filter(
-            Q(assignedd_to__in=[self.request.user]) |
+            Q(assigned_to__in=[self.request.user]) |
             Q(created_by=self.request.user)
         )
 
@@ -270,11 +270,11 @@ class TerritoryListView(TemplateView):
                     user_profile__icontains=request_post.get('user_profile')
                 )
 
-        return request.distinct()
+        return queryset.distinct()
 
     def get_context_data(self, **kwargs):
-        context = super(AssignTerritory, self).get_context_data(**kwargs)
-        ccontext['assign_territory_obj'] = self.get_queryset()
+        context = super(TerritoryListView, self).get_context_data(**kwargs)
+        context['assign_territory_obj'] = self.get_queryset()
         context['per_page'] = self.request.POST.get('per_page')
         context['users'] = User.objects.filter(
             is_active=True
@@ -300,7 +300,7 @@ class TerritoryListView(TemplateView):
 class TerritoryAssign(CreateView):
     model = AssignTerritory
     form_class = AssignTerritoryForm
-    template_name = 'territory/territory_create.html'
+    template_name = 'registration/register.html'
 
     def get_form_kwargs(self):
         kwargs = super(TerritoryAssign, self).get_form_kwargs()
@@ -464,7 +464,7 @@ class BudgetListView(TemplateView):
             return queryset.distinct()
         
     def get_context_data(self, **kwargs):
-        context = super(BudgetListView, self)/get_context_data(**kwargs)
+        context = super(BudgetListView, self).get_context_data(**kwargs)
         context['budget_list_obj'] = self.get_queryset()
         
         search = False
@@ -525,7 +525,6 @@ class BudgetCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(BudgetCreateView, self).get_context_data(**kwargs)
         context['budget_form'] = context['form']
-        context['users'] = self.users
         
         return context
     
@@ -604,7 +603,7 @@ class CollateralListView(TemplateView):
     template_name = 'collateral/collateral_list.html'
     
     def get_queryset(self):
-        queryset = self.models.objects.all()
+        queryset = self.model.objects.all()
         
         request_post = self.request.POST
         if request_post:

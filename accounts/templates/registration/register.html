@@ -1,11 +1,13 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
 
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
 
 {% block sidebar %}
-{% include 'sidebar.html' %}
+
 {% endblock sidebar %}
 
 {% block navbar %}
@@ -13,55 +15,111 @@
 {% endblock navbar %}
 
 {% block title %}
-<title>Marketing | Registration </title>
+        <title>Marketing | Career Comsultant</title>
 {% endblock title %}
 {% load crispy_forms_tags %}
 
+
 {% block content %}
-<div class="content-section">
-    {% include 'messages.html' %}
-    <form action="" method='POST' enctype="multipart/form-data">
-        {% csrf_token %}
+    <!-------------------------------------------- Start of PAGE CONTENT -------------------------------------------------->
+<div class="container-fluid">
 
-        {{ form.non_field_errors }}
-        {{ form.source.errors }}
-        {{ form.source }}
-
-        <legend class="border-bottom mb-4">
-            <center> User Registration </center>
-        </legend>
-        <div class="container-fluid">
-            <div class="form-group">
-                {{ form.email.errors }}
-                {{ form.email|as_crispy_field }}
-
-            </div>
-            <div class="form-group">
-            <p>User Role</p>
-            <div class='form-check'>
-                    {{ form.is_budgetary|as_crispy_field }}
-                    
-                    {{ form.is_icl|as_crispy_field }}
-                    
-                    {{ form.is_shs|as_crispy_field }}
-                    
-                    {{ form.is_ihe|as_crispy_field }}
-            </div>
-            </div>
-            <div class="form-group">
-                {{ form.password.errors }}
-                {{ form.password|as_crispy_field }}
-            </div>
+    <!-------------------------------------------- Start of Breadcrumb -------------------------------------------------->
+    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
+        <h4>Career Consultant</h4>   
+    <!-------------------- search field --------------------------------------------------------------------------------->
+        <div class="topbar-divider d-none d-sm-block" style="padding-right:65%"></div>
+        <div class="input-group float-right" style="max-width: 20%;">            
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+        <div class="input-group-prepend" >
+            <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
         </div>
-        <div class="form-group">
-            <button href="{% url 'accounts:register_list' %}" class="btn btn-outline-info" type="submit">
-                Register
-            </button>
-        </div>
-    </form>
-</div>
-{% endblock %}
+        </div>                
+    </nav>    
+    <!-------------------------------------------- End of Bread Crumb ------------------------------------------------------>
+    <br>
+
+    <!------------------------------------------- page content ------------------------------------------------------------->
+    <div class="content-section">
+        {% include 'messages.html' %}
+    
+
+    <!------------------------------------- DIV FOR ADDING career consultant------------------------------------------------->
+   
+    <div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
+        <!-- BUTTON ADD SANCTION-->
+        <div class="card-body">
+                
+            <div class="card-body">
+                <form action="" method="POST">                      
+                {% csrf_token %}
+                <fieldset class="form-group" >
+                    {{ form|crispy }}
+                </fieldset> 
+                    
+                <div class="row float-right " style="padding-right: 5%;">        
+                        <div class="form-group ">
+                            <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                        </div> &nbsp                                                   
+                <div class="form-group float-left">
+                    <a href="{% url 'accounts:user_list'%}" class="btn btn-outline-info">      
+                                Cancel
+                    </a>                                                
+                </div>        
+          
+                </div>   
+                </form>                
+                                       
+                        
+            </div>
+        </div>               
+        
+        
+       
+    </div>
+    <!------------------------------------- END OF DIV FOR ADDING career consultant------------------------------------------------->
+    
+    <!----------------------------- DIV THAT SHOWS ALL THE ADDED career consultant------------------------------------>       
+    <div class=" card card-deck float-right" style="min-height:600px; min-width: 70%; ">    
+            <div class="card-body"> 
+               
+
+                
+                <br>
+                <div class="card" style="border-color: #36B9CC; min-width:50%; ">     
+                    <center>
+                        <table class="table table-sm">
+                        <thead>
+                            <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Territory</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                           
+                        </tbody>
+
+                        </table>
+                    </center>
+                </div><br>  
+            </div>
+        </div>  
+    
+    <!----------------------------- END OF DIV THAT SHOWS ALL THE ADDED career consultant------------------------------------>      
+    </div>
+    <!------------------------------------------- end page content ------------------------------------------------------------->
+ </div>
+    <!------------------------------------------- end page  ------------------------------------------------------------->
+
+
+
+
+{% endblock content %}
 
 {% block footer %}
-{% include 'footer.html' %}
+    {% include 'footer.html' %}
 {% endblock footer %}

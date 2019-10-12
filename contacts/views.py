@@ -97,11 +97,11 @@ class ICLContactCreateView(CreateView):
     form_class = ICLContactForm
     template_name = 'create_contact.html'
 
-    def get_form_kwargs(self):
-        kwargs = super(ICLContactCreateView, self).get_form_kwargs()
-        self.users = User.objects.filter(is_active=True).order_by('email')
-        kwargs.update({"assigned_to": self.users})
-        return kwargs
+    # def get_form_kwargs(self):
+    #     kwargs = super(ICLContactCreateView, self).get_form_kwargs()
+    #     self.users = User.objects.filter(is_active=True).order_by('email')
+    #     kwargs.update({"assigned_to": self.users})
+    #     return kwargs
     def post(self, request, *args, **kwargs):
         self.object = None
         form = self.get_form()
@@ -119,12 +119,12 @@ class ICLContactCreateView(CreateView):
         
     def form_valid(self, form):
         contact_obj = form.save(commit=False)
-        if self.request.POST.getlist('assigned_to', []):
-            contact_obj.assigned_to.add(
-                *self.request.POST.getlist('assigned_to')
-            )
+        # if self.request.POST.getlist('assigned_to', []):
+        #     contact_obj.assigned_to.add(
+        #         *self.request.POST.getlist('assigned_to')
+        #     )
         
-        assigned_to_list = list(contact_obj.assigned_to.all().values_list('id', flat=True))
+        #assigned_to_list = list(contact_obj.assigned_to.all().values_list('id', flat=True))
         current_site = get_current_site(self.request)
         #''' Email Notif to be followed '''
         # recipients = assigned_to_list
@@ -154,10 +154,10 @@ class ICLContactCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(ICLContactCreateView, self).get_context_data(**kwargs)
         context['contact_form'] = context['form']
-        context['users'] = self.users
-        context['assignedto_list'] = [
-            int(i) for i in self.request.POST.getlist('assigned_to', []) if i
-        ]
+     #   context['users'] = self.users
+    #    context['assignedto_list'] = [
+     #       int(i) for i in self.request.POST.getlist('assigned_to', []) if i
+      #  ]
         return context
 
 class ICLContactDetailView(DetailView):

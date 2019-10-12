@@ -4,13 +4,13 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.forms import ReadOnlyPasswordHashField, UserCreationForm, UserChangeForm
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User, Profile
-from .forms import EmployeeCreationForm, MarketingAdminUserChangeForm, UserForm
+from .forms import EmployeeCreationForm, MarketingAdminUserChangeForm
 # Register your models here.
 
 
 class UserAdmin(BaseUserAdmin):
     form = MarketingAdminUserChangeForm
-    add_form = UserForm
+    add_form = EmployeeCreationForm
     fieldsets = (
         (
             None,

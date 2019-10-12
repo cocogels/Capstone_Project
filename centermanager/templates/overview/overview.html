@@ -7,16 +7,24 @@
 {% endblock header %}
 
 {% block sidebar %}
-{% include 'sidebar.html' %}
+
 {% endblock sidebar %}
 
 {% block navbar %}
 {% include 'navbar.html' %}
+
 {% endblock navbar %}
 
-{% block content %}
+{% block title %}
+        <title>Marketing | Overview</title>
+{% endblock title %}
 
 
+{% load crispy_forms_tags %}
+{% block content %} 
+        <div class="card min-vh-100">
+                
+        </div>
 {% endblock content %}
 
 {% block footer %}

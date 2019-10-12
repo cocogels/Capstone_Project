@@ -1,65 +1,24 @@
-{% extends 'root.html' %}
-{% load static from staticfiles %}
-
-{% block breadcrumb %}
-{% block extralinks %}
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-{% endblock %}
+{% extends 'base.html' %}
 
 {% block title %}
 <title>Marketing | Quota</title>
 {% endblock title %}
 
-{% endblock breadcrumb %}
-
-
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="content-section">
     {% include 'messages.html' %}
-    <div class="card">
-        <div class="card-body">
-            <div class="card-title text-center">
-                {% if assign_quota_obj %}
-                EDIT
-                {% else %}
-                Create
-                {% endif %}
-                Quota
-            </div>
-            <form id="quota_form" action="" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group">
-                    {{ form.as_p }}
-                </div>
-                <div class="form-group">
-                    <input type="hidden" id="save_new_form" name="savenewform">
-                    <button class="btn btn-outline-info save" type="submit">
-                        Submit
-                    </button>
-                    {% if not assign_quota_obj %}
-                    <button class="btn btn-success save savenew" type="submit">Save & New</button>
-                    {% endif %}
-                    <a href="{% url 'marketing_head:assign_quota' %}" class="btn btn-default clear"
-                        id="create_contact_cancel">Cancel</a>
-                </div>
-            </form>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            {{ form|crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">
+                Submit
+            </button>
         </div>
-    </div>
+    </form>
 </div>
 {% endblock content %}
-
-
-{% block js_block %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-<script>
-    $(".savenew").on('click', function (e) {
-        e.preventDefault()
-        $("#save_new_form").val('true')
-        $('#quota_form').submit()
-    });
-    $(document).ready(function () {
-        $('.assigned_users').select2();
-    });
-
-</script>
-{% endblock js_block  %}

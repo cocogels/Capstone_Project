@@ -11,9 +11,9 @@ class ICLContactForm(forms.ModelForm):
         assigned_users = kwargs.pop('assigned_to', [])
         super(ICLContactForm, self).__init__(*args, **kwargs)
         
-        if assigned_users:
-            self.fields['assigned_to'].queryset = assigned_users
-        self.fields['assigned_to'].required = False
+        # if assigned_users:
+        #     self.fields['assigned_to'].queryset = assigned_users
+        # self.fields['assigned_to'].required = False
         
         self.fields['name'].widget.attrs['placeholder'] = 'Organization Name'
         self.fields['tel_num_digits'].widget.attrs['placeholder'] = '000'
@@ -31,7 +31,7 @@ class ICLContactForm(forms.ModelForm):
     class Meta:
         model = ICL_ContactModel
         fields = (
-            'assigned_to',
+           # 'assigned_to',
             'name',
             'org_type',
             'tel_area',

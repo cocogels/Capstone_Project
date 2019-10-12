@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     'schedule',
     #phone
     'phonenumber_field',
-    'phone_field',
+    #'phone_field',
 
     
 ]

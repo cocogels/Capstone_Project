@@ -16,7 +16,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView,
     TemplateView, UpdateView, ListView, View)
 from marketinghead.models import AssignQuota, AssignTerritory
 
-from .forms import UserUpdateForm, ProfileUpdateForm, EmployeeCreationForm, UserForm
+from .forms import UserUpdateForm, ProfileUpdateForm, EmployeeCreationForm
 
 
 
@@ -27,7 +27,7 @@ class ProfileView(TemplateView):
 class UsersListView(TemplateView):
     model = User
     context_object_name = 'users'
-    template_name = 'account._list.html'
+    template_name = 'registration/register_list.html'
 
     def get_queryset(self):
         queryset = self.model.objects.all()
@@ -62,8 +62,8 @@ class UsersListView(TemplateView):
 
 class CreateUserView(CreateView):
     model = User
-    form_class = UserUpdateForm
-    template_name = 'create.html'
+    form_class = EmployeeCreationForm
+    template_name = 'registration/register.html'
 
     def form_valid(self, form):
         user = form.save(commit=False)
@@ -97,10 +97,10 @@ class CreateUserView(CreateView):
             return JsonResponse(data)
         return response
     
-    def get_form_kwargs(self):
-        kwargs = super(CreateUserView, self).get_form_kwargs()
-        kwargs.update({"request_user": self.request.user})
-        return kwargs
+    # def get_form_kwargs(self):
+    #     kwargs = super(CreateUserView, self).get_form_kwargs()
+    #     kwargs.update({"request_user": self.request.user})
+    #     return kwargs
     
     def get_context_data(self, **kwargs):
         context = super(CreateUserView, self).get_context_data(**kwargs)
@@ -140,7 +140,7 @@ class UserDetailView(DetailView):
 
 class UpdateUserView(UpdateView):
     model = User
-    form_class = UserForm 
+    form_class = EmployeeCreationForm 
     template_name = 'registration/create.html'
 
 

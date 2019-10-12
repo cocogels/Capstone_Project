@@ -12,52 +12,94 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
-from multiselectfield import MultiSelectField
 
 
-class UserForm(forms.ModelForm):
-    password = forms.CharField(max_length=100, required=False)
+
+
+class EmployeeCreationForm(forms.ModelForm):
+    
+    email        = forms.EmailField()
+    password     = forms.CharField(max_length=50,label='Password' , widget=forms.PasswordInput())
+    is_budgetary = forms.BooleanField(required=False, label='BUDGETARY')
+    is_ihe       = forms.BooleanField(required=False, label='IHE')
+    is_shs       = forms.BooleanField(required=False, label='SHS')
+    is_icl       = forms.BooleanField(required=False, label='ICL')
+    
     class Meta:
         model = User
-        fields = [
+        fields = (
             'email',
-            'is_centermanager',
-            'is_centerbusinessmanager',
-            'is_marketinghead',
-            'is_registrar',   
-        ]
+        )
+    
+
+    def clean_email(self, *args, **kwargs):
+        email = self.cleaned_data.get('email')
+        query_set = UserMarketingProfile.objects.filter(email__iexact=email)
+        if query_set.exists():
+            raise forms.ValidationError('This email Already Registered..!!')
+        return email
+
+    def save(self, commit=True):
+        #This would save the provided password in hashed format
+        user = super(EmployeeCreationForm, self).save(commit=False)
+        user = UserMarketingProfile(
+            email                       = self.cleaned_data['email'],
+            is_budgetary                = self.cleaned_data['is_budgetary'],
+            is_ihe                      = self.cleaned_data['is_ihe'],
+            is_shs                      = self.cleaned_data['is_shs'],
+            is_icl                      = self.cleaned_data['is_icl'],
+        )
+        user.set_password(self.cleaned_data['password'])
+        if commit:
+            user.save()
+        return user
+
+
+# class UserForm(forms.ModelForm):
+#     password = forms.CharField(max_length=100, required=False)
+#     class Meta:
+#         model = User
+#         fields = [
+#             'email',
+#             'is_centermanager',
+#             'is_centerbusinessmanager',
+#             'is_marketinghead',
+#             'is_registrar',   
+#         ]
         
-        def __init__(self, *args, **kwargs):
-            self.request_user = kwargs.pop('request_user', None)
-            super(UserForm, self).__init__(*args, **kwargs)
-            self.fields['email'].required = True
-            if not self.instance.pk:
-                self.fields['password'].required=True
+#         def __init__(self, *args, **kwargs):
+#             self.request_user = kwargs.pop('request_user', None)
+#             super(UserForm, self).__init__(*args, **kwargs)
+#             self.fields['email'].required = True
+#             if not self.instance.pk:
+#                 self.fields['password'].required=True
         
-        def clean_email(self):
-            email = self.cleaned_data.get('email')
-            if self.instance.id:
-                if self.instance.eamil != email:
-                    if not User.objects.filter(
-                        email=self.cleaned_data.get("email")
-                        ).exists():
-                        return self.cleaned-data.get('email')
-                    raise forms.ValidationError('Email already exists')
-                else:
-                    return self.cleaned_data.get('email')
-            else:
-                if not User.objects.filter(
-                    email=self.cleaned_data.get("email")).exists():
-                    return self.cleaned_data.get("email")
-                raise forms.ValidationError('User already exists with this email')
+#         def clean_email(self):
+#             email = self.cleaned_data.get('email')
+#             if self.instance.id:
+#                 if self.instance.eamil != email:
+#                     if not User.objects.filter(
+#                         email=self.cleaned_data.get("email")
+#                         ).exists():
+#                         return self.cleaned-data.get('email')
+#                     raise forms.ValidationError('Email already exists')
+#                 else:
+#                     return self.cleaned_data.get('email')
+#             else:
+#                 if not User.objects.filter(
+#                     email=self.cleaned_data.get("email")).exists():
+#                     return self.cleaned_data.get("email")
+#                 raise forms.ValidationError('User already exists with this email')
                 
-        def clean_password(self):
-            password = self.cleaned_data.get('password')
-            if password:
-                if len(password) < 8:
-                    raise forms.ValidationError(
-                        'Password Must be At Least 8 Characters Long'
-                    )
+#         def clean_password(self):
+#             password = self.cleaned_data.get('password')
+#             if password:
+#                 if len(password) < 8:
+#                     raise forms.ValidationError(
+#                         'Password Must be At Least 8 Characters Long'
+#                     )
+                    
+        
             
 
 class ChangePassword(forms.Form):

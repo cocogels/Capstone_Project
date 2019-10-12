@@ -1,92 +1,133 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
-{% block header %}
+<!--{% block header %}
 {% include 'header.html' %}
 {% endblock header %}
+-->
 
 {% block sidebar %}
-{% include 'sidebar.html' %}
+
 {% endblock sidebar %}
 
 {% block navbar %}
 {% include 'navbar.html' %}
 {% endblock navbar %}
 
-{% block content %}
-<div class="container-fluid">
+{% block title %}
+        <title>Marketing | TargetSheet</title>
+{% endblock title %}
+{% load crispy_forms_tags %}
+
+{% block content %} 
+      <div class="container-fluid">
 
     <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item" aria-current="page">
-                <a href="{% url 'crm_blog:home' %}">
-                    Overview
-                </a>
-
-                <i class="fas fa-chevron-right small"></i>
-
-                <a href="{% url 'centermanager:sanction_list' %}">
-                    Sanction
-                </a>
-            </li>
-        </ol>
+    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
+        <h4>Sanction</h4>   
+<!-- search field -->
+    <div class="topbar-divider d-none d-sm-block" style="padding-right:73%"></div>
+ <div class="input-group float-right" style="max-width: 20%;">            
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+            <div class="input-group-prepend" >
+              <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
+            </div>
+          </div>                
     </nav>
+    
     <!-- End of Bread Crumb -->
-
     <br>
+
+<!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
-        <div class="card" style="height:500px">
-            <div class="cad-body">
-                <center>
-                    <h2 class="mt-4">
-                        School Year:{{ start_year|date:'Y' }} - {{ end_year|date:'Y' }}
-                    </h2>
-                </center>
-                {% for sanction in sanction_list %}
-                <ul>
-                    <li>
-                        <strong>First Month:</strong>
-                        {{ sanction.first_sanction }}
-                    </li>
-                    <li>
-                        <strong>Second Month:</strong>
-
-                        {{ sanction.second_sanction }}
-                    </li>
-                    <li>
-                        <strong>Third Month:</strong>
-                        {{ sanction.third_sanction }}
-                    </li>
-                    <li>
-                        <strong>Fourth Month:</strong>
-                        {{ sanction.fourth_sanction }}
-                    </li>
-                    <li>
-                        <strong>Fifth Month:</strong>
-
-                        {{ sanction.fifth_sanction }}
-                    </li>
-                </ul>
-                {% endfor %}
+    
+<!--DIV FOR ADDING SANCTION-->
 
 
-            </div>
+
+<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
+    <!----------------------- BUTTON ADD SANCTION-------------->
+    <div class="card-body">          
+  <a href="{% url 'centermanager:create_sanction' %}" class="btn float-left" name="addSanction">
+        <span class="text btn btn-info">Add Sanction</span>
+    </a>
+    
+              </div>                   
         </div>
+         
+ <!--DIV THAT SHOWS ALL THE ADDED SANCTION-->       
+ <div class=" card card-deck float-right min-vh-100" style="min-width:70% ;">
+    
+        <div class="card-body"> 
+            <div class="card" style="border-color: #36B9CC; max-width: 50%; margin-left:25%">     
+           
+                        
+            <div class="card-body">   
+            {% for sanction in sanction_list %}
+            <table class="table table-sm" >
+                        <thead>
+                            <tr>
+                            <th scope="col">Month</th>
+                            <th scope="col">Sanction</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>First Month</td>
+                                <td>{{ sanction.first_sanction }}</td>
+                            </tr>
+    
+                            <tr>
+                                <td>Second Month</td>
+                                <td>{{ sanction.second_sanction }}</td>
+                            </tr>
+                            
+                            <tr>    
+                                <td>Third Month</td>
+                                <td>{{ sanction.third_sanction }}</td>
+                            
+                            </tr>
+                            <tr>
+                                <td>Fourth Month</td>
+                                <td>{{ sanction.fourth_sanction }}</td>
+                            </tr>
+                            
+                            <tr>    
+                                <td>Fifth Month</td>
+                                <td>{{ sanction.fifth_sanction }}</td>
+                            
+                            </tr>
+                            
+                        </tbody>
+                        </table>
+                        {% endfor %}
+                          
+            </div>
+        
+    </div>
+    <br>
+    
+    
+        </div>
+    </div> 
+    <br>
+
+<br>
+<!--LIST OF CAREER CONSULTANT WITH SANCTION-->
     </div>
 
-</div>
+<!--END LIST OF CAREER CONSULTANT WITH SANCTION-->
 
+<br><br>
+
+
+      </div>
+    </div>
+</div>
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+
 
 {% endblock content %}
 

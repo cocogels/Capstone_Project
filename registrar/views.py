@@ -18,7 +18,7 @@ from registrar.forms import RequirementsForm, AvailableCourseForm
 class RequirementsListView(TemplateView):
     model = RequirementsModel
     context_object_name = 'requirements_obj_list'
-    template_name = 'requiremenets/requirements_list.html'
+    template_name = 'stud_requirements/student_requirements_list.html'
     
     def get_queryset(self):
         queryset = self.model.objects.all()
@@ -54,7 +54,7 @@ class RequirementsListView(TemplateView):
 class RequirementsCreateView(CreateView):
     model = RequirementsModel
     form_class = RequirementsForm
-    template_name = 'requirements/create_requirements.html'
+    template_name = 'stud_requirements/create_student_requirements.html'
     
     def post(self, request, *args, **kwargs):
         self.object = None
@@ -174,10 +174,10 @@ class RequirementsUpdateView(UpdateView):
 class CourseListView(TemplateView):
     model = AvailableCourseModel
     context_object_name = 'course_obj_list'
-    template_name = 'course/course_list.html'
+    template_name = 'available_course/course_list.html'
     
     def get_queryset(self):
-        queryset = self.models.objects.all()
+        queryset = self.model.objects.all()
         
         request_post = self.request.POST
         if request_post:
@@ -213,7 +213,7 @@ class CourseListView(TemplateView):
 class CourseCreateView(CreateView):
     model = AvailableCourseModel
     form_class = AvailableCourseForm
-    template_name = 'course/create_course.html'
+    template_name = 'available_course/create_course.html'
     
     def post(self, request, *args, **kwargs):
         self.object = None

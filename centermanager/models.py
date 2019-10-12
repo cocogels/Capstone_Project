@@ -15,32 +15,32 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 
 
-def validate_year(year):
-    pattern = re.compile('^\d{8}%')
-    if not pattern.match(year):
-        raise ValidationError("{year} is not a valid year".format(year=year))
+# def validate_year(year):
+#     pattern = re.compile('^\d{8}%')
+#     if not pattern.match(year):
+#         raise ValidationError("{year} is not a valid year".format(year=year))
     
-def validate_start_year(start_year):
-    latest_start_year = SchoolYear.objects.aggregate(Max('start_year'))["start_year__max"]
-    latest_start_year = int(latest_start_year or 0)
+# def validate_start_year(start_year):
+#     latest_start_year = SchoolYear.objects.aggregate(Max('start_year'))["start_year__max"]
+#     latest_start_year = int(latest_start_year or 0)
     
-    if start_year <= latest_start_year:
-        raise ValidationError(
-            'Start year {start_year} must be greater than most recent'
-            'School Year start year{latest_start_year}'.format(
-                start_year=start_year, latest_start_year=latest_start_year
-            )
-        )
-def validate_end_year(end_year):
-    latest_end_year = SchoolYear.objects.aggregate(Max('end_year'))["end_year__max"]
-    latest_end_year = int(latest_end_year or 1)
-    if end_year <= latest_end_year:
-        raise ValidationError(
-            'End year {end_year} must be grater than most recent'
-            'School Year end year {latest_end_year}'.format(
-                end_year=end_year, latest_end_year=latest_end_year
-            )
-        )
+#     if start_year <= latest_start_year:
+#         raise ValidationError(
+#             'Start year {start_year} must be greater than most recent'
+#             'School Year start year{latest_start_year}'.format(
+#                 start_year=start_year, latest_start_year=latest_start_year
+#             )
+#         )
+# def validate_end_year(end_year):
+#     latest_end_year = SchoolYear.objects.aggregate(Max('end_year'))["end_year__max"]
+#     latest_end_year = int(latest_end_year or 1)
+#     if end_year <= latest_end_year:
+#         raise ValidationError(
+#             'End year {end_year} must be grater than most recent'
+#             'School Year end year {latest_end_year}'.format(
+#                 end_year=end_year, latest_end_year=latest_end_year
+#             )
+#         )
     
 
 class SchoolYearQuerySet(models.QuerySet):
@@ -61,8 +61,8 @@ class SchoolYearManager(models.Manager):
 
     
 class SchoolYearModel(models.Model):
-    start_year      = models.DateField(unique=True, validators=[validate_start_year ,validate_year])
-    end_year        = models.DateField(unique=True, validators=[validate_end_year ,validate_year])
+    start_year      = models.DateField(unique=True)
+    end_year        = models.DateField(unique=True)
     active_year     = models.BooleanField(default=False, help_text="This is Current School Year. There Can Only be one.")
     date_created    = models.DateField(_("Date Created"), auto_now_add=True,)
     

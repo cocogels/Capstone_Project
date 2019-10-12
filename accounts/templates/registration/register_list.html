@@ -6,53 +6,106 @@
 {% include 'header.html' %}
 {% endblock header %}
 
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}
+        <title>Marketing | Career Comsultant</title>
+{% endblock title %}
+{% load crispy_forms_tags %}
 
 
 {% block content %}
+    <!-------------------------------------------- Start of PAGE CONTENT -------------------------------------------------->
+<div class="container-fluid">
 
-{%  if request.user.is_authenticated %}
-{% if request.user.is_marketinghead %}
+    <!-------------------------------------------- Start of Breadcrumb -------------------------------------------------->
+    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
+        <h4>Career Consultant</h4>   
+    <!-------------------- search field --------------------------------------------------------------------------------->
+        <div class="topbar-divider d-none d-sm-block" style="padding-right:65%"></div>
+        <div class="input-group float-right" style="max-width: 20%;">            
+            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+        <div class="input-group-prepend" >
+            <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
+        </div>
+        </div>                
+    </nav>    
+    <!-------------------------------------------- End of Bread Crumb ------------------------------------------------------>
+    <br>
 
+    <!------------------------------------------- page content ------------------------------------------------------------->
+    <div class="content-section">
+        {% include 'messages.html' %}
+    
 
-    {% include 'messages.html' %}
-    <div class='card'>
-        <div class="card-title mt-3">
-            <h3 class='float-left ml-3'> Registerd User </h3>
-            <a class=' card-link btn btn-info float-right mr-4' href="{% url 'accounts:register' %}">
-                Add Employee
-            </a>
-        </div>
-        <div clas='card-header' >
-            
-        </div>
-        <div class="card-body" >
-            <table  class="table table-bordered table-sm" cellspacing="0" width="100%">
-                {% if object_list %}
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col"> <center>  Email</center></th>
-                        <th scope="col"> <center> Action</center></th>
-                    </tr>
-                </thead>
-                {% for registration in object_list %}
-                <tbody>
-                    <tr>
-                        <td>{{ registration.email  }}</td>
-                        <td>
-            
-                        </td>
-                    </tr>
-                </tbody>
-                {% endfor %}
-                </ul>
-                {% else %}
-                <p>No Account Has Been Registered</p>
-            </table>
-            {% endif %}
-        </div>
+    <!------------------------------------- DIV FOR ADDING career consultant------------------------------------------------->
+    
+    <div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
+        <!-- BUTTON ADD SANCTION-->
+            <div class="row"> 
+                    <a href="{% url 'accounts:create_user' %}" class="btn float-left" >
+                            <span class="text btn btn-info">Add Career Consultant</span>
+                    </a>    
+                    <a href="{% url 'marketing_head:add_territory' %}" class="btn float-right" >
+                            <span class="text btn btn-info">Assign Territory</span>
+                    </a>
+                    <a class="btn" href="{% url 'marketing_head:assign_quota' %}">
+                        <span class="text btn btn-info">Quota</span>
+                    </a>
     </div>
-{% endif %}
-{% endif %}
+        
+        
+       
+    </div>
+    <!------------------------------------- END OF DIV FOR ADDING career consultant------------------------------------------------->
+    
+    <!----------------------------- DIV THAT SHOWS ALL THE ADDED career consultant------------------------------------>       
+    <div class=" card card-deck float-right" style="min-height:600px; min-width: 70%; ">    
+            <div class="card-body"> 
+               
+
+                
+                <br>
+                <div class="card" style="border-color: #36B9CC; min-width:50%; ">     
+                    <center>
+                        <table class="table table-sm">
+                        <thead>
+                            <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Territory</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                           
+                        </tbody>
+
+                        </table>
+                    </center>
+                </div><br>  
+            </div>
+        </div>  
+    
+    <!----------------------------- END OF DIV THAT SHOWS ALL THE ADDED career consultant------------------------------------>      
+    </div>
+    <!------------------------------------------- end page content ------------------------------------------------------------->
+ </div>
+    <!------------------------------------------- end page  ------------------------------------------------------------->
 
 
-{% endblock content  %}
+
+
+{% endblock content %}
+
+{% block footer %}
+    {% include 'footer.html' %}
+{% endblock footer %}

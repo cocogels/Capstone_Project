@@ -214,8 +214,7 @@ class EmployeeUpdateView(UpdateView):
 class SchoolYearCreateView(CreateView):
     model = SchoolYearModel
     form_class = SchoolYearForm
-    template_name = 'school_year/create_school_year.html'
-    success_url = reverse_lazy('centermanager:school_year_list')
+    template_name = 'target_sheet/create_target.html'
     
     
     
@@ -244,7 +243,7 @@ class SchoolYearCreateView(CreateView):
                     'error':False,
                 }
             )
-        return redirect("centermanager:target_list")
+        return redirect("centermanager:target")
     
     def form_invalid(self, form):
         if self.request.is_ajax():
@@ -270,11 +269,11 @@ class SchoolYearCreateView(CreateView):
 class TargetSheetListView(TemplateView):
     model = TargetSheet
     context_object_name = 'target_sheet_obj'
-    template_name = 'school_year/school_year_list.html'
+    template_name = 'target_sheet/targetsheet_list.html'
 
     
     def get_queryset(self):
-        queryset = self.models.objects.all()
+        queryset = self.model.objects.all()
          
         request_post = self.request.POST
         if request_post:
@@ -481,7 +480,7 @@ class PaymentListView(TemplateView):
     template_name = 'payment/payment_list.html'
     
     def get_queryset(self):
-        queryset = self.models.objects.all()
+        queryset = self.model.objects.all()
 
         
         request_post = self.request.POST
@@ -637,7 +636,7 @@ class PaymentUpdateView(UpdateView):
 class SanctionSettingListView(TemplateView):
     model = SanctionSetting
     context_object_name = 'sanction_obj_list'
-    template_name = 'sanction/sacntion_list.html'
+    template_name = 'sanction/sanction_list.html'
     
     
     
@@ -794,6 +793,10 @@ class CommissionSettingListView(TemplateView):
     context_object_name = 'commission_obj_list'
     template_name = 'commission/commission_list.html'
     
+    
+    def get_queryset(self):
+        queryset = self.model.objects.all()
+        
     def get_context_data(self, **kwargs):
         context = super(CommissionSettingListView, self).get_context_data(**kwargs)
         context['commission_obj_list'] = self.get_queryset()
@@ -810,11 +813,11 @@ class CommissionSettingCreateView(CreateView):
     template_name = 'commission/create_commission.html' 
     
     def dispatch(self, request, *args, **kwargs):
-        if self.requesst.user.is_centermanager:
+        if self.request.user.is_centermanager:
             self.users = User.objects.filter(is_active=True).order_by('email')
         else:
             self.users = User.objects.filter(is_centermanager=True).order_by('email')
-        return super(CommissionSettingCreateViiew, self).dispatch(
+        return super(CommissionSettingCreateView, self).dispatch(
             request, *args, **kwargs
         )
         
@@ -852,7 +855,7 @@ class CommissionSettingCreateView(CreateView):
         
         
     def get_context_data(self, **kwargs):
-        context = super(CommissionSettingCreateViiew, self).get_context_data(**kwargs)
+        context = super(CommissionSettingCreateView, self).get_context_data(**kwargs)
         context['commission_form'] = context['form']
         return context
     
