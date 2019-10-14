@@ -99,20 +99,20 @@ class TargetSheetForm(forms.ModelForm):
     class Meta:
         model = TargetSheet
         fields = [
+            'school_year',
             'corporate',
             'retail',
-            'school_year',
             'owwa',
             'seniorhigh',
             'higher_ed',
         ]
 
-    def clean(self):
-        years = school_year.cleaned_data.get('school_year')
-        queryset = SchoolYear.objects.filter(start_year__gte=school_year, end_year__lte=school_year)
-        if queryset.exists():
-            raise forms.ValidationError('Target Sheet Already Have This Date')
-        super(TargetSheetForm, self).clean()
+    #def clean(self):
+    #    years = school_year.cleaned_data.get('school_year')
+    #    queryset = SchoolYear.objects.filter(start_year__gte=school_year, end_year__lte=school_year)
+    #    if queryset.exists():
+    #        raise forms.ValidationError('Target Sheet Already Have This Date')
+    #    super(TargetSheetForm, self).clean()
              
 
 ''' Matriculation Form '''
@@ -217,10 +217,10 @@ class SanctionSettingForm(forms.ModelForm):
         super(SanctionSettingForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         self.fields['first_sanction'].label = 'First Month Sanction'
-        self.fields['second_sanction'].label = 'First Month Sanction'
-        self.fields['third_sanction'].label = 'First Month Sanction'
-        self.fields['fourth_sanction'].label = 'First Month Sanction'
-        self.fields['fifth_sanction'].label = 'Student Type'
+        self.fields['second_sanction'].label = 'Second Month Sanction'
+        self.fields['third_sanction'].label = 'Third Month Sanction'
+        self.fields['fourth_sanction'].label = 'Fourth Month Sanction'
+        self.fields['fifth_sanction'].label = 'Fifth Month'
 
         if instance and instance.pk:
             self.fields['first_sanction'].widget.attrs['readonly'] = True

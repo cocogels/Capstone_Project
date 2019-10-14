@@ -63,19 +63,24 @@
             
                 <thead class="bg-active text-dark" >
                     <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Date of Arrival</th>
-                        <th scope="col">Date of Added</th>
+                        <th scope="col">Org. Name</th>
+                        <th scope="col">Org. Type</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
-                {% for Budget in Budget %}
+                {% for contact in contact_obj_list %}
                 <tbody >   
                 <tr class=" border border-dark">
-                        <td scope="row">{{ Budget.b_id }}</td>
-                        <td>{{ Budget.amount }}</td>
-                        <td>{{ Budget.arrival }}</td>
-                        <td>{{ Budget.date_created }}</td>
+                        <td scope="row">{{ contact.name }}</td>
+                        <td>{{ contact.org_type }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.address }}</td>
+                        <td>
+                            <a href="#" >VIEW &nbsp| &nbsp</a>
+                            <a href="#" >DELETE </a>
+                        </td>
                     </tr>
                 </tbody>
            {% endfor %}

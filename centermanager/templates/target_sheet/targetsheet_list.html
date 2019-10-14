@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
@@ -50,7 +49,6 @@
 <!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
-    
 
 <!-- DIV FOR ADDING TARGET SHEET-->
 
@@ -58,66 +56,65 @@
 <div class="card card-deck float-left" style="min-width:30%; max-width:28%; margin-left:2%; "> 
     <!-- BUTTON ADD TARGET SHEET-->
     <div class="card-body">          
-    <a href="{% url 'centermanager:create_target' %}" class="btn float-left" >
+        <a href="{% url 'centermanager:create_target' %}" class="btn float-left" >
             <span class="text btn btn-info">Add Target Sheet</span>
-    </a>
-    
-
-              </div>                   
-        </div>
+        </a>
+    </div>                   
+</div>
 
 <!-- DIV THAT SHOWS ALL THE ADDED SANCTION-->       
 <div class=" card card-deck float-right" style="min-height:560px; min-width: 65%; margin-right: 2% ">
     
     <div class="card-body"> 
         <center>
+       {% for target_sheet_record in target_sheet_obj %}             
        <div class="card" style="border-color: #36B9CC; max-width: 50%;%">     
       
-              
+          
        <div class="card-body">   
-       
-       <table class="table table-sm">
-              
-                   <thead class="card-header">
-                       <tr>
-                       <th scope="col">Name</th>
-                       <th scope="col">Target details</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-        {% for target_sheet_record in TargetSheet %}                 
-                       <tr>
-                           <td>iCL: Corporate:</td>
-                           <td>{{ target_sheet_record.corporate }}</td>
-                       </tr>
+         
+        <table class="table table-sm">
+            <thead class="card-header">
+                <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Target details</th>
+                </tr>
+            </thead>
+            <tbody>
+                            
+                <tr>
+                    <td>ICL: Corporate</td>
+                    <td>{{ target_sheet_record.corporate }}</td>
+                </tr>
 
-                       <tr>
-                           <td>ICL: Retail:</td>
-                           <td>{{ target_sheet_record.retail }}</td>
-                       </tr>
-                       
-                       <tr>    
-                           <td>OWWA</td>
-                           <td>{{ target_sheet_record.owwa }}</td>
-                       
-                       </tr>
-                       <tr>
-                           <td>Informatics Senior High School:</td>
-                           <td>{{ target_sheet_record.seniorhigh }}</td>
-                       </tr>
+                <tr>
+                    <td>ICL: Retail</td>
+                    <td>{{ target_sheet_record.retail }}</td>
+                </tr>
+                
+                <tr>    
+                    <td>OWWA</td>
+                    <td>{{ target_sheet_record.owwa }}</td>
+                
+                </tr>
+                <tr>
+                    <td>Informatics Senior High School</td>
+                    <td>{{ target_sheet_record.seniorhigh }}</td>
+                </tr>
 
-                       <tr>
-                           <td>Informatics Higher Education:</td>
-                           <td> {{ target_sheet_record.higher_ed }}</td>
-                       </tr>
-        {% endfor %}                
-                   </tbody>
-                   </table>
-
-                                  
+                <tr>
+                    <td>Informatics Higher Education</td>
+                    <td> {{ target_sheet_record.higher_ed }}</td>
+                </tr>
+                          
+            </tbody>
+            </table>
        </div>
-   
-</div>
+       </div>
+       <br>
+    {% endfor %}      
+
+
 </center>  
 <br>
 </div>

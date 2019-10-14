@@ -325,7 +325,7 @@ class TargetSheetCreateView(CreateView):
             target_sheet_obj = form.save(commit=False)
             target_sheet_obj.save()
             
-            return self.form.valid(form)
+        return self.form_valid(form)
         return self.form_invalid(form)
     
     
@@ -333,7 +333,7 @@ class TargetSheetCreateView(CreateView):
     def form_valid(self, form):
         target_sheet_obj = form.save(commit=False)
         
-        current_site = get_current_site(self.request)
+        #current_site = get_current_site(self.request)
         
         if self.request.is_ajax():
             return JsonResponse(
@@ -638,7 +638,8 @@ class SanctionSettingListView(TemplateView):
     context_object_name = 'sanction_obj_list'
     template_name = 'sanction/sanction_list.html'
     
-    
+    def get_queryset(self):
+        queryset = self.model.objects.all
     
     def get_context_data(self, **kwargs):
         context = super(SanctionSettingListView, self).get_context_data(**kwargs)
@@ -683,8 +684,8 @@ class SanctionSettingCreateView(CreateView):
                 }
             )
         if self.request.POST.get("savenewform"):
-            return redirect('sanction:create_sanction')
-        return redirect('sanction:sanction_list')
+            return redirect('centermanager:create_sanction')
+        return redirect('centermanager:sanction_list')
     
     
     def form_invalid(self, form):

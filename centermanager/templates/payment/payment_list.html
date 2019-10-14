@@ -50,71 +50,129 @@
   
 <div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
     <!-- BUTTON ADD SANCTION-->
-    <div class="card-body">          
-    <!---->
-<!-- Default dropright button -->
-<div class="btn-group dropright">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Add Matriculation
-        </button>
-        <div class="dropdown-menu">
-          <!-- Dropdown menu links -->
-          <a class="dropdown-item"  href="{% url 'centermanager:create_payment' %}">&nbsp BSIT:Night Class</a>
-          <a class="dropdown-item"  href="#">&nbsp BSIT:Regular Class</a>
-          <a class="dropdown-item"  href="#">&nbsp BSBA: Night Class</a>
-          <a class="dropdown-item"  href="#">&nbsp BSBA: Regular Class</a>
-          <a class="dropdown-item"  href="#">&nbsp Senior High School</a>
-        </div>
-      </div>
-      
-    <!---->
-
-              </div>                   
+    <div class="row"> 
+            <a href="#" class="btn " >&nbsp
+                    <span class="text btn btn-info">IHE:Night </span>
+            </a>    
+            <a href="#" class="btn " >
+                    <span class="text btn btn-info">IHE:Regular</span>
+            </a>
+            <a class="btn" href="#">
+                <span class="text btn btn-info">Senior High School</span>
+            </a>
+    </div>     
         </div>
 
 
     <div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; max-width: 70%">    
      
-    <div class="row mx-3 " style="padding-top: 3%">
-        <div class="card border-primary " >
-        <div class="card-body text-primary">
-        <div class="card-title">Bachelor of Science in Information Technology: Regular Class</div>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-        </div>
-        <div class="card border-primary " >
-        <div class="card-body text-primary">                                 
-            <div class="card-title">Bachelor of Science in Information Technology: Regular Class</div>                                
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
-        </div>
-                              
+
+        <div class="row mx-auto py-3 " style="min-width:96%; min-height: 50%; margin-bottom: 1% ;" >
+                <div class="card border-primary " >
+                    <div class="card-body text-primary">
+                    <div class="card-title">Informatics Higher Education: Regular Class</div>
+            <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Registration Fee</td>
+                            <td>{{ target_sheet_record.corporate }}</td>
+                        </tr>
+        
+                        <tr>
+                            <td>Miscellaneous Fee</td>
+                            <td>{{ target_sheet_record.retail }}</td>
+                        </tr>
+                        
+                        <tr>    
+                            <td>Laboratory Fee</td>
+                            <td>{{ target_sheet_record.owwa }}</td>
+                        
+                        </tr>
+                        <tr>
+                            <td>Amount per Unit(cash)</td>
+                            <td>{{ target_sheet_record.seniorhigh }}</td>
+                        </tr>
+        
+                        <tr>
+                            <td>Amount per Unit(installment)</td>
+                            <td> {{ target_sheet_record.higher_ed }}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                    </div>
+                    </div>
+        </div>              
+
+        <div class="row mx-auto py-3 " style="min-width:96%; min-height: 50%; margin-bottom: 1% ;" >
+                <div class="card border-primary " >
+                    <div class="card-body text-primary">
+                    <div class="card-title">Informatics Higher Education: Night Class</div>                                                 
+                    <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td>Registration Fee</td>
+                                    <td>{{ target_sheet_record.corporate }}</td>
+                                </tr>
                 
-    <div class="row mx-auto py-3 " style="min-width:96%; min-height: 50%" >
+                                <tr>
+                                    <td>Miscellaneous Fee</td>
+                                    <td>{{ target_sheet_record.retail }}</td>
+                                </tr>
+                                
+                                <tr>    
+                                    <td>Laboratory Fee</td>
+                                    <td>{{ target_sheet_record.owwa }}</td>
+                                
+                                </tr>
+                                <tr>
+                                    <td>Amount per Unit(cash)</td>
+                                    <td>{{ target_sheet_record.seniorhigh }}</td>
+                                </tr>
+                
+                                <tr>
+                                    <td>Amount per Unit(installment)</td>
+                                    <td> {{ target_sheet_record.higher_ed }}</td>
+                                </tr>
+                            </tbody>
+                            </table>
+                    </div>
+                    </div>
+        </div>                                
+                
+    <div class="row mx-auto py-3 " style="min-width:96%; min-height: 50%; margin-bottom: 1% ;" >
             <div class="card border-primary " >
                 <div class="card-body text-primary">
                 <div class="card-title">Senior High School</div>                                                 
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <table class="table table-sm">
+                        <tbody>
+                            <tr>
+                                <td>Registration Fee</td>
+                                <td>{{ target_sheet_record.corporate }}</td>
+                            </tr>
+                        </tbody>
+                                if no voucher
+                         <tbody> 
+                            <tr>    
+                                <td>Laboratory Fee</td>
+                                <td>{{ target_sheet_record.owwa }}</td>
+                            
+                            </tr>
+                            <tr>
+                                <td>Amount per Unit(cash)</td>
+                                <td>{{ target_sheet_record.seniorhigh }}</td>
+                            </tr>
+            
+                            <tr>
+                                <td>Amount per Unit(installment)</td>
+                                <td> {{ target_sheet_record.higher_ed }}</td>
+                            </tr>
+                        </tbody>
+                        </table>
                 </div>
                 </div>
     </div>            
 
-    <div class="row mx-3">
-        <div class="card border-primary " >
-        <div class="card-body text-primary">
-        <div class="card-title">Bachelor of Science in Information Technology: Regular Class</div>                                                 
-                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        </div>
-        </div>
-        <div class="card border-primary" >
-        <div class="card-body text-primary">
-        <div class="card-title">Bachelor of Science in Information Technology: Regular Class</div>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-         </div>
-         </div>
-         </div>
-        
+
                                          
             </div>
         </div>
