@@ -1,8 +1,7 @@
 from django.contrib import admin
 
 from .models import TargetSheet, Matriculation, SanctionSetting, CommissionSetting, SchoolYearManager
-from .forms import TargetSheetForm, SchoolYearForm, MatriculationForm, SanctionSettingForm
-from .serializers import SchoolYearSerializer
+from .forms import MatriculationForm, SanctionSettingForm, TargetSheetForm
 # Register your models here.
 
 class TargetSheetAdmin(admin.ModelAdmin):

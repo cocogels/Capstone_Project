@@ -14,8 +14,6 @@ from django.shortcuts import redirect, render
 from django.utils.translation import gettext as _
 
 
-
-
 class EmployeeCreationForm(forms.ModelForm):
     
     email        = forms.EmailField()
@@ -53,80 +51,9 @@ class EmployeeCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-
-# class UserForm(forms.ModelForm):
-#     password = forms.CharField(max_length=100, required=False)
-#     class Meta:
-#         model = User
-#         fields = [
-#             'email',
-#             'is_centermanager',
-#             'is_centerbusinessmanager',
-#             'is_marketinghead',
-#             'is_registrar',   
-#         ]
-        
-#         def __init__(self, *args, **kwargs):
-#             self.request_user = kwargs.pop('request_user', None)
-#             super(UserForm, self).__init__(*args, **kwargs)
-#             self.fields['email'].required = True
-#             if not self.instance.pk:
-#                 self.fields['password'].required=True
-        
-#         def clean_email(self):
-#             email = self.cleaned_data.get('email')
-#             if self.instance.id:
-#                 if self.instance.eamil != email:
-#                     if not User.objects.filter(
-#                         email=self.cleaned_data.get("email")
-#                         ).exists():
-#                         return self.cleaned-data.get('email')
-#                     raise forms.ValidationError('Email already exists')
-#                 else:
-#                     return self.cleaned_data.get('email')
-#             else:
-#                 if not User.objects.filter(
-#                     email=self.cleaned_data.get("email")).exists():
-#                     return self.cleaned_data.get("email")
-#                 raise forms.ValidationError('User already exists with this email')
-                
-#         def clean_password(self):
-#             password = self.cleaned_data.get('password')
-#             if password:
-#                 if len(password) < 8:
-#                     raise forms.ValidationError(
-#                         'Password Must be At Least 8 Characters Long'
-#                     )
-                    
-        
-            
-
-class ChangePassword(forms.Form):
-    new_password = forms.CharField(max_length=100)
-    confirm_password = forms.CharField(max_length=100)
-    
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
-        super(ChangePassword, self).__init__(*args, **kwargs)
-        
-    
-    def clean_confirm(self):
-        
-        if self.data.get('confirm_password') != self.cleaned_data.get('new_password'):
-            raise forms.ValidationError(
-                'Confirm password do not match with new password'
-            )
-            
-            password_validation.validate_password(
-                self.cleaned_data.get('new_password'), user=self.user
-            )
-            
-            return self.data.get('confirm_password')
+  
         
         
-        
-
 class LoginForm(forms.ModelForm):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
@@ -183,7 +110,6 @@ class MarketingAdminUserChangeForm(UserChangeForm):
     
 class EmployeeCreationForm(forms.ModelForm):
     
-    email        = forms.EmailField()
     first_name   = forms.CharField(required=False)
     last_name    = forms.CharField(required=False)
     address      = forms.CharField(required=False)
@@ -208,10 +134,12 @@ class EmployeeCreationForm(forms.ModelForm):
         return email
 
     def save(self, commit=True):
-        #This would save the provided password in hashed format
         user = super(EmployeeCreationForm, self).save(commit=False)
         user = User(
             email                       = self.cleaned_data['email'],
+            address                     = self.cleaned_data['address'],
+            first_name                  = self.cleaned_data['first_name'],
+            last_name                   = self.cleaned_data['last_name'],
             is_budgetary                = self.cleaned_data['is_budgetary'],
             is_ihe                      = self.cleaned_data['is_ihe'],
             is_shs                      = self.cleaned_data['is_shs'],
@@ -237,3 +165,22 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['contact_no','birth_date']
+
+class ChangePasswordForm(forms.Form):
+    Newpassword = forms.CharField(max_length=100, widget=forms.PasswordInput())
+    Confirmpassword= forms.CharField(max_length=100, widget=forms.PasswordInput())
+    
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+        
+    def clean_confirm(self):
+        if self.data.get('Confirmpassword') != self.cleaned_data.get('Newpassword'):
+            raise forms.ValidationError(
+                'Confirm Password Do Not Match With New Password'
+            )
+            
+        password_validation.validate_password(
+            self.cleaned_data.get('Newpassword'), user=self.user
+        )
+        return self.data.get('Cofnrimpassword')

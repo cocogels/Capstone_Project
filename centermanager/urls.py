@@ -3,8 +3,9 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 
 from . import views
-from centermanager.views import SchoolYearCreateView
-
+from . import t_views
+from . import s_views
+from . import sy_views
 app_name = 'centermanager'
 
 
@@ -27,20 +28,21 @@ urlpatterns = [
     path('commission/<int:pk>/edit/', views.CommissionUpdateView.as_view(), name='commission_update'),
 
     
-    path('create/sanction/', views.SanctionSettingCreateView.as_view(), name='create_sanction'),
-    path('sanction/list/', views.SanctionSettingListView.as_view(), name='sanction_list'),   
-    path('sanction/<int:pk>/details/', views.SanctionSettingDetailView.as_view(), name='sanction_detial'),
-    path('sanction/<int:pk>/edit/', views.SanctionSettingUpdateView.as_view(), name='sanction_update'),
+    path('create/sanction/', s_views.SanctionSettingCreateView.as_view(), name='create_sanction'),
+    path('sanction/list/', s_views.SanctionSettingListView.as_view(), name='sanction_list'),   
+    path('sanction/<int:pk>/details/', s_views.SanctionSettingDetailView.as_view(), name='sanction_detial'),
+    path('sanction/<int:pk>/edit/', s_views.SanctionSettingUpdateView.as_view(), name='sanction_update'),
 
 
     
-    path('create/school-year/', views.SchoolYearCreateView.as_view(), name='create_school_year'),
+    path('school-year/', sy_views.SchoolYearCreateView.as_view(), name='create_school_year'),
+    path('school-year/list/', sy_views.SchoolYearListView.as_view(), name='school_year_list'),
+    path('school-year/<int:year>', sy_views.SchoolYearArchiveView.as_view(), name='school_year_archive'),
     
-
-    path('create/target-sheet/', views.TargetSheetCreateView.as_view(), name='create_target'),
-    path('target-sheet/', views.TargetSheetListView.as_view(), name='target'),
-    path('target-sheet/<int:pk>/details/', views.TargetSheetDetailView.as_view(), name='target_details'),
-    path('target-sheet/<int:pk>/edit/', views.TargetUpdateView.as_view(), name='target_update'),
+    path('create/target-sheet/', t_views.TargetSheetCreateView.as_view(), name='create_target'),
+    path('target-sheet/', t_views.TargetSheetListView.as_view(), name='target'),
+    path('target-sheet/<int:pk>/details/', t_views.TargetSheetDetailView.as_view(), name='target_details'),
+    path('target-sheet/<int:pk>/edit/', t_views.TargetUpdateView.as_view(), name='target_update'),
          
 ]
 

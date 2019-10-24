@@ -7,10 +7,14 @@ from accounts.models import User
 import datetime
 from datetime import date
 from taggit.managers import TaggableManager
-
+from django.core.exceptions import ValidationError
 
 from django.conf import settings
 
+def present_or_future_date(value):
+    if value < datetime.date.today():
+        raise ValidationError("The date cannot be in the past!")
+    return value
 
 class Collateral(models.Model):
     
@@ -126,8 +130,8 @@ class AssignQuota(models.Model):
    
     assigned_to           = models.ManyToManyField(User, related_name="assign_user")
     created_by            = models.ForeignKey(User, related_name='assign_created_by', on_delete=models.SET_NULL, null=True)
-    start_month           = models.DateField(validators = settings.DATE_VALIDATORS)
-    end_month             = models.DateField(validators = settings.DATE_VALIDATORS)
+    start_month           = models.DateField(validators=[present_or_future_date])
+    end_month             = models.DateField(validators=[present_or_future_date])
     a_senior_high         = models.BigIntegerField(null=True)
     a_higher_education    = models.BigIntegerField(null=True)
     a_retail              = models.BigIntegerField(null=True)

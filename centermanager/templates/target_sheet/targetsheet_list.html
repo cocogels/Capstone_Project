@@ -22,6 +22,8 @@
 
 {% block content %}
 <div class="container-fluid">
+<<<<<<< HEAD
+=======
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
               
@@ -35,6 +37,7 @@
         </div>
         </div>
 
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
     <div class="card">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs"> 
@@ -61,6 +64,25 @@
             <h5 class=" mb-0 text-gray-800">School Year: </h5>   
     <!-- search field -->
 
+<<<<<<< HEAD
+
+  
+    <!-- <form action="" method='GET'>
+        <select name="" id="">
+
+        </select>
+    </form> -->
+        <!-- <div class="topbar-divider d-none d-sm-block" style="padding-right:68%"></div>
+     <div class="input-group float-right" style="max-width: 20%;">            
+                <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
+                <div class="input-group-prepend" >
+                  <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
+                </div>
+              </div>                 -->
+    </nav>
+
+
+=======
         <div class="topbar-divider d-none d-sm-block" style="padding-right:83%"></div>
      <div class="dropdown float-right" style="max-width: 20%;">            
                     <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,6 +101,7 @@
 
         
     
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
     <!-- End of Bread Crumb -->
     <br>
 
@@ -294,11 +317,58 @@ DIV THAT SHOWS ALL THE ADDED SANCTION
 
     <div class="card-body"> 
         <center>
+<<<<<<< HEAD
+       <div class="card" style="border-color: #36B9CC; max-width: 50%;">     
+=======
        {% for target_sheet_record in target_sheet_obj %}             
        <div class="card" style="border-color: #36B9CC; max-width: 50%;%">     
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
       
           
        <div class="card-body">   
+<<<<<<< HEAD
+       
+       <table class="table table-sm">
+    
+                   <thead class="card-header">
+                       <tr>
+                       <th scope="col">Name</th>
+                       <th scope="col">Target details</th>
+                       </tr>
+                   </thead>
+    
+                   <tbody>
+                    {% for target in target_sheet_obj %}
+                       <tr>
+                           <td>ICL: Corporate:</td>
+                           <td>{{ target_sheet_record.corporate }}</td>
+                       </tr>
+
+                       <tr>
+                           <td>ICL: Retail:</td>
+                           <td>{{ target_sheet_record.retail }}</td>
+                       </tr>
+                       
+                       <tr>    
+                           <td>OWWA</td>
+                           <td>{{ target_sheet_record.owwa }}</td>
+                       
+                       </tr>
+                       <tr>
+                           <td>Informatics Senior High School:</td>
+                           <td>{{ target_sheet_record.seniorhigh }}</td>
+                       </tr>
+
+                       <tr>
+                           <td>Informatics Higher Education:</td>
+                           <td> {{ target_sheet_record.higher_ed }}</td>
+                       </tr>
+                    {% endfor %}                
+                   </tbody>
+                   </table>
+
+                                  
+=======
          
         <table class="table table-sm">
             <thead class="card-header">
@@ -336,6 +406,7 @@ DIV THAT SHOWS ALL THE ADDED SANCTION
                           
             </tbody>
             </table>
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
        </div>
        </div>
        <br>

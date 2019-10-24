@@ -76,10 +76,13 @@
     
         <div class="card-body"> 
             <div class="card" style="border-color: #36B9CC; max-width: 50%; margin-left:25%">     
-           
-                        
+          
             <div class="card-body">   
+<<<<<<< HEAD
+      
+=======
             {% for sanction in sanction_obj_list %}
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
             <table class="table table-sm" >
                         <thead>
                             <tr>
@@ -87,6 +90,7 @@
                             <th scope="col">Sanction</th>
                             </tr>
                         </thead>
+                        {% if sanction_obj_list in sanction %}
                         <tbody>
                             
                             <tr>
@@ -96,28 +100,30 @@
     
                             <tr>
                                 <td>Second Month</td>
-                                <td>{{ sanction.second_sanction }}</td>
+                                <td>{{ second_sanction }}</td>
                             </tr>
                             
                             <tr>    
                                 <td>Third Month</td>
-                                <td>{{ sanction.third_sanction }}</td>
+                                <td>{{ third_sanction }}</td>
                             
                             </tr>
                             <tr>
                                 <td>Fourth Month</td>
-                                <td>{{ sanction.fourth_sanction }}</td>
+                                <td>{{ fourth_sanction }}</td>
                             </tr>
                             
                             <tr>    
                                 <td>Fifth Month</td>
-                                <td>{{ sanction.fifth_sanction }}</td>
+                                <td>{{ fifth_sanction }}</td>
                             
                             </tr>
-                            
+                        {% else %}
+                        <p>No Sanction Has Been Found</p>
+                        {% endif %}
                         </tbody>
                         </table>
-                        {% endfor %}
+                 
                           
             </div>
         

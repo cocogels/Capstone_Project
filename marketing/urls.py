@@ -22,18 +22,20 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from accounts.forms import AuthenticationForm
+from material.frontend import urls as frontend_urls
 
 #from accounts.urls import user_login, user_logout
 urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard', include( 'jet.dashboard.urls', 'jet-dashboard')),
+    path('activity/', include(frontend_urls)),
     path('admin/', admin.site.urls),
     path('crm_blog/', include('crm_blog.urls'),),
     path('center/', include('centermanager.urls'),),
     path('contacts/', include('contacts.urls')),
     path('accounts/', include('accounts.urls'),),
+    path('schedule/', include('activitycalendar.urls')),
     path('marketinghead/', include('marketinghead.urls')),
-    path('careerconsultant/', include('careerconsultant.urls')),
     path('registrar/',include('registrar.urls')),
     path('', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),

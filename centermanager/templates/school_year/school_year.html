@@ -61,6 +61,36 @@
 </div>
 </div>
         
+<<<<<<< HEAD
+        <br><br>
+      
+               <div class="card-body">
+                 <form action="" method="POST">                      
+                         {% csrf_token %}
+                                        
+                    <fieldset class="form-group" >
+                                {{ form|crispy }}
+                    </fieldset> 
+                
+                    <div class="row float-right " style="padding-right: 5%;">        
+                        <div class="form-group ">
+                            <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                         </div>
+                                        &nbsp
+                    <div class="form-group float-left">
+                        <a href="#" class="btn btn-outline-info">
+                                        Cancel
+                        </a>    
+                 </div>  
+                    </div>
+                    </div>               
+                    </form>
+                  </div>                   
+            </div>
+
+
+=======
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
     
     <!-- End of Bread Crumb -->
     <br>
@@ -148,19 +178,11 @@
     <div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; ">
         
         <div class="card-body">        
-            {% for school_year_record in school_year_record %}
             <ul>
-                <li>
-                    <strong>Start Year:</strong>
-                    {{ school_year_record.start_year }}
-                </li>
-                <li>
-                    <strong>End Year:</strong>
-                    {{ school_year_record.end_year }}
-                </li>
+                {% for date in date_list %}
+                <li>{{ date|date }}</li>
+                {% endfor %}
             </ul>
-            {% endfor %}
-    
         </div>
     </div> 
     <br><br>

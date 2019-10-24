@@ -69,16 +69,22 @@
                         <th scope="col">Date of Added</th>
                     </tr>
                 </thead>
+<<<<<<< HEAD
+                {% for budget in budget_list_obj %}
+                <tbody>   
+=======
                 {% for Budget in budget_list_obj %}
                 <tbody >   
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
                 <tr class=" border border-dark">
-                        <td scope="row">{{ Budget.b_id }}</td>
-                        <td>{{ Budget.amount }}</td>
-                        <td>{{ Budget.arrival }}</td>
-                        <td>{{ Budget.date_created }}</td>
+                        <td scope="row">{{ budget.b_id }}</td>
+                        <td>{{ budget.amount }}</td>
+                        <td>{{ budget.arrival }}</td>
+                        <td>{{ budget.date_created }}</td>
                     </tr>
                 </tbody>
-           {% endfor %}
+                {% endfor %}
+     
         </table> 
 </div>
     <br>

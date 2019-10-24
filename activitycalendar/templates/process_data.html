@@ -1,0 +1,25 @@
+{% if process.pk %}
+{% with process.activity as activity %}
+<div class='row'>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-title black-text">{{ activity.activity_name }}</div>
+            <table class="table">
+                <thead>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </thead>
+                <tbody>
+                    {% for date in activity.activity_set.all %}
+                    <tr>
+                        <td> {{ date.start_date }}</td>
+                        <td> {{ date.end_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endwith %}
+{% endif %}

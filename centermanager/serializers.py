@@ -4,9 +4,9 @@ from rest_framework.validators import UniqueForYearValidator
 from django.db.models import Q
 from rest_framework import serializers
 from bootstrap_datepicker_plus import YearPickerInput
-from .models import SchoolYearModel
+from .models import SchoolYear, Matriculation
 from django.utils.translation import gettext as _
-
+from bootstrap_datepicker_plus import DatePickerInput
 
 
 def present_or_future_date(value):
@@ -15,16 +15,20 @@ def present_or_future_date(value):
     return value
 
 class SchoolYearSerializer(serializers.ModelSerializer):
-    start_year = serializers.DateField(validators=[present_or_future_date])
+    start_year  = serializers.DateField(validators=[present_or_future_date])
     end_year    = serializers.DateField(validators=[present_or_future_date])
 
 
     class Meta:
-        model= SchoolYearModel
+        model= SchoolYear
         fields = [
             'start_year',
             'end_year',
         ]
+        widgets = {
+            'start_year': DatePickerInput().start_of('school year'),
+            'end_year': DatePickerInput().end_of('school year'),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
