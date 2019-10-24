@@ -1,7 +1,6 @@
 from django import forms
 from .models import IHE_ContactModel, ICL_ContactModel, SHS_ContactModel, IHE_ContactCategoryModel, ICL_ContactCategoryModel, SHS_ContactCategoryModel
 
-from phonenumber_field.formfields import PhoneNumberField
 
 class ICLContactForm(forms.ModelForm):
 

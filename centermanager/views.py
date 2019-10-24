@@ -214,7 +214,7 @@ class EmployeeUpdateView(UpdateView):
 class SchoolYearCreateView(CreateView):
     model = SchoolYearModel
     form_class = SchoolYearForm
-    template_name = 'target_sheet/create_target.html'
+    template_name = 'school_year/school_year.html'
     
     
     

@@ -67,7 +67,7 @@ class SchoolYearModel(models.Model):
     date_created    = models.DateField(_("Date Created"), auto_now_add=True,)
     
     school_year = SchoolYearManager()
-    
+  
 
     @property
     def created_on_arrow(self):

@@ -1,7 +1,6 @@
 from django.db import models
 from accounts.models import Profile
 from django.core.validators import RegexValidator
-from phonenumber_field.modelfields import PhoneNumberField
 
 class ICL_ContactCategoryModel(models.Model):
     name            = models.CharField(max_length=255)

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
@@ -15,7 +14,7 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Commission</title>
+        <title>Marketing | Target Sheet</title>
 {% endblock title %}
 
 
@@ -23,166 +22,166 @@
 
 {% block content %}
 <div class="container-fluid">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
+              
+        <div class="float-left">
+         
+        </div>
+        </div>
 
-    <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
-        <h4>Matriculation</h4>   
-<!-- search field -->
-    <div class="topbar-divider d-none d-sm-block" style="padding-right:70%"></div>
- <div class="input-group float-right" style="max-width: 20%;">            
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-            <div class="input-group-prepend" >
-              <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
-            </div>
-          </div>                
-    </nav>
-    
-    <!-- End of Bread Crumb -->
-    <br>
-
-<!-- page content -->
-<div class="content-section">
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:create_school_year' %}">School Year</a>
+                  </li>              
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="{% url 'centermanager:target' %}">Target Sheet</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:commission_list' %}">Commission</a>
+              </li>              
+            </ul>
+          </div>
+      <div class="card-body">
+<br>
+    <div class="content-section">
         {% include 'messages.html' %}
-    
 
-<!-- DIV FOR ADDING SANCTION-->
-
-  
-<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
-    <!-- BUTTON ADD SANCTION-->
-    <div class="row"> 
-            <a href="#" class="btn " >&nbsp
-                    <span class="text btn btn-info">IHE:Night </span>
-            </a>    
-            <a href="#" class="btn " >
-                    <span class="text btn btn-info">IHE:Regular</span>
-            </a>
-            <a class="btn" href="#">
-                <span class="text btn btn-info">Senior High School</span>
-            </a>
-    </div>     
-        </div>
-
-
-    <div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; max-width: 70%">    
-     
-
-        <div class="row mx-auto py-3 " style="min-width:96%; min-height: 50%; margin-bottom: 1% ;" >
-                <div class="card border-primary " >
-                    <div class="card-body text-primary">
-                    <div class="card-title">Informatics Higher Education: Regular Class</div>
-            <table class="table table-sm">
-                    <tbody>
-                        <tr>
-                            <td>Registration Fee</td>
-                            <td>{{ target_sheet_record.corporate }}</td>
-                        </tr>
-        
-                        <tr>
-                            <td>Miscellaneous Fee</td>
-                            <td>{{ target_sheet_record.retail }}</td>
-                        </tr>
-                        
-                        <tr>    
-                            <td>Laboratory Fee</td>
-                            <td>{{ target_sheet_record.owwa }}</td>
-                        
-                        </tr>
-                        <tr>
-                            <td>Amount per Unit(cash)</td>
-                            <td>{{ target_sheet_record.seniorhigh }}</td>
-                        </tr>
-        
-                        <tr>
-                            <td>Amount per Unit(installment)</td>
-                            <td> {{ target_sheet_record.higher_ed }}</td>
-                        </tr>
-                    </tbody>
-                    </table>
-                    </div>
-                    </div>
-        </div>              
-
-        <div class="row mx-auto py-3 " style="min-width:96%; min-height: 50%; margin-bottom: 1% ;" >
-                <div class="card border-primary " >
-                    <div class="card-body text-primary">
-                    <div class="card-title">Informatics Higher Education: Night Class</div>                                                 
-                    <table class="table table-sm">
-                            <tbody>
-                                <tr>
-                                    <td>Registration Fee</td>
-                                    <td>{{ target_sheet_record.corporate }}</td>
-                                </tr>
-                
-                                <tr>
-                                    <td>Miscellaneous Fee</td>
-                                    <td>{{ target_sheet_record.retail }}</td>
-                                </tr>
-                                
-                                <tr>    
-                                    <td>Laboratory Fee</td>
-                                    <td>{{ target_sheet_record.owwa }}</td>
-                                
-                                </tr>
-                                <tr>
-                                    <td>Amount per Unit(cash)</td>
-                                    <td>{{ target_sheet_record.seniorhigh }}</td>
-                                </tr>
-                
-                                <tr>
-                                    <td>Amount per Unit(installment)</td>
-                                    <td> {{ target_sheet_record.higher_ed }}</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                    </div>
-                    </div>
-        </div>                                
-                
-    <div class="row mx-auto py-3 " style="min-width:96%; min-height: 50%; margin-bottom: 1% ;" >
-            <div class="card border-primary " >
-                <div class="card-body text-primary">
-                <div class="card-title">Senior High School</div>                                                 
-                <table class="table table-sm">
-                        <tbody>
-                            <tr>
-                                <td>Registration Fee</td>
-                                <td>{{ target_sheet_record.corporate }}</td>
-                            </tr>
-                        </tbody>
-                                if no voucher
-                         <tbody> 
-                            <tr>    
-                                <td>Laboratory Fee</td>
-                                <td>{{ target_sheet_record.owwa }}</td>
-                            
-                            </tr>
-                            <tr>
-                                <td>Amount per Unit(cash)</td>
-                                <td>{{ target_sheet_record.seniorhigh }}</td>
-                            </tr>
-            
-                            <tr>
-                                <td>Amount per Unit(installment)</td>
-                                <td> {{ target_sheet_record.higher_ed }}</td>
-                            </tr>
-                        </tbody>
-                        </table>
+        <div class="card-deck">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Senior High School</h5>
+                        <form>
+                                <div class="form-row">
+                                  <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Registration Fee:</label>
+                                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                                  </div>
+                                  <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Miscellaneous Fee:</label>
+                                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                                  </div>
+                                </div>
+                                <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                          <label for="inputEmail4">Laboratory Fee: </label>
+                                          <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                          <label for="inputPassword4">ID Fee:</label>
+                                          <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                                        </div>
+                                      </div>
+                                      <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                              <label for="inputEmail4">Fee per Unit(Cash): </label>
+                                              <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                              <label for="inputPassword4">Fee per Unit(Installment):</label>
+                                              <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                                            </div>
+                                          </div>
+                                <button type="submit" class="btn btn-primary float-right">Edit</button>
+                              </form>    
+                  </div>
                 </div>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education (Night Class)</h5>
+                    <form>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="inputEmail4">Registration Fee:</label>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="inputPassword4">Miscellaneous Fee:</label>
+                                <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                              </div>
+                            </div>
+                            <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                      <label for="inputEmail4">Laboratory Fee: </label>
+                                      <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label for="inputPassword4">ID Fee:</label>
+                                      <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                                    </div>
+                                  </div>
+                                  <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                          <label for="inputEmail4">Fee per Unit(Cash): </label>
+                                          <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                          <label for="inputPassword4">Fee per Unit(Installment):</label>
+                                          <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                                        </div>
+                                      </div>
+                            <button type="submit" class="btn btn-primary float-right">Edit</button>
+                          </form>
+                  </div>
                 </div>
-    </div>            
-
-
-                                         
-            </div>
-        </div>
-    </div>
-
-
-
-
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education (Regular Class)</h5>
+                    <form>
+                            <div class="form-row">
+                              <div class="form-group col-md-6">
+                                <label for="inputEmail4">Registration Fee:</label>
+                                <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                              </div>
+                              <div class="form-group col-md-6">
+                                <label for="inputPassword4">Miscellaneous Fee:</label>
+                                <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                              </div>
+                            </div>
+                            <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                      <label for="inputEmail4">Laboratory Fee: </label>
+                                      <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label for="inputPassword4">ID Fee:</label>
+                                      <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                                    </div>
+                                  </div>
+                                  <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                          <label for="inputEmail4">Fee per Unit(Cash): </label>
+                                          <input type="email" class="form-control" id="inputEmail4" placeholder="0">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                          <label for="inputPassword4">Fee per Unit(Installment):</label>
+                                          <input type="password" class="form-control" id="inputPassword4" placeholder="0">
+                                        </div>
+                                      </div>
+                            <button type="submit" class="btn btn-primary float-right">Edit</button>
+                          </form>
+                  </div>
+                </div>
+              </div>
+</div>
+</div>
+</div>
+</div>
+<br>
 {% endblock content %}
 
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock footer %}
+
+
+
+
