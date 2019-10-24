@@ -23,9 +23,7 @@ class SchoolYearCreateView(AjaxFormMixin, CreateView):
     model = SchoolYear
     form_class = SchoolYearForm
     template_name = 'target_sheet/create_target.html'
-    success_url = 'centermanager:create_school_year'
-    
-    
+
     
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_centermanager:
@@ -72,20 +70,15 @@ class SchoolYearCreateView(AjaxFormMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(SchoolYearCreateView, self).get_context_data(**kwargs)
-        context = {}
         context['school_year_form'] = context['form']
         school_year = SchoolYear.objects.all()
-        context['school_year_list'] = school_year
-        context['start_year'] = school_year
-        comtext['end_year'] = school_year
-        context['current_year'] = _year
         return context
 
 
 
 class SchoolYearListView(ListView):
     model = SchoolYear
-    template_name = 'target_sheet/create_target.html'
+    template_name = 'school_year/school_year.html'
     context_object_name = 'school_year_list'
     
     def get_queryset(self):

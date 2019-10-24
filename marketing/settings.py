@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     'viewflow.frontend',
     'material',
     'material.frontend',
-    'django_tables2',
+    #'django_tables2',
     #handling our crm content
     'crm_blog.apps.CrmBlogConfig',
     #handling  adding cm  set details
@@ -130,7 +130,7 @@ WSGI_APPLICATION = 'marketing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'capstone3',
+        'NAME': 'db_capstone3',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
