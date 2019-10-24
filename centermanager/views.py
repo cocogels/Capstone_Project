@@ -120,6 +120,7 @@ class EmployeeRegistration(CreateView):
     def get_context_data(self, **kwargs):
         context = super(EmployeeRegistration, self).get_context_data(**kwargs)
         context['employee_form'] = context["form"]
+        context['employee_list'] = User.objects.all() #can be used in any page
         context['users'] = self.users
         return context
     

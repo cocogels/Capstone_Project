@@ -103,46 +103,33 @@
     </nav> 
               <center>
               <div>
-                <table class="table table-bordered" style="height: 100%;">
-                    <thead class="bg-primary text-light">
-                      <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Firstname</th>
-                        <th scope="col">Lastname</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">2018 - 2019</th>
-                        <td>Active</td>
-                        <td>Active</td>
-                        <td>Active</td>
-                        <td>
-                          <a href="#" class="btn btn-success">View</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2017 - 2018</th>
-                        <td>Active</td>
-                        <td>Active</td>
-                        <td>Inactive</td>
-                        <td>
-                          <a href="#" class="btn btn-success">View</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2016 - 2017</th>
-                        <td>Active</td>
-                        <td>Active</td>
-                        <td>Inactive</td>
-                        <td>
-                          <a href="#" class="btn btn-success">View</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table> 
+                    <table class="table table-bordered" style="height: 100%;">
+                            <thead class="bg-primary text-light">
+                              <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Lastname</th>
+                                <th scope="col">Role</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            {% for user in employee_list %}         
+                                    <tbody>
+                                       <tr> 
+                                           <td>{{ user.id }}</td>
+                                           <td>{{ user.email }}</td>
+                                           <td>{{ user.first_name }}</td>
+                                           <td>{{ user.last_name }}</td>
+                                           
+                                           <td>{{ user.is_centermanager|yesno:"Centermanager," }}{{ user.is_marketinghead|yesno:"MarketingHead," }}{{ user.is_centerbusinessmanager|yesno:"CenterBusinessManager," }}</td>
+                                           <td>
+                                               <a href="#" class="btn btn-success btn-sm">VIEW</a>
+                                           </td>
+                                       </tr>
+                                    </tbody>
+                                {% endfor %}
+                          </table> 
                </div>   
              </center>       
 

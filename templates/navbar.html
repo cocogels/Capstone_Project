@@ -9,16 +9,6 @@
     <!-- Topbar Navbar -->
 
 
-
-    {% if request.user.is_marketinghead %}
-    <ul class="navbar-nav mr-auto float-left">
-        <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp
-        <li><a class="btn btn-outline-light" href="{% url 'accounts:user_list' %}">Career Consultant</a></li>&nbsp
-        <li><a class="btn btn-outline-light" href="{% url 'marketing_head:collateral_list' %}">Collateral</a></li>&nbsp
-        <li><a class="btn btn-outline-light" href="{% url 'marketing_head:budget_list' %}">Budget</a></li>&nbsp       
-    </ul>
-    {% endif %}
-
     {% if request.user.is_superuser %}
     <ul class="navbar-nav mr-auto float-left">
         <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp

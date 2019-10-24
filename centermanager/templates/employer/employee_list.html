@@ -65,6 +65,7 @@
                     <thead class="bg-primary text-light">
                       <tr>
                         <th scope="col">Id</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Firstname</th>
                         <th scope="col">Lastname</th>
                         <th scope="col">Role</th>
@@ -75,12 +76,13 @@
                             <tbody>
                                <tr> 
                                    <td>{{ user.id }}</td>
+                                   <td>{{ user.email }}</td>
                                    <td>{{ user.first_name }}</td>
                                    <td>{{ user.last_name }}</td>
                                    
-                                   <td>{{ user.is_centermanager|yesno:"Centermanager," }}/{{ user.is_marketinghead|yesno:"MarketingHead," }}{{ user.is_centerbusinessmanager|yesno:"CenterBusinessManager," }}</td>
+                                   <td>{{ user.is_centermanager|yesno:"Centermanager," }}{{ user.is_marketinghead|yesno:"MarketingHead," }}{{ user.is_centerbusinessmanager|yesno:"CenterBusinessManager," }}</td>
                                    <td>
-                                       <a href="#">VIEW</a>
+                                       <a href="#" class="btn btn-success btn-sm">VIEW</a>
                                    </td>
                                </tr>
                             </tbody>
