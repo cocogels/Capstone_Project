@@ -57,9 +57,8 @@ class UsersListView(LoginRequiredMixin, TemplateView):
             ('True', ' Active'),
             ('False', 'In Active')
         ]
-
+        context['user_obj_list'] = User.objects.all()
         return context
-
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
@@ -116,6 +115,7 @@ class CreateUserView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateUserView, self).get_context_data(**kwargs)
         context['user_form'] = context['form']
+        context['user_list'] = User.objects.all()
         if 'errors' in kwargs:
             context['errors'] = kwargs['errors']
         return context

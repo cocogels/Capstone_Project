@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
@@ -15,106 +14,104 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Career Comsultant</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
+
+
 {% load crispy_forms_tags %}
 
-
 {% block content %}
-    <!-------------------------------------------- Start of PAGE CONTENT -------------------------------------------------->
 <div class="container-fluid">
-
-    <!-------------------------------------------- Start of Breadcrumb -------------------------------------------------->
-    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
-        <h4>Career Consultant</h4>   
-    <!-------------------- search field --------------------------------------------------------------------------------->
-        <div class="topbar-divider d-none d-sm-block" style="padding-right:65%"></div>
-        <div class="input-group float-right" style="max-width: 20%;">            
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-        <div class="input-group-prepend" >
-            <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
-        </div>
-        </div>                
-    </nav>    
-    <!-------------------------------------------- End of Bread Crumb ------------------------------------------------------>
+    <div class="d-sm-flex align-items-center">
+        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
+    </div>
     <br>
+    <div class="card">
+        <div class="card-body">
+            <br>
 
-    <!------------------------------------------- page content ------------------------------------------------------------->
-    <div class="content-section">
-        {% include 'messages.html' %}
-    
-
-    <!------------------------------------- DIV FOR ADDING career consultant------------------------------------------------->
-    
-    <div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
-        <!-- BUTTON ADD SANCTION-->
-            <div class="row"> 
-                    <a href="{% url 'accounts:create_user' %}" class="btn float-left" >
-                            <span class="text btn btn-info">Add Career Consultant</span>
-                    </a>    
-                    <a href="{% url 'marketing_head:add_territory' %}" class="btn float-right" >
-                            <span class="text btn btn-info">Assign Territory</span>
+            <!-- page content -->
+            <div class="content-section">
+                {% include 'messages.html' %}
+                <div class="float-right">
+                    <a href="{% url 'accounts:create_user' %}" class="btn float-left">
+                        <span class="text btn btn-primary">Add Career Consultant</span>
                     </a>
-                    <a class="btn" href="   {% url 'marketing_head:assign_quota' %}">
-                        <span class="text btn btn-info">Quota</span>
-                    </a>
+
+                </div>
+
             </div>
-        
-        
-       
-    </div>
-    <!------------------------------------- END OF DIV FOR ADDING career consultant------------------------------------------------->
-    
-    <!----------------------------- DIV THAT SHOWS ALL THE ADDED career consultant------------------------------------>       
-    <div class=" card card-deck float-right" style="min-height:600px; min-width: 70%; ">    
-            <div class="card-body"> 
-               
+        </div>
+        <br>
+        <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+        <center>
+            <div style="margin-right: 2%; margin-left: 2%;">
+                <table class="table table-bordered" style="height: 100%;">
+                    <thead class="bg-primary text-light">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Firstname</th>
+                            <th scope="col">Lastname</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    {% for user in user_obj_list %}
+                    <tbody>
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email  }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
 
-                
-                <br>
-                <div class="card" style="border-color: #36B9CC; min-width:50%; ">     
-                    <center>
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                <th scope="col">Id</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Lastname</th>
-                                <th scope="col">Firstname</th>
-                                <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                        {% for user in users %}         
-                            <tbody>
-                               <tr> 
-                                   <td>{{ user.id }}</td>
-                                   <td>{{ user.email }}</td>
-                                   <td>{{ user.last_name }}</td>
-                                   <td>{{ user.first_name }}</td>
-                                   <td>
-                                       <a href="#">VIEW</a>
-                                   </td>
-                               </tr>
-                            </tbody>
-                        {% endfor %}
-                            </table>
-        
-                    </center>
-                </div><br>  
+                            <td>
+                                {{ user.is_centermanager|yesno:"Centermanager," }}{{ user.is_marketinghead|yesno:"MarketingHead," }}{{ user.is_centerbusinessmanager|yesno:"CenterBusinessManager," }}
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-success btn-sm">VIEW</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
             </div>
-        </div>  
-    
-    <!----------------------------- END OF DIV THAT SHOWS ALL THE ADDED career consultant------------------------------------>      
+        </center>
+
     </div>
-    <!------------------------------------------- end page content ------------------------------------------------------------->
- </div>
-    <!------------------------------------------- end page  ------------------------------------------------------------->
+</div>
+</div>
+<br>
 
 
 
 
+
+
+
+
+
+
+<!--start-->
+
+</div>
+</div>
+<br>
+</div>
+</div>
+<br><br>
+
+<!--end-->
 {% endblock content %}
 
 {% block footer %}
-    {% include 'footer.html' %}
+{% include 'footer.html' %}
 {% endblock footer %}

@@ -41,6 +41,9 @@ class TargetSheetListView(TemplateView):
         context['target_sheet_obj'] = self.get_queryset()
         context['filter'] = SchoolYearFilter(self.request.GET, queryset=self.get_queryset())
         context['per_page'] = self.request.POST.get('per_page')
+
+        targetsheet = TargetSheet.objects.all()
+        context['school_year_list'] = targetsheet
         return context
     
     
@@ -63,9 +66,6 @@ class TargetSheetCreateView(CreateView):
         return super(TargetSheetCreateView, self).dispatch(
             request, *args, **kwargs
         )
-    
-    
-    
     
     def post(self, request, *args, **kwargs,):
         self.object = None

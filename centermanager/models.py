@@ -43,7 +43,7 @@ class SchoolYearManager(models.Manager):
         return SchoolYearQuerySet(self.model, using=self._db)
 
 def get_end_year():
-    return datetime.date.today() + timedelta(days=365)
+    return timedelta(days=365)
 
 def get_start_year():
     return datetime.date.today()

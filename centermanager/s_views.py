@@ -32,10 +32,12 @@ class SanctionSettingListView(TemplateView):
         queryset = SanctionSetting.objects.all()
 
     def get_context_data(self, **kwargs):
-        context = super(SanctionSettingListView,
-                        self).get_context_data(**kwargs)
+        context = super(SanctionSettingListView,self).get_context_data(**kwargs)
         context['sanction_obj_list'] = self.get_queryset()
         context['per_page'] = self.request.POST.get('per_page')
+        
+        sanction = SanctionSetting.objects.all()
+        context['sanction_list'] = sanction
         return context
 
     def post(self, request, *args, **kwargs):
@@ -149,8 +151,7 @@ class SanctionSettingUpdateView(UpdateView):
         return redirect('centermanager:create_sanction')
 
     def get_context_data(self, **kwargs):
-        context = super(SanctionSettingUpdateView,
-                        self).get_context_data(**kwargs)
+        context = super(SanctionSettingUpdateView, self).get_context_data(**kwargs)
         context['sanction_obj'] = self.object
         context['sanction_form'] = context['form']
 

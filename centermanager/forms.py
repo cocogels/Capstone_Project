@@ -31,14 +31,14 @@ class EmployeeRegistrationForm(forms.ModelForm):
 
     def clean_email(self, *args, **kwargs):
         email = self.cleaned_data.get('email')
-        queryset = fitler(email__iexact=email)
+        queryset = User.objects.filter(email__iexact=email)
         if queryset.exists():
             raise forms.ValidationError('This Email Already Registered')
         return email
 
     def save(self, commit=True):
         user = super(EmployeeRegistrationForm, self).save(commit=False)
-        user = UserMarketing(
+        user = User(
             email                       = self.cleaned_data['email'],
             first_name                  = self.cleaned_data['first_name'],
             last_name                   = self.cleaned_data['last_name'],
@@ -77,7 +77,7 @@ class SchoolYearForm(forms.ModelForm):
         end_year    = self.cleaned_data.get('end_year')
         
         year = date.today() + timedelta(days=365)
-        _start_year = SchoolYear.objects.filter(start_year__lte=year)
+        _start_year = SchoolYear.objects.filter(start_year__gte=year)
         
         today = datetime.date.today() + timedelta(days=365*1)
         

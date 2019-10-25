@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
@@ -15,46 +14,146 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | School Year</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
 
 
 {% load crispy_forms_tags %}
 
-
 {% block content %}
-<!-- Start of Breadcrumb -->
-<nav aria-label="breadcrumb">
-                <h4>School Year</h4>        
-            </nav>
-            <!-- End of Bread Crumb -->
+<div class="container-fluid">
+        <div class="d-sm-flex align-items-center">
+                <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
+        </div>
+        <br>
+        <div class="card">
+                <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                        <a class="nav-link active " href="{% url 'centermanager:create_school_year' %}">School Year</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link text-dark" href="{% url 'centermanager:target' %}">Target Sheet</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link text-dark" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link text-dark" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+                                </li>
+                                <li class="nav-item">
+                                        <a class="nav-link text-dark" href="{% url 'centermanager:commission_list' %}">Commission</a>
+                                </li>
+                        </ul>
+                </div>
+                <div class="card-body">
+                        <!-- Start of Breadcrumb -->
+
+
+                        <div class="card w-75" style="margin: 0 auto; float: none; margin-bottom: 10px;">
+                                <form action="" method="POST">
+                                        {% csrf_token %}
+
+                                        <fieldset class="form-group row "
+                                                style="padding-top: 5%; padding-right: 5%; padding-bottom: 0%; padding-left: 5%;">
+                                                {{ form|crispy }}
+                                        </fieldset>
+
+                                        <div class="row float-right " style="padding-right: 5%;">
+                                                <div class="form-group ">
+                                                        <button class="btn btn-outline-info"type="submit">Submit</button>
+                                                </div>
+                                                &nbsp
+                                                <div class="form-group float-left">
+                                                        <a href="{% url 'centermanager:school_year_list'%}"class="btn btn-outline-info">
+                                                                Cancel
+                                                        </a>
+                                                </div>
+
+                                        </div>
+                                </form>
+                        </div>
+
+
+                </div>
+
+
+
+
+
+                <div class="content-section">
+                        {% include 'messages.html' %}
+
+                        <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+                                <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                                </ul>
+                        </nav>
+                        <center>
+                                <div style="margin-left: 2%; margin-right: 2%;">
+                                        <table class="table table-bordered" style="height: 100%;">
+                                                <thead class="bg-primary text-light">
+                                                        <tr>
+                                                                <th scope="col">School Year</th>
+                                                                <th scope="col">Status</th>
+                                                                <th scope="col">Action</th>
+                                                        </tr>
+                                                </thead>
+                                                {% for user in school_year %}
+                                                <tbody>
+                                                        <tr>
+                                                                <td>{{ user.start_year|date:'Y' }} -
+                                                                        {{ user.end_year|date:'Y' }}</td>
+                                                                <td>{{ user.active_year|yesno:'ACTIVE, INACTIVE' }}</td>
+                                                                <td>
+                                                                        <a href="#" class="">VIEW</a>
+                                                                </td>
+                                                        </tr>
+                                                </tbody>
+                                                {% endfor %}
+                                        </table>
+                                </div>
+                        </center>
+
+                </div>
+        </div>
+</div>
+</div>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DIV FOR ADDING TARGET SHEET
+    <div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; ">
         
-        <div class="content-section">
-               {% include 'messages.html' %}
-                
-          <center><div class="card w-75"> 
-                <form action="" method="POST">                      
-                        {% csrf_token %}
-                        
-                        <fieldset class="form-group row " style="padding-top: 5%; padding-right: 5%; padding-bottom: 0%; padding-left: 5%;">
-                                {{ form|crispy }}
-                        </fieldset> 
+        <div class="card-body">        
+            <ul>
+                {% for date in date_list %}
+                <li>{{ date|date }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div> 
+    <br><br>
+-->
 
-                  <div class="row float-right " style="padding-right: 5%;">        
-                        <div class="form-group ">
-                                <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                        </div>
-                        &nbsp
-                        <div class="form-group float-left">
-                            <a href="{% url 'centermanager:scool_year_list'%}" class="btn btn-outline-info">
-                                       Cancel
-                             </a>    
-                        </div>
-
-                        </div>               
-                </form>                             
-                </div></center>
-        </div>   
 {% endblock content %}
 
 {% block footer %}

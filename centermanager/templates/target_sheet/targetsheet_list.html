@@ -53,8 +53,11 @@
           </div>
       <div class="card-body">
     <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb" class="row" style="padding-top:2%; padding-right:2%; padding-left:2%;">
+    <nav aria-label="breadcrumb" class="row align-items-center justify-content-between" style="padding-top:2%; padding-right:2%; padding-left:2%;">
             <h5 class=" mb-0 text-gray-800">School Year: </h5>   
+            <div class="d-sm-flex align-items-center">
+              <a href="{% url 'centermanager:create_target' %}" class="btn btn-primary"> ADD TARGET SHEET</a>
+          </div>
     </nav>
 
 
@@ -67,7 +70,7 @@
 <!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
-
+       
     <div class="row d-flex justify-content-center" style="min-height:50%;">
  <!-- Earnings (Monthly) Card Example -->
   <div class="col-xl-2 col-md-6 mb-4">
@@ -78,11 +81,11 @@
                 <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Senior High School </div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
-                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50</div>
                   </div>
                   <div class="col">
                     <div class="progress progress-sm mr-2">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="{{ target.seniorhigh }}" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                   </div>
                 </div>
@@ -186,7 +189,7 @@
         </div>
       </div>
     </div>
-
+   
     <hr>
     <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
       <ul class="pagination">
@@ -212,28 +215,28 @@
           </thead>
           <tbody>
             <tr>
-              <th scope="row">2018 - 2019</th>
-              <td>Active</td>
-              <td>Active</td>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
               <td>
               </td>
-              <td>Active</td>
+              <td></td>
             </tr>
             <tr>
-              <th scope="row">2017 - 2018</th>
-              <td>Active</td>
-              <td>Inactive</td>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
               <td>
               </td>
-              <td>Active</td>
+              <td></td>
             </tr>
             <tr>
-              <th scope="row">2016 - 2017</th>
-              <td>Active</td>
-              <td>Inactive</td>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
               <td>
               </td>
-              <td>Active</td>
+              <td></td>
             </tr>
           </tbody>
         </table> 

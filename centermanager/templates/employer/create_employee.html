@@ -35,7 +35,7 @@
         {% include 'messages.html' %}
         <div class="card" style="width: 60%; margin-left: 20%;">
                 <div class="card-body" >
-
+    
                         <div class="card-body">
                             <form action="" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
@@ -118,7 +118,7 @@
                                     <tbody>
                                        <tr> 
                                            <td>{{ user.id }}</td>
-                                           <td>{{ user.email }}</td>
+                                           <td>{{ user.email  }}</td>
                                            <td>{{ user.first_name }}</td>
                                            <td>{{ user.last_name }}</td>
                                            
@@ -147,39 +147,16 @@
 
 
 
+<!--start-->
 
-
-<<<<<<< HEAD
                 </div>
             </div>
             <br>
-=======
-
-
-
-<!-- DIV FOR ADDING TARGET SHEET
-    <div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; ">
-        
-        <div class="card-body">        
-            {% for school_year_record in school_year_record %}
-            <ul>
-                <li>
-                    <strong>Start Year:</strong>
-                    {{ school_year_record.start_year }}
-                </li>
-                <li>
-                    <strong>End Year:</strong>
-                    {{ school_year_record.end_year }}
-                </li>
-            </ul>
-            {% endfor %}
-    
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
         </div>
     </div> 
     <br><br>
--->
 
+<!--end-->
 {% endblock content %}
 
 {% block footer %}

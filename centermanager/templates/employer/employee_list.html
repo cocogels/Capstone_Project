@@ -14,108 +14,111 @@
 {% endblock navbar %}
 
 {% block title %}
-<<<<<<< HEAD
-        <title>Marketing | Account</title>
-=======
-        <title>Marketing | Target Sheet</title>
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
-{% endblock title %}
+<<<<<<< HEAD <title>Marketing | Account</title>
+    =======
+    <title>Marketing | Target Sheet</title>
+    >>>>>>> 180452339520ca24726b23483e4e66d43307c895
+    {% endblock title %}
 
 
-{% load crispy_forms_tags %}
+    {% load crispy_forms_tags %}
 
-{% block content %}
-<div class="container-fluid">
+    {% block content %}
+    <div class="container-fluid">
         <div class="d-sm-flex align-items-center">
-            <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
+            <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
         </div>
-<br>
-    <div class="card">
-        <div class="card-header">
-      <div class="card-body">
-    <!-- Start of Breadcrumb -->
-    
-              
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h5 class=" mb-0 text-gray-800"></h5> 
-      
-<div class="float-left">
-
-<a href="{% url 'centermanager:add_employee' %}" class="btn float-left" >
-    <span class="text btn btn-primary">Add Employee</span>
-</a>            
-</div>
-</div>
-        
-    
-    <!-- End of Bread Crumb -->
-    <br>
-
-<!-- page content -->
-    <div class="content-section">
-        {% include 'messages.html' %}
-    <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav> 
-              <center>
-              <div class="card">
-                <table class="table table-bordered" style="height: 100%;">
-                    <thead class="bg-primary text-light">
-                      <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Firstname</th>
-                        <th scope="col">Lastname</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    {% for user in employee_obj_list %}         
-                            <tbody>
-                               <tr> 
-                                   <td>{{ user.id }}</td>
-                                   <td>{{ user.email }}</td>
-                                   <td>{{ user.first_name }}</td>
-                                   <td>{{ user.last_name }}</td>
-                                   
-                                   <td>{{ user.is_centermanager|yesno:"Centermanager," }}{{ user.is_marketinghead|yesno:"MarketingHead," }}{{ user.is_centerbusinessmanager|yesno:"CenterBusinessManager," }}</td>
-                                   <td>
-                                       <a href="#" class="btn btn-success btn-sm">VIEW</a>
-                                   </td>
-                               </tr>
-                            </tbody>
-                        {% endfor %}
-                  </table> 
-               </div>   
-             </center>       
-
-    </div>
-</div>
-</div>
-</div>
-<br>
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <div class="card-body">
+                    <!-- Start of Breadcrumb -->
 
 
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h5 class=" mb-0 text-gray-800"></h5>
 
-         
- <!--DIV THAT SHOWS ALL THE ADDED SANCTION-->      
+                        <div class="float-left">
+                            <a href="{% url 'accounts:create_user' %}" class="btn float-left">
+                                <span class="text btn btn-primary">Add Career Consultant</span>
+                            </a>
 
+                            <a href="{% url 'centermanager:add_employee' %}" class="btn float-left">
+                                <span class="text btn btn-primary">Add Employee</span>
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- End of Bread Crumb -->
+                    <br>
+
+                    <!-- page content -->
+                    <div class="content-section">
+                        {% include 'messages.html' %}
+                        <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+                            <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                        <center>
+                            <div class="card">
+                                <table class="table table-bordered" style="height: 100%;">
+                                    <thead class="bg-primary text-light">
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Firstname</th>
+                                            <th scope="col">Lastname</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    {% for user in employee_obj_list %}
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ user.id }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.first_name }}</td>
+                                            <td>{{ user.last_name }}</td>
+
+                                            <td>{{ user.is_centermanager|yesno:"Centermanager," }}{{ user.is_marketinghead|yesno:"MarketingHead," }}{{ user.is_centerbusinessmanager|yesno:"CenterBusinessManager," }}
+                                            </td>
+                                            <td>
+                                                <a href="#" class="btn btn-success btn-sm">VIEW</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        </center>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
 
 
 
 
+        <!--DIV THAT SHOWS ALL THE ADDED SANCTION-->
 
 
 
 
 
-<!-- DIV FOR ADDING TARGET SHEET
+
+
+
+
+
+        <!-- DIV FOR ADDING TARGET SHEET
     <div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; ">
         
         <div class="card-body">        
@@ -137,8 +140,8 @@
     <br><br>
 -->
 
-{% endblock content %}
+        {% endblock content %}
 
-{% block footer %}
-{% include 'footer.html' %}
-{% endblock footer %}
+        {% block footer %}
+        {% include 'footer.html' %}
+        {% endblock footer %}

@@ -22,7 +22,7 @@ from django.http import JsonResponse
 class SchoolYearCreateView(AjaxFormMixin, CreateView):
     model = SchoolYear
     form_class = SchoolYearForm
-    template_name = 'target_sheet/create_target.html'
+    template_name = 'school_year/create_school_year.html'
 
     
     def dispatch(self, request, *args, **kwargs):
@@ -51,7 +51,7 @@ class SchoolYearCreateView(AjaxFormMixin, CreateView):
                     'error': False,
                 }
             )
-        return redirect('centermanager:create_target')
+        return redirect('centermanager:create_school_year')
         return super(TargetSheetCreateView, self).form_valid(form)
 
     def form_invalid(self, form):
@@ -72,6 +72,7 @@ class SchoolYearCreateView(AjaxFormMixin, CreateView):
         context = super(SchoolYearCreateView, self).get_context_data(**kwargs)
         context['school_year_form'] = context['form']
         school_year = SchoolYear.objects.all()
+        context['school_year'] = school_year
         return context
 
 
@@ -98,7 +99,6 @@ class SchoolYearListView(ListView):
             
         return queryset.distinct()
     
-    
 
     def get_context_data(self, **kwargs):
         context = super(SchoolYearListView, self).get_context_data(**kwargs)
@@ -110,7 +110,8 @@ class SchoolYearListView(ListView):
             self.request.POST.get('end_year')
         ):
             search = True
-            
+        #school_year = SchoolYear.objects.all()
+        #context['school_year_list'] = school_year
         return context
     
     def post(self, request, *args, **kwargs):

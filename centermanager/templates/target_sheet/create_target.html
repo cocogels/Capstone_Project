@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
@@ -15,7 +14,7 @@
 {% endblock navbar %}
 
 {% block title %}
-<title>Marketing | Target Sheet</title>
+        <title>Marketing | Target Sheet</title>
 {% endblock title %}
 
 
@@ -23,44 +22,42 @@
 
 {% block content %}
 <div class="container-fluid">
-    <a href="{% url 'centermanager:create_school_year' %}" class="btn float-left">
-        <span class="text btn btn-info">Add School Year</span>
-    </a>
-    <br>
-    <br>
-    <br>
-    <div class="card">
-        <!-- Start of Breadcrumb -->
 
-        <nav aria-label="breadcrumb" class="row" style="padding-top:2%; padding-right:2%; padding-left:2%;">
-        {% if school_year_list  %}
-            <h4>School Year {{ school_year_list.start_year }}</h4>
-        {% endif %}
-            <!-- Filter Field -->
-            <div class="topbar-divider d-none d-sm-block" style="padding-right:68%"></div>
-            <div class="input-group float-right" style="max-width: 20%;">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
+      
+<div class="float-left">
+ 
+</div>
+</div>
+<!---->
+<div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs"> 
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:school_year_list' %}">School Year</a>
+                  </li>              
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'centermanager:target' %}">Target Sheet</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:commission_list' %}">Commission</a>
+              </li>              
+            </ul>
+          </div>
+      <div class="card-body">
+    <!-- Start of Breadcrumb -->
+    <nav aria-label="breadcrumb" class="row align-items-center justify-content-between" style="padding-top:2%; padding-right:2%; padding-left:2%;">
+            <h5 class=" mb-0 text-gray-800">School Year: </h5>   
+    </nav>
 
-            </div>
-        </nav>
-
-        <!-- End of Bread Crumb -->
-        <br>
-        <!-- page content -->
-        <div class="content-section">
-            {% include 'messages.html' %}
-            {{ school_year_list.start_year }}
-            <!-- DIV FOR ADDING TARGET SHEET-->
-
-            <div>
-                <form id='school_year_filter' action="POST">
-                    <div class='form-group'>
-                        <input type="text">
-                    </div>
-                </form>
-            </div>
-            <div class="card card-deck float-left" style="min-width:30%; max-width:28%; margin-left:2%; ">
-                <!-- BUTTON ADD TARGET SHEET-->
-                <div class="card-body">
+<div class="card-body">
                     <div class="card-body">
                         <form class='ajax-form' action="." method="POST"
                             data-url='{{ request.build_absolute_url|safe }}' enctype="multipart/form-data">
@@ -84,182 +81,209 @@
                     </div>
                     </form>
                 </div>
-            </div>
-
-
-
-            <!-- DIV THAT SHOWS ALL THE ADDED SANCTION-->
-            <div class=" card card-deck float-right" style="min-height:560px; min-width: 65%; margin-right: 2% ">
-
-                <div class="card-body">
-                    <center>
-                        <div class="card" style="border-color: #36B9CC; max-width: 50%;">
-                            <div class="card-body table-responsive-md">
-                                <table class="table table-striped table-lg">
-                                    <tr>
-                                        <thead class="card-header">
-                                            <tr>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">School Year</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                    </tr>
-                                    {% for school_year in school_year_list %}
-
-                                    <tbody>
-                                        <tr>
-                                            <td>{{ school_year.active_year|yesno:'ACTIVE, INACTIVE' }}</td>
-                                            <td>{{ school_year.start_year|date:'Y' }} - {{ school_year.end_year|date:'Y' }}</td>
-                                            <td> <a href="">View</a> <td>
-                                        </tr>
-                                    </tbody>
-                                    {% endfor %}
-                                </table>
-                            </div>
-                        </div>
-                    </center>
-                    <br>
-                </div>
-            </div>
-            <br><br>
-
-<<<<<<< HEAD
-=======
-<!-- DIV THAT SHOWS ALL THE ADDED SANCTION-->       
-<div class=" card card-deck float-right" style="min-height:560px; min-width: 65%; margin-right: 2% ">
     
-    <div class="card-body"> 
-        <center>
-       <div class="card" style="border-color: #36B9CC; max-width: 50%;%">     
-      
-              
-       <div class="card-body">   
-       
-       <table class="table table-sm">
-              
-                   <thead class="card-header">
-                       <tr>
-                       <th scope="col">Name</th>
-                       <th scope="col">Target details</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-        {% for target_sheet_record in target_sheet_obj %}                 
-                       <tr>
-                           <td>iCL: Corporate:</td>
-                           <td>{{ target_sheet_record.corporate }}</td>
-                       </tr>
+    <!-- end -->
 
-                       <tr>
-                           <td>ICL: Retail:</td>
-                           <td>{{ target_sheet_record.retail }}</td>
-                       </tr>
-                       
-                       <tr>    
-                           <td>OWWA</td>
-                           <td>{{ target_sheet_record.owwa }}</td>
-                       
-                       </tr>
-                       <tr>
-                           <td>Informatics Senior High School:</td>
-                           <td>{{ target_sheet_record.seniorhigh }}</td>
-                       </tr>
+<!-- End of Bread Crumb -->
+    <br>
 
-                       <tr>
-                           <td>Informatics Higher Education:</td>
-                           <td> {{ target_sheet_record.higher_ed }}</td>
-                       </tr>
-        {% endfor %}                
-                   </tbody>
-                   </table>
+<!-- page content -->
+    <div class="content-section">
+        {% include 'messages.html' %}
 
-                                  
-       </div>
-   
-</div>
-</center>  
-<br>
-</div>
-</div> 
-<br><br>
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
-
-
+    <div class="row d-flex justify-content-center" style="min-height:50%;">
+ <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Senior High School </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+  <!--Informatics Higher Education -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Informatics Higher Education</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ 
+
+        <!-- OWWA-->
+        <div class="col-xl-2 col-md-6 mb-4">
+                <div class="card border-left-dark shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Owwa: Overseas Workers Welfare Administration</div>
+                        <div class="row no-gutters align-items-center">
+                          <div class="col-auto">
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                          </div>
+                          <div class="col">
+                            <div class="progress progress-sm mr-2">
+                              <div class="progress-bar bg-dark" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+  <!-- Corporate -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-warning h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Informatics Corporate Learning: Corporate</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <!-- Retail -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Informatics Corporate Learning: Retail</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">100%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav> 
+      <!---->
+      <center>
+      <div style="max-width:80%">
+        <table class="table table-bordered" style="height: 100%;">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th scope="col">Career Consultant</th>
+              <th scope="col">Role</th>
+              <th scope="col">Assigned Quota</th>
+              <th scope="col">Achieved Quota</th>
+              <th scope="col">Date Assigned</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
+              <td>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
+              <td>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <th scope="row"></th>
+              <td></td>
+              <td></td>
+              <td>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table> 
+      </div>
+    </center>
     </div>
 </div>
+</div>
+</div>
 <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {% endblock content %}
 
-{% block js_block %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-
-<script>
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]); // Does this cookie string begin with the
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-            }
-        }
-        return cookieValue;
-    }
-    var
-        csrftoken = getCookie('csrftoken');
-
-    function csrfSafeMethod(method) { // these HTTP methods do not require CSRF
-        protection
-        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-    }
-    $.ajaxSetup({
-        beforeSend: function (xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-    })
-    $(document).ready(function () {
-        var $myForm = $('.ajax-form') 
-        $myForm.submit(function (event) {
-            event.preventDefault() 
-            var $formData = $(this).serialize() 
-            var $thisURL = $myForm.attr('data-url') || window.location.href 
-            $.ajax({
-                        method: 'POST',
-                        url: $thisURL,
-                        data: $formData,
-                        success: handleFormSuccess,
-                        error: handleFormError
-                    })
-        })
-        function
-        handleFormSuccess(data, textStatus, jqXHR) {
-            console.log(data) 
-            console.log(textStatus) 
-            console.log(kqXHR)
-            $myForm.reset();
-        }
-
-        function handleFormError(jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR)
-            console.log(textStatus) 
-            console.log(errorThrown)
-        }
-    })
-</script>
-
-{% endblock js_block %}
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock footer %}

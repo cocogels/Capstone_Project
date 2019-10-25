@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-<!--{% block header %}
+{% block header %}
 {% include 'header.html' %}
 {% endblock header %}
--->
 
 {% block sidebar %}
 
@@ -15,141 +14,127 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | TargetSheet</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
+
+
 {% load crispy_forms_tags %}
 
-{% block content %} 
-      <div class="container-fluid">
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
 
-    <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
-        <h4>Sanction</h4>   
-<!-- search field -->
-    <div class="topbar-divider d-none d-sm-block" style="padding-right:73%"></div>
-           
-    </nav>
-    
-    <!-- End of Bread Crumb -->
-    <br>
+        <div class="float-left">
 
-<!-- page content -->
-    <div class="content-section">
-        {% include 'messages.html' %}
-    
-<!--DIV FOR ADDING SANCTION-->
-
-
-
-<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
-    <!----------------------- BUTTON ADD SANCTION-------------->
-    <div class="card-body">          
-    
-           <div class="card-body">
-             <form action="" method="POST">                      
-                     {% csrf_token %}
-                                    
-                <fieldset class="form-group" >
-                            {{ form|crispy }}
-                </fieldset> 
-            
-                <div class="row float-right " style="padding-right: 5%;">        
-                    <div class="form-group ">
-                        <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                     </div>
-                                    &nbsp
-                <div class="form-group float-left">            
-                    <a href="{% url 'centermanager:sanction_list'%}" class="btn btn-outline-info">
-                                    Cancel
-                    </a>    
-                                    
-
-             </div>  
-                </div>
-                </div>               
-                </form>
-              </div>                   
         </div>
-         
- <!--DIV THAT SHOWS ALL THE ADDED SANCTION-->       
- <div class=" card card-deck float-right min-vh-100" style="min-width:70% ;">
-    
-        <div class="card-body"> 
-            <div class="card" style="border-color: #36B9CC; max-width: 50%; margin-left:25%">     
-          
-            <div class="card-body">   
-<<<<<<< HEAD
-      
-=======
-            {% for sanction in sanction_obj_list %}
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
-            <table class="table table-sm" >
-                        <thead>
-                            <tr>
-                            <th scope="col">Month</th>
-                            <th scope="col">Sanction</th>
-                            </tr>
-                        </thead>
-                        {% if sanction_obj_list in sanction %}
-                        <tbody>
-                            
-                            <tr>
-                                <td>First Month</td>
-                                <td>{{ sanction.first_sanction }}</td>
-                            </tr>
-    
-                            <tr>
-                                <td>Second Month</td>
-                                <td>{{ second_sanction }}</td>
-                            </tr>
-                            
-                            <tr>    
-                                <td>Third Month</td>
-                                <td>{{ third_sanction }}</td>
-                            
-                            </tr>
-                            <tr>
-                                <td>Fourth Month</td>
-                                <td>{{ fourth_sanction }}</td>
-                            </tr>
-                            
-                            <tr>    
-                                <td>Fifth Month</td>
-                                <td>{{ fifth_sanction }}</td>
-                            
-                            </tr>
-                        {% else %}
-                        <p>No Sanction Has Been Found</p>
-                        {% endif %}
-                        </tbody>
-                        </table>
-                 
-                          
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:school_year_list' %}">School Year</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:target' %}">Target Sheet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:commission_list' %}">Commission</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <!-- Start of Breadcrumb -->
+            <!-- End of Bread Crumb -->
+            <br>
+
+            <!-- page content -->
+            <div class="content-section">
+                {% include 'messages.html' %}
+
+                <div class="d-flex justify-content-center" style="min-height:50%;">
+
+                    <!---->
+                    <div class="card w-75" style="margin: 0 auto; float: none; margin-bottom: 10px;">
+                        <form action="" method="POST">
+                            {% csrf_token %}
+
+                            <fieldset class="form-group row "
+                                style="padding-top: 5%; padding-right: 5%; padding-bottom: 0%; padding-left: 5%;">
+                                {{ form|crispy }}
+                            </fieldset>
+
+                            <div class="row float-right " style="padding-right: 5%;">
+                                <div class="form-group ">
+                                    <button class="btn btn-outline-info" type="submit">Submit</button>
+                                </div>
+                                &nbsp
+                                <div class="form-group float-left">
+                                    <a href="{% url 'centermanager:sanction_list'%}" class="btn btn-outline-info">
+                                     Cancel
+                                    </a>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                <!---->
             </div>
-        
-    </div>
-    <br>
-    
-    
+            <hr>
+            <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+            <table class="table table-bordered" style="height: 100%;">
+                <thead class="bg-primary text-light">
+                    <tr>
+                        <th scope="col">Career Consultant</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Sanction</th>
+                        <th scope="col">Date Given</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row"></th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"></th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div> 
-    <br>
-
-<br>
-<!--LIST OF CAREER CONSULTANT WITH SANCTION-->
-    </div>
-
-<!--END LIST OF CAREER CONSULTANT WITH SANCTION-->
-
-<br><br>
-
-
-      </div>
     </div>
 </div>
+</div>
 <br>
-
-
 {% endblock content %}
 
 {% block footer %}

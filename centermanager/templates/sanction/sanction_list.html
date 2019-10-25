@@ -57,7 +57,7 @@
       
 <div class="float-left">
 
-<a href="{% url 'centermanager:create_target' %}" class="btn float-left" >
+<a href="{% url 'centermanager:create_sanction' %}" class="btn float-left" >
     <span class="text btn btn-primary">Edit Sanction</span>
 </a>            
 </div>
@@ -72,6 +72,7 @@
     <div class="d-flex justify-content-center" style="min-height:50%;">
 
       <!---->
+      {% for sanction in sanction_list %}
       <div class="card" style="min-width: 60%;">
       <table class="table table-bordered" style="height: 100%;">
         <thead>
@@ -83,27 +84,28 @@
         <tbody>
           <tr>
             <th scope="row">First Month</th>
-            <td>None</td>
+            <td>{{ sanction.first_sanction }}</td>
           </tr>
           <tr>
             <th scope="row">Second Month</th>
-            <td>None</td>
+            <td>{{ sanction.second_sanction }}</td>
           </tr>
           <tr>
             <th scope="row">Third Month</th>
-            <td>None</td>
+            <td>{{ sanction.third_sanction }}</td>
           </tr>
           <tr>
             <th scope="row">Fourth Month</th>
-            <td>None</td>
+            <td>{{ sanction.fourth_sanction }}</td>
           </tr>
           <tr>
             <th scope="row">Fifth Month</th>
-            <td>None</td>
+            <td>{{ sanction.fifth_sanction }}</td>
           </tr>
         </tbody>
       </table>
     </div>
+    {% endfor %}
     </div>
     <hr>
     <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
@@ -126,23 +128,23 @@
         </thead>
         <tbody>
           <tr>
-            <th scope="row">2018 - 2019</th>
-            <td>Active</td>
-            <td>Active</td>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
             <td>
             </td>
           </tr>
           <tr>
-            <th scope="row">2017 - 2018</th>
-            <td>Active</td>
-            <td>Inactive</td>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
             <td>
             </td>
           </tr>
           <tr>
-            <th scope="row">2016 - 2017</th>
-            <td>Active</td>
-            <td>Inactive</td>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
             <td>
             </td>
           </tr>
@@ -158,100 +160,3 @@
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock footer %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- DIV FOR ADDING TARGET SHEET
-
-  
-<div class="card card-deck float-left" style="min-width:30%; max-width:28%; margin-left:2%; "> 
-     BUTTON ADD TARGET SHEET
-    <div class="card-body">          
-        <a href="{% url 'centermanager:create_target' %}" class="btn float-left" >
-            <span class="text btn btn-info">Add Target Sheet</span>
-        </a>
-    </div>                   
-</div>
-
-DIV THAT SHOWS ALL THE ADDED SANCTION
- <div class=" card card-deck float-right min-vh-100" style="min-width:70% ;">
-    
-        <div class="card-body"> 
-<<<<<<< HEAD
-            <div class="card" style="border-color: #36B9CC; max-width: 50%; margin-left:25%">     
-            <div class="card-body">   
-        
-=======
-                {% for sanction in sanction_obj_list %}
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
-            <table class="table table-sm" >
-                        <thead>
-                            <tr>
-                            <th scope="col">Month</th>
-                            <th scope="col">Sanction</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            <tr>
-                                <td>First Month</td>
-                                <td>{{ sanction.first_sanction }}</td>
-                            </tr>
-    
-                            <tr>
-                                <td>Second Month</td>
-                                <td>{{ sanction.second_sanction }}</td>
-                            </tr>
-                            
-                            <tr>    
-                                <td>Third Month</td>
-                                <td>{{ sanction.third_sanction }}</td>
-                            
-                            </tr>
-                            <tr>
-                                <td>Fourth Month</td>
-                                <td>{{ sanction.fourth_sanction }}</td>
-                            </tr>
-                            
-                            <tr>    
-                                <td>Fifth Month</td>
-                                <td>{{fifth_sanction }}</td>
-                            
-                            </tr>
-                            
-                        </tbody>
-                        </table>
-<<<<<<< HEAD
-                   
-                          
-            </div>
-        
-    </div>
-    <br>
-    
-=======
-                        {% endfor %}
-         
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
-    
-        </div>
-    </div> 
-    <br>
-
-    
-    </div>
-</div>
-</div>
-<br>
--->
-
