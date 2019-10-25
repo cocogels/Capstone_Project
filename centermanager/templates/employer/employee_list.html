@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <!-- Start of Breadcrumb -->
 
-
+                    {% if request.user.is_centermanager %}
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h5 class=" mb-0 text-gray-800"></h5>
 
@@ -48,7 +48,7 @@
                             </a>
                         </div>
                     </div>
-
+                    {% endif %}
 
                     <!-- End of Bread Crumb -->
                     <br>
@@ -68,6 +68,7 @@
                         <center>
                             <div class="card">
                                 <table class="table table-bordered" style="height: 100%;">
+                                {% if request.user.is_centermanager %}      
                                     <thead class="bg-primary text-light">
                                         <tr>
                                             <th scope="col">Id</th>
@@ -96,6 +97,36 @@
                                         </tr>
                                     </tbody>
                                     {% endfor %}
+                                   {% endif %} 
+
+                                   {% if request.user.is_centerbusinessmanager %}      
+                                   <thead class="bg-primary text-light">
+                                       <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">Territory</th>
+                                            <th scope="col">Quota</th>
+                                            <th scope="col">Action</th>
+                                       </tr>
+                                   </thead>
+                                   {% for user in employee_obj_list %}
+                                   <tbody>
+                                       <tr>
+                                           <td>{{ user.id }}</td>
+                                           <td class="text-capitalize">{{ user.last_name }} , {{ user.first_name }}</td>
+                                           <td>{{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
+                                               {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
+                                               {{ user.is_registrar|yesno:"Registrar," }}</td>
+                                           <td>{{ user.assignterritory_id }}</td>
+                                           <td>Quota</td>
+                                           <td>
+                                               <a href="#" class="btn btn-success btn-sm">VIEW</a>
+                                           </td>
+                                       </tr>
+                                   </tbody>
+                                   {% endfor %}
+                                  {% endif %} 
                                 </table>
                             </div>
                         </center>

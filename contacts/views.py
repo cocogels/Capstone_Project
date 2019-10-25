@@ -66,6 +66,8 @@ class ICLContactListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ICLContactListView ,self).get_context_data(**kwargs)
         context['contact_obj_list'] = self.get_queryset()
+        icl_contacts = ICL_ContactModel.objects.all()
+        context['icl_contacts'] = icl_contacts
         context['per_page'] = self.request.POST.get('per_page')
         context['users'] = User.objects.filter(
             is_active=True
@@ -286,7 +288,7 @@ class ICLContactUpdateView(UpdateView):
 class SHSContactListView(TemplateView):
     model = SHS_ContactModel
     context_object_name = 'contact_obj_list'
-    template_name = 'shs_contact_list.html'
+    template_name = 'shs/shs_contact_list.html'
     
     def get_queryset(self):
         queryset = self.model.objects.all()
@@ -312,13 +314,15 @@ class SHSContactListView(TemplateView):
     def get_context_data(self, **kwargs):
         context =  super(SHSContactListView, self).get_context_data(**kwargs)
         context['contact_obj_list'] = self.get_queryset()
+        shs_contacts = SHS_ContactModel.objects.all()
+        context['shs_contacts'] = shs_contacts
         context['per_page'] = self.request.POST.get('per_page')
         context['users'] = User.objects.filter(
             is_active=True
         ).order_by('email')
         
         context['assignedto_list'] = [
-            int(i) for i in self.request.POST.getlst('assigned_to', []) if i
+           int(i) for i in self.request.POST.getlist('assigned_to', []) if i
         ]
         
         search = False
@@ -327,7 +331,7 @@ class SHSContactListView(TemplateView):
           self.request.POST.get('email')  
         ):
             search = True
-        conetxt['search'] = search
+        context['search'] = search
         return context
     
     def post(self, request, *args, **kwargs):
@@ -531,6 +535,8 @@ class IHEContactListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(IHEContactListView, self).get_context_data(**kwargs)
         context['contact_obj_list'] = self.get_queryset()
+        ihe_contacts = IHE_ContactModel.objects.all()
+        context['ihe_contacts'] = ihe_contacts
         context['per_page'] = self.request.POST.get('per_page')
         context['users'] = User.objects.filter(
             is_active=True

@@ -20,14 +20,6 @@
     {% endif %}
 
 
-    {% if request.user.is_icl %}
-        <ul class="navbar-nav mr-auto float-left">
-            <li><a class="btn btn-outline-light" href="#">Overview</a></li> &nbsp
-            <li><a class="btn btn-outline-light" href="{% url 'contacts:list' %}">Contacts</a></li>&nbsp
-            <li><a class="btn btn-outline-light" href="#">Profile</a></li>&nbsp
-        </ul>
-    {% endif %}
-
 <ul class="navbar-nav ml-auto">
         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -36,45 +28,12 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> 
-                {% if request.user.is_centermanager %}
-                        {{ user.email }}
-                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
-                {% endif %}
-                
-                {% if request.user.is_superuser %}
-                        {{ user.email }}
-                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
-                {% endif %}
 
-                {% if request.user.is_marketinghead %}
-                {{ user.email }}
+                {% if request.user.is_authenticated %}
+                <span class="text-light text-capitalize">{{ user.last_name }} , {{ user.first_name }}
+                </span>
                 <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
-                {% endif %}
-
-                {% if request.user.is_registrar %}
-                {{ user.email }}
-                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
-                {% endif %}
-
-                {% if request.user.is_centerbusinessmanager %}
-                {{ user.email }}
-                <img class="img-profile rounded-circle" src="#">
-                {% endif %}
-
-                {% if request.user.is_ihe %}
-                {{ user.email }}
-                <img class="img-profile rounded-circle" src="#">
                 {% endif %}                
-
-                {% if request.user.is_shs %}
-                {{ user.email }}
-                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
-                {% endif %}
-
-                {% if request.user.is_icl %}
-                {{ user.email }}
-                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
-                {% endif %}
 
                 </span>
                  
