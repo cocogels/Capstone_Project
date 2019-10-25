@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-<!--{% block header %}
+{% block header %}
 {% include 'header.html' %}
 {% endblock header %}
--->
 
 {% block sidebar %}
 
@@ -15,91 +14,101 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Collateral</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
+
+
 {% load crispy_forms_tags %}
 
-{% block content %} 
-      <div class="container-fluid">
+{% block content %}
+<div class="container-fluid">
 
-    <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
-        <h4>Collateral</h4>   
-<!-- search field -->
-    <div class="topbar-divider d-none d-sm-block" style="padding-right:73%"></div>
- <div class="input-group float-right" style="max-width: 20%;">            
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-            <div class="input-group-prepend" >
-              <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
+
+        <div class="float-left">
+
+        </div>
+    </div>
+    <!---->
+    <div class="card">
+
+        <div class="card-body">
+            <!-- Start of Breadcrumb -->
+            <nav aria-label="breadcrumb" class="row align-items-center justify-content-between"
+                style="padding-top:2%; padding-right:2%; padding-left:2%;">
+                <h5 class=" mb-0 text-gray-800">School Year: </h5>
+                <div class="d-sm-flex align-items-center">
+                    <a href="{% url 'marketing_head:create_collateral' %}" class="btn btn-primary"> ADD COLLATERAL</a>
+                </div>
+            </nav>
+
+
+
+            <!-- end -->
+
+            <!-- End of Bread Crumb -->
+            <br>
+
+            <!-- page content -->
+            <div class="content-section">
+                {% include 'messages.html' %}
+
+                <div class="row d-flex justify-content-center" style="min-height:50%;">
+                </div>
+
+                <hr>
+                <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+                <!---->
+                <center>
+                    <div style="max-width:80%">
+                        <table class="table table-bordered" style="height: 100%;">
+                            <thead class="bg-primary text-light">
+                                <tr>
+                                    <th scope="col">Collateral Name</th>
+                                    <th scope="col">Unit</th>
+                                    <th scope="col">Quantity</th>
+                                </tr>
+                            </thead>
+                            {% for collateral_list in collateral %}
+                            <tbody>
+                                <tr>
+                                    <th scope="row">{{ collateral_list.name }}</th>
+                                    <td>{{ collateral_list.unit }}</td>
+                                    <td>{{ collateral_list.quantity }}</td>
+                                </tr>
+                            </tbody>
+                            {% endfor %}
+
+                        </table>
+                    </div>
+                </center>
             </div>
-          </div>                
-    </nav>
-    
-    <!-- End of Bread Crumb -->
-    <br>
-
-<!-- page content -->
-    <div class="content-section">
-        {% include 'messages.html' %}
-    
-<!--DIV FOR ADDING SANCTION-->
-
-
-
-<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
-    <!----------------------- BUTTON ADD SANCTION-------------->
-    <div class="card-body">          
-  <a href="{% url 'marketing_head:create_collateral' %}" class="btn float-left">
-        <span class="text btn btn-info">Add Collateral</span>
-    </a>
-              </div>                   
         </div>
-         
- <!--DIV THAT SHOWS ALL THE ADDED SANCTION-->       
- <div class=" card card-deck float-right min-vh-100" style="min-width:70%;">
-        
-        <table class="table table-hover">
-            
-                <thead class="bg-active text-dark" >
-                    <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">Collateral Name</th>
-                        <th scope="col">Unit</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Date Added</th>
-                    </tr>
-                </thead>
-                {% for Collateral in Collateral %}
-                <tbody class="bg-active ">   
-                <tr>
-                        <td scope="row">{{ Collateral.c_id }}</td>
-                        <td>{{ Collateral.name }}</td>
-                        <td>{{ Collateral.unit }}</td>
-                        <td>{{ Collateral.quantity }}</td>
-                        <td>{{ Collateral.date_created }}</td>
-                    </tr>
-                </tbody>
-           {% endfor %}
-        </table> 
-</div>
-    <br>
-        </div>
-    </div> 
-    <br>
-
-<br>
-<!--LIST OF CAREER CONSULTANT WITH SANCTION-->
-    </div>
-
-<!--END LIST OF CAREER CONSULTANT WITH SANCTION-->
-
-<br><br>
-
-
-      </div>
     </div>
 </div>
 <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {% endblock content %}

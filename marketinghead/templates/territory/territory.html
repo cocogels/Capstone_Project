@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
@@ -15,107 +14,127 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Territory</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
+
+
 {% load crispy_forms_tags %}
 
-
 {% block content %}
+<div class="container-fluid">
+   
+  <br>
+  <div class="card">
+    <div class="card-body">
+      <br>
 
- <!-------------------------------------------- Start of PAGE CONTENT -------------------------------------------------->
- <div class="container-fluid">
-<!-------------------------------------------- Start of Breadcrumb -------------------------------------------------->
-<nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
-        <h4>Territory</h4>   
-    <!-------------------- search field --------------------------------------------------------------------------------->
-        <div class="topbar-divider d-none d-sm-block" style="padding-right:73%"></div>
-        <div class="input-group float-right" style="max-width: 20%;">            
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-        <div class="input-group-prepend" >
-            <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
-        </div>
-        </div>                
-    </nav> <br>   
-    <!-------------------------------------------- End of Bread Crumb ------------------------------------------------------>
-     <!------------------------------------------- page content ------------------------------------------------------------->
-     <div class="content-section">
-            {% include 'messages.html' %}
+      <!-- page content -->
+      <div class="content-section">
+        {% include 'messages.html' %}
+        <div class="card" style="width: 60%; margin: 0 auto; float: none; margin-bottom: 10px; ">
+        <div class="card-body" >          
 
-<!------------------------------------- DIV FOR ADDING career consultant------------------------------------------------->
-  
-<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
-        <!-- BUTTON ADD SANCTION-->
-        <div class="card-body">
-            <a href="{% url 'marketing_head:add_territory' %}" class="btn float-left" >
-                <span class="text btn btn-info">Assign Territory</span>
-            </a>
-            <br><br>
     
-            <div class="card-body">
-                <form action="" method="POST">                      
-                {% csrf_token %}
-                <fieldset class="form-group" >
-                    {{ form|crispy }}
-                </fieldset> 
-                    
-                <div class="row float-right " style="padding-right: 5%;">        
-                        <div class="form-group ">
-                            <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                        </div> &nbsp                                                   
-                <div class="form-group float-left">
-                    <a href="{% url 'marketing_head:a_list'%}" class="btn btn-outline-info">      
-                                Cancel
-                    </a>                                                
-                </div>        
-          
-                </div>   
-                </form>                
-                                       
-                        
-            </div>
-        </div>                   
+          <div class="card-body">
+            <form action="" method="POST">                      
+                    {% csrf_token %}
+                                   
+               <fieldset class="form-group" >
+                           {{ form|crispy }}
+               </fieldset> 
+           
+               <div class="row float-right " style="padding-right: 5%;">        
+                   <div class="form-group ">
+                       <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                    </div>
+                                   &nbsp
+               <div class="form-group float-left">            
+                   <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-info">
+                                   Cancel
+                   </a>    
+                                   
+      
+            </div>  
+               </div>
+               </div>               
+               </form>
+             </div> 
+      </div>
+
+      </div>
     </div>
-    <!------------------------------------- END OF DIV FOR ADDING career consultant------------------------------------------------->
-     </div>
-<!------------------------------------------- end page content ------------------------------------------------------------->    
+    <br>
+    <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
+    <center>
+      <div style="margin-right: 2%; margin-left: 2%;">
+        <table class="table table-bordered" style="height: 100%;">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Email</th>
+              <th scope="col">Firstname</th>
+              <th scope="col">Lastname</th>
+              <th scope="col">Role</th>
+              <th scope="col">Territory</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          {% for user in user_list %}
+          <tbody>
+            <tr>
+              <td>{{ user.id }}</td>
+              <td>{{ user.email  }}</td>
+              <td>{{ user.first_name }}</td>
+              <td>{{ user.last_name }}</td>
 
- </div>
- <!-------------------------------------------- End of PAGE CONTENT -------------------------------------------------->
+              <td>
+                {{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
+                                {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
+              </td>
+              <td>
+                <a href="#" class="btn btn-success btn-sm">VIEW</a>
+              </td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </center>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<div class="content-section">
-    {% include 'messages.html' %}
-
-    <form action="" method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">
-                Assigned
-            </button>
-        </div>
-    </form>
+  </div>
 </div>
--->
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
+<!--start-->
+
+</div>
+</div>
+<br>
+</div>
+</div>
+<br><br>
+
+<!--end-->
 {% endblock content %}
 
-
-
 {% block footer %}
-    {% include 'footer.html' %}
+{% include 'footer.html' %}
 {% endblock footer %}

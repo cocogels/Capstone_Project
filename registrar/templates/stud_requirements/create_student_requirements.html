@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-<!--{% block header %}
+{% block header %}
 {% include 'header.html' %}
 {% endblock header %}
--->
 
 {% block sidebar %}
 
@@ -15,111 +14,160 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Budget</title>
+        <title>Marketing | Target Sheet</title>
 {% endblock title %}
+
+
 {% load crispy_forms_tags %}
 
-{% block content %} 
-      <div class="container-fluid">
+{% block content %}
+<div class="container-fluid">
 
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
+      
+<div class="float-left">
+ 
+</div>
+</div>
+<!---->
+<div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs"> 
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'registrar:course_list' %}">Course</a>
+                  </li>              
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'registrar:requirements_list' %}">Student Requirements</a>
+              </li>
+            </ul>
+          </div>
+      <div class="card-body">
     <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb" class="row" style="padding-left:1%;">
-        <h4>Requirements</h4>   
-<!-- search field -->
-    <div class="topbar-divider d-none d-sm-block" style="padding-right:70%"></div>
- <div class="input-group float-right" style="max-width: 20%;">            
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="addon-wrapping">
-            <div class="input-group-prepend" >
-              <span class="input-group-text"  style="background-color: 0080ff;"><i class="fas fa-search"></i></span>
-            </div>
-          </div>                
-    </nav>
+    <div class="card-body">          
+
     
-    <!-- End of Bread Crumb -->
+            <div class="card-body">
+              <form action="" method="POST">                      
+                      {% csrf_token %}
+                                     
+                 <fieldset class="form-group" >
+                             {{ form|crispy }}
+                 </fieldset> 
+             
+                 <div class="row float-right " style="padding-right: 5%;">        
+                     <div class="form-group ">
+                         <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                      </div>
+                                     &nbsp
+                 <div class="form-group float-left">            
+                     <a href="{% url 'registrar:course_list'%}" class="btn btn-outline-info">
+                                     Cancel
+                     </a>    
+                                     
+ 
+              </div>  
+                 </div>
+                 </div>               
+                 </form>
+               </div> 
+<br>
+    
+    <!-- end -->
+
+<!-- End of Bread Crumb -->
     <br>
 
 <!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
-    
-<!--DIV FOR ADDING SANCTION-->
+   
+    <hr>
+    <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav> 
+      <!---->
+      <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">&nbsp;</h5>
+                    <br>
 
 
-
-<div class="card card-deck float-left" style="min-width:30%; max-width:30%; "> 
-    <!----------------------- BUTTON ADD SANCTION-------------->
-    <div class="card-body">          
-
-    
-           <div class="card-body">
-             <form action="" method="POST">                      
-                     {% csrf_token %}
-                                    
-                <fieldset class="form-group" >
-                            {{ form|crispy }}
-                </fieldset> 
-            
-                <div class="row float-right " style="padding-right: 5%;">        
-                    <div class="form-group ">
-                        <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                     </div>
-                                    &nbsp
-                <div class="form-group float-left">            
-                    <a href="{% url 'registrar:requirements_list' %}" class="btn btn-outline-info">
-                                    Cancel
-                    </a>    
-                                    
-
-             </div>  
+                    <div>
+                        <table class="table table-bordered" style="height: 100%;">
+                            <thead class="bg-primary text-light">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Requirements</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary float-right">Edit</button>
+                    </div>
                 </div>
-                </div>               
-                </form>
-              </div>                   
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-s text-uppercase text-dark">Transferee</h5>
+                    <br>
+                    <div>
+                        <table class="table table-bordered" style="height: 100%;">
+                            <thead class="bg-primary text-light">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col"> Requirements</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Edit</button>
+
+                </div>
+            </div>
         </div>
-         
- <!--DIV THAT SHOWS ALL THE ADDED SANCTION-->       
- <div class=" card card-deck float-right min-vh-100" style="min-width:70%;">
-        
-        <table class="table table-hover">
-            
-                <thead class="bg-active text-dark" >
-                    <tr>
-                        <th scope="col">No.</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Date of Arrival</th>
-                        <th scope="col">Date of Added</th>
-                    </tr>
-                </thead>
-                {% for Budget in Budget %}
-                <tbody >   
-                <tr class=" border border-dark">
-                        <td scope="row">{{ Budget.b_id }}</td>
-                        <td>{{ Budget.amount }}</td>
-                        <td>{{ Budget.arrival }}</td>
-                        <td>{{ Budget.date_created }}</td>
-                    </tr>
-                </tbody>
-           {% endfor %}
-        </table> 
-</div>
-    <br>
-        </div>
-    </div> 
-    <br>
-
-<br>
-<!--LIST OF CAREER CONSULTANT WITH SANCTION-->
-    </div>
-
-<!--END LIST OF CAREER CONSULTANT WITH SANCTION-->
-
-<br><br>
-
-
-      </div>
     </div>
 </div>
+</div>
+</div>
 <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {% endblock content %}

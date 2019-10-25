@@ -82,6 +82,7 @@
               <th scope="col">Email</th>
               <th scope="col">Firstname</th>
               <th scope="col">Lastname</th>
+              <th scope="col">Territory</th>
               <th scope="col">Role</th>
               <th scope="col">Action</th>
             </tr>
@@ -95,8 +96,11 @@
               <td>{{ user.last_name }}</td>
 
               <td>
-                {{ user.is_centermanager|yesno:"Centermanager," }}{{ user.is_marketinghead|yesno:"MarketingHead," }}{{ user.is_centerbusinessmanager|yesno:"CenterBusinessManager," }}
+                {{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
+                {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
+                {{ user.is_registrar|yesno:"Registrar," }}
               </td>
+              <td>none</td>
               <td>
                 <a href="#" class="btn btn-success btn-sm">VIEW</a>
               </td>

@@ -18,7 +18,7 @@ from django.core.exceptions import PermissionDenied
 class AssignQuotaListView(LoginRequiredMixin, TemplateView):
     model = AssignQuota
     context_object_name = 'assign_obj_list'
-    template_name = 'quota/quota.html'
+    template_name = 'quota/quota_list.html'
 
     def get_queryset(self):
         queryset = self.model.objects.all()
@@ -39,6 +39,9 @@ class AssignQuotaListView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(AssignQuotaListView, self).get_context_data(**kwargs)
         context['assign_obj_list'] = self.get_queryset()
+        quota = AssignQuota.objects.all()
+        context['quota'] = quota
+
         context['assignedto_list'] = [
             int(i) for i in self.request.POST.getlist('assigned_to', []) if i
         ]
@@ -50,6 +53,7 @@ class AssignQuotaListView(LoginRequiredMixin, TemplateView):
         ):
             search = True
         context['search'] = search
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -60,7 +64,8 @@ class AssignQuotaListView(LoginRequiredMixin, TemplateView):
 class CreateAssignQuota(LoginRequiredMixin, CreateView):
     model = AssignQuota
     form_class = AssignQuotaForm
-    template_name = 'registration/register.html'
+    template_name = 'quota/create_quota.html'
+    context_object_name = 'assign_list'
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_marketinghead:
@@ -122,6 +127,9 @@ class CreateAssignQuota(LoginRequiredMixin, CreateView):
         context['assignedto_list'] = [
             int(i) for i in self.request.POST.getlist('assigned_to', []) if i
         ]
+        context['assign_list'] = self.get_queryset()
+        quota = AssignQuota.objects.all()
+        context['quota_list'] = quota
         return context
 
 
@@ -300,7 +308,7 @@ class TerritoryListView(TemplateView):
 class TerritoryAssign(CreateView):
     model = AssignTerritory
     form_class = AssignTerritoryForm
-    template_name = 'registration/register.html'
+    template_name = 'territory/territory.html'
 
     def get_form_kwargs(self):
         kwargs = super(TerritoryAssign, self).get_form_kwargs()
@@ -466,7 +474,8 @@ class BudgetListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(BudgetListView, self).get_context_data(**kwargs)
         context['budget_list_obj'] = self.get_queryset()
-        
+        budget = Budget.objects.all()
+        context['budget'] = budget
         search = False
         if(
             self.request.POST.get(
@@ -475,6 +484,7 @@ class BudgetListView(TemplateView):
         ):
             search = True
         context['search'] = search
+    
         return context
     
     def post(self, request,*args, **kwargs):
@@ -525,7 +535,8 @@ class BudgetCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(BudgetCreateView, self).get_context_data(**kwargs)
         context['budget_form'] = context['form']
-        
+        budget = Budget.objects.all()
+        context['budget_list'] = budget
         return context
     
 
@@ -617,6 +628,8 @@ class CollateralListView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(CollateralListView, self).get_context_data(**kwargs)
         context['collateral_obj_list'] = self.get_queryset()
+        collateral = Collateral.objects.all()
+        context['collateral'] = collateral
         context['per_page'] = self.request.POST.get('per_page')
         
         search = False
@@ -629,6 +642,7 @@ class CollateralListView(TemplateView):
     
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
+
         return self.render_to_response(context)
     
 
@@ -679,6 +693,9 @@ class CollateralCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(CollateralCreateView, self).get_context_data(**kwargs)
         context['collateral_form'] = context['form']
+        context['collateral_obj_list'] = self.get_queryset()
+        collateral = Collateral.objects.all()
+        context['collateral_list'] = collateral
         
         return context
     

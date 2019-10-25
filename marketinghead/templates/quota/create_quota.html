@@ -1,24 +1,162 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
 
 {% block title %}
-<title>Marketing | Quota</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
 
-{% load crispy_forms_tags %}
-{% block content %}
-<div class="content-section">
-    {% include 'messages.html' %}
 
-    <form action="" method="POST">
-        {% csrf_token %}
-        <fieldset class="form-group">
-            {{ form|crispy }}
-        </fieldset>
-        <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">
-                Submit
-            </button>
-        </div>
-    </form>
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid">
+   
+  <br>
+  <div class="card">
+    <div class="card-body">
+      <br>
+
+      <!-- page content -->
+      <div class="content-section">
+        {% include 'messages.html' %}
+        <div class="card" style="width: 60%; margin: 0 auto; float: none; margin-bottom: 10px; ">
+        <div class="card-body" >          
+
+    
+          <div class="card-body">
+            <form action="" method="POST">                      
+                    {% csrf_token %}
+                                   
+               <fieldset class="form-group" >
+                           {{ form|crispy }}
+               </fieldset> 
+           
+               <div class="row float-right " style="padding-right: 5%;">        
+                   <div class="form-group ">
+                       <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                    </div>
+                                   &nbsp
+               <div class="form-group float-left">            
+                   <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-info">
+                                   Cancel
+                   </a>    
+                                   
+      
+            </div>  
+               </div>
+               </div>               
+               </form>
+             </div> 
+      </div>
+
+      </div>
+    </div>
+    <br>
+    <center>
+      <div style="margin-right: 2%; margin-left: 2%;">
+        <table class="table table-bordered" style="height: 100%;">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Quota</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          {% for quota in quota_list %}
+          <tbody>
+            <tr>
+              <td>{{ quota.id }}</td>
+              <td>{{ user.last_name }} , {{ user.first_name }}</td>
+              <td>
+                {{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
+                                {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
+              </td>
+              <td>
+                {% if quota.a_senior_high == None %}
+
+                {% else %}
+                Senior High School: &nbsp  {{ quota.a_senior_high}} <br>
+                {% endif %}
+                
+                {% if quota.a_higher_education == None %}
+
+                {% else %}
+                Higher Education: &nbsp &nbsp   {{ quota.a_higher_education}} <br>
+                {% endif %}
+
+                {% if quota.a_retail == None %}
+
+                {% else %}
+                ICL (Retail): &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  {{ quota.a_retail}} <br>
+                {% endif %}
+
+                {% if quota.a_corporate == None %}
+
+                {% else %}
+                ICL (Corporate): &nbsp &nbsp &nbsp &nbsp {{ quota.a_corporate}} <br>
+                {% endif %}
+
+                {% if quota.a_owwa == None %}
+
+                {% else %}
+                OWWA: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ quota.a_owwa}} <br>
+                {% endif %}
+
+               
+                
+
+
+              </td>
+              <td>
+                <a href="#" class="btn btn-success btn-sm">VIEW</a>
+              </td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </center>
+
+  </div>
 </div>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
+<!--start-->
+
+</div>
+</div>
+<br>
+</div>
+</div>
+<br><br>
+
+<!--end-->
 {% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

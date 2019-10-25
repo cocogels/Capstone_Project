@@ -19,13 +19,6 @@
     </ul>
     {% endif %}
 
-    {% if request.user.is_registrar %}
-        <ul class="navbar-nav mr-auto float-left">
-            <li><a class="btn btn-outline-light" href="{% url 'registrar:course_list' %}">Course</a></li> &nbsp
-            <li><a class="btn btn-outline-light" href="{% url 'registrar:requirements_list' %}">Requirements</a></li>&nbsp
-            <li><a class="btn btn-outline-light" href="#">Students</a></li>&nbsp
-        </ul>
-    {% endif %}
 
     {% if request.user.is_icl %}
         <ul class="navbar-nav mr-auto float-left">

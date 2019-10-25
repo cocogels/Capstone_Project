@@ -1,109 +1,127 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
 
+{% block sidebar %}
 
+{% endblock sidebar %}
 
 {% block navbar %}
 {% include 'navbar.html' %}
 {% endblock navbar %}
 
+{% block title %}
+<title>Marketing | Target Sheet</title>
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+
 {% block content %}
-{%  if request.user.is_authenticated %}
-{% if request.user.is_marketinghead  %}
-<div class="content-section">
-
-        <h2>
-            <center> Target This Year </center>
-        </h2>
-
-    {% include 'messages.html' %}
-    
-    <hr>
-    <div class=" ml-5 float-left">
-        <h3>Assign Quota Information </h3>
-    </div>
-
-    <!-- <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target=".bd-target-modal-lg">
-    </button>
-     -->
-
+<div class="container-fluid">
    
+  <br>
+  <div class="card">
+    <div class="card-body">
+      <br>
 
-        <table class="float-right">
-            <tr>
-                <td>
-                    <a href="{%  url 'marketing_head:assign_territory' %}" class="btn btn-info pr-4">
-                        Territory
-                    </a>
-                </td>
-                <td>
-                    <a href="{%  url 'marketing_head:assign_quota' %}" class="btn btn-info">
-                        Add Quota
-                    </a>
-                </td>
-            </tr>
-        </table>
+      <!-- page content -->
+      <div class="content-section">
+        {% include 'messages.html' %}
+        <div class="card" style="width: 60%; margin: 0 auto; float: none; margin-bottom: 10px; ">
+        <div class="card-body" >          
+
     
+          <div class="card-body">
+            <form action="" method="POST">                      
+                    {% csrf_token %}
+                                   
+               <fieldset class="form-group" >
+                           {{ form|crispy }}
+               </fieldset> 
+           
+               <div class="row float-right " style="padding-right: 5%;">        
+                   <div class="form-group ">
+                       <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                    </div>
+                                   &nbsp
+               <div class="form-group float-left">            
+                   <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-info">
+                                   Cancel
+                   </a>    
+                                   
+      
+            </div>  
+               </div>
+               </div>               
+               </form>
+             </div> 
+      </div>
 
-    <ul>
-        <table class="table">
-            {% if object_list %}
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Assigned To</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            {% for quota in object_list %}
-            <tbody>
-                <tr>
-
-                    <td>
-                        {{ quota.user_profile }}
-                    </td>
-
-             
-                    <td>
-                    </td>
-                   
-                    <td>
-                        <a class="btn btn-secondary" href="{% url 'marketing_head:assign_quota'  %}">
-                            Update
-                        </a>
-                    </td>
-                </tr>
-            </tbody>
-            {% endfor %}
-    </ul>
-    {% else %}
-    <p>No Quota Have Been Assign</p>
-    </table>
-    {% endif %}
-</div>
-{% endif %}
-{% endif %}
-</div>
-
-
-<div class="modal fade bd-target-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="container-fluid">
-            <div class="modal-content">
-
-            </div>
-        </div>
+      </div>
     </div>
+    <br>
+    <center>
+      <div style="margin-right: 2%; margin-left: 2%;">
+        <table class="table table-bordered" style="height: 100%;">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Quota</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          {% for quota in quota %}
+          <tbody>
+            <tr>
+              <td>{{ quota.assigned_to }}</td>
+              <td>{{ quota.last_name }} , {{ quota.first_name }}</td>
+              <td>
+                {{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
+                                {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
+              </td>
+              <td></td>
+              <td>
+                <a href="#" class="btn btn-success btn-sm">VIEW</a>
+              </td>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </center>
+
+  </div>
 </div>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
+<!--start-->
+
+</div>
+</div>
+<br>
+</div>
+</div>
+<br><br>
+
+<!--end-->
+{% endblock content %}
 
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock footer %}
-
-{% endblock content  %}
