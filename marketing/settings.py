@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'centermanager',
     'marketinghead',
     'centerbusinessmanager',
+    'careerconsultant',
     'registrar',
     'contacts',
     'category',

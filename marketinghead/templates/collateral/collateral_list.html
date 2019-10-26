@@ -38,8 +38,13 @@
             <nav aria-label="breadcrumb" class="row align-items-center justify-content-between"
                 style="padding-top:2%; padding-right:2%; padding-left:2%;">
                 <h5 class=" mb-0 text-gray-800">School Year: </h5>
-                <div class="d-sm-flex align-items-center">
-                    <a href="{% url 'marketing_head:create_collateral' %}" class="btn btn-primary"> ADD COLLATERAL</a>
+                <div class="row float-right">
+                        <div class="d-sm-flex align-items-center mr-2">
+                            <a href="{% url 'marketing_head:collateral_request' %}" class="btn btn-primary"> VIEW REQUEST</a>
+                        </div>
+                    <div class="d-sm-flex align-items-center">
+                         <a href="{% url 'marketing_head:create_collateral' %}" class="btn btn-primary"> ADD COLLATERAL</a>
+                    </div>
                 </div>
             </nav>
 
@@ -76,6 +81,8 @@
                                     <th scope="col">Collateral Name</th>
                                     <th scope="col">Unit</th>
                                     <th scope="col">Quantity</th>
+                                    <th scope="col">Used</th>
+                                    <th scope="col">Remaining</th>
                                 </tr>
                             </thead>
                             {% for collateral_list in collateral %}
@@ -84,6 +91,8 @@
                                     <th scope="row">{{ collateral_list.name }}</th>
                                     <td>{{ collateral_list.unit }}</td>
                                     <td>{{ collateral_list.quantity }}</td>
+                                    <td>Used</td>
+                                    <td>Remaining</td>
                                 </tr>
                             </tbody>
                             {% endfor %}

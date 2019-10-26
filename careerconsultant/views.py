@@ -19,6 +19,15 @@ from django.http import HttpResponse, JsonResponse
 
 ''' activity '''
 
-def activity_list(request):
-    return render(request, 'activity_request_list.html')
+def activity(request):
+    return render(request, 'activity.html')
+
+
+def activity1(request):
+    return render(request, 'contacts_detailedview.html')
+
+
+def activity2(request):
+    return render(request, 'requested_activity.html')
+
 

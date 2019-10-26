@@ -14,6 +14,12 @@ from marketinghead.forms import BudgetForm, CollateralForm, AssignQuotaForm, Ass
 from accounts.models import User
 from django.core.exceptions import PermissionDenied
 
+def budget_request(request):
+    return render(request, 'budget/budget_request.html')
+
+def collateral_request(request):
+    return render(request, 'collateral/collateral_request.html')
+#-------------------------------------------------------------------
 
 class AssignQuotaListView(LoginRequiredMixin, TemplateView):
     model = AssignQuota

@@ -32,33 +32,6 @@
       <div class="content-section">
         {% include 'messages.html' %}
         <div class="card" style="width: 60%; margin: 0 auto; float: none; margin-bottom: 10px; ">
-        <div class="card-body" >          
-
-    
-          <div class="card-body">
-            <form action="" method="POST">                      
-                    {% csrf_token %}
-                                   
-               <fieldset class="form-group" >
-                           {{ form|crispy }}
-               </fieldset> 
-           
-               <div class="row float-right " style="padding-right: 5%;">        
-                   <div class="form-group ">
-                       <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                    </div>
-                                   &nbsp
-               <div class="form-group float-left">            
-                   <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-info">
-                                   Cancel
-                   </a>    
-                                   
-      
-            </div>  
-               </div>
-               </div>               
-               </form>
-             </div> 
       </div>
 
       </div>
