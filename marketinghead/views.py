@@ -336,8 +336,8 @@ class TerritoryAssign(CreateView):
     def form_valid(self, form):
         assign_territory_obj = form.save(commit=False)
         if self.request.POST.getlist('assigned_to', []):
-            contact_obj.assigned_to.add(
-                *self.request.POST.getlist('assiged_to')
+            assign_territory_obj.assigned_to.add(
+                *self.request.POST.getlist('assigned_to')
             )
 
         assigned_to_list = list(
@@ -349,7 +349,7 @@ class TerritoryAssign(CreateView):
 
         if self.request.POST.get('savenewform'):
             return redirect('marketing_head:add_territory')
-        return redirect('marketing_head:a_list')
+        return redirect('accounts:user_list')
 
     def form_invalid(self, form):
         if self.request.is_ajax():

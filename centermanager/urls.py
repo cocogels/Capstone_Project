@@ -27,7 +27,7 @@ urlpatterns = [
     
     
 #   path('create/commission/', views.CommissionSettingCreateView.as_view(), name='create_commission'),
-    path('commission/list/', views.MatriculationTemplateView.as_view(), name='commission_list'),  
+    path('commission/list/', views.CommissionSettingListView.as_view(), name='commission_list'),  
 #   path('commission/<int:pk>/details/', views.CommissionDetailView.as_view(), name='commission_detial'),
     path('commission/<int:pk>/shs/edit', views.CommissionSettingSHSUpdate.as_view(), name='com_shs_update'),
     path('commission/<int:pk>/higher-education/nc/edit', views.CommissionSettingHERCUpdate.as_view(), name='com_herc_update'),
@@ -45,7 +45,7 @@ urlpatterns = [
     path('school-year/list/', sy_views.SchoolYearListView.as_view(), name='school_year_list'),
     path('school-year/<int:year>', sy_views.SchoolYearArchiveView.as_view(), name='school_year_archive'),
     
-    path('create/target-sheet/<int:pk>', t_views.TargetSheetCreateView.as_view(), name='create_target'),
+    path('create/target-sheet/', t_views.TargetSheetCreateView.as_view(), name='create_target'),
     path('target-sheet/', t_views.TargetSheetListView.as_view(), name='target'),
     path('target-sheet/<int:pk>/details/', t_views.TargetSheetDetailView.as_view(), name='target_details'),
     path('target-sheet/<int:pk>/edit/', t_views.TargetUpdateView.as_view(), name='target_update'),

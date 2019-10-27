@@ -88,7 +88,12 @@
                                 {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
                                 {{ user.is_registrar|yesno:"Registrar," }}
                             </td>
-                            <td>none</td>
+                            <td>
+                                
+                                {{ user.territory }}
+
+
+                            </td>
                             <td>
                                 <a href="#" class="btn btn-success btn-sm">VIEW</a>
                             </td>

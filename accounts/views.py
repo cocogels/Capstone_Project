@@ -57,8 +57,12 @@ class UsersListView(LoginRequiredMixin, TemplateView):
             ('True', ' Active'),
             ('False', 'In Active')
         ]
-        context['user_obj_list'] = User.objects.all()
+        context['user_obj_list'] = AssignTerritory.objects.all()
         return context
+
+
+
+
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
@@ -97,7 +101,7 @@ class UserDetailView(LoginRequiredMixin, DetailView):
         
         context.update({
             "user_obj":user_obj,
-            "assigned_territory":AssignTerritory.objects.filter(assigned_to=user_obj.id),
+           # "assigned_territory":AssignTerritory.objects.filter(assigned_to=user_obj.id),
             "assigned_quota":AssignQuota.objects.filter(assigned_to=user_obj.id),
             "assigned_data": json.dumps(users_data),
         })

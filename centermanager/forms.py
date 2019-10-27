@@ -127,7 +127,6 @@ class TargetSheetForm(forms.ModelForm):
         ]
 
         widgets = {
-            'active_year': forms.HiddenInput(),
         }
 
     def clean(self, *args, **kwargs):

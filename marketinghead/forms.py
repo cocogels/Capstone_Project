@@ -154,15 +154,4 @@ class AssignTerritoryForm(forms.ModelForm):
             'territory_choices',
             'assigned_to',
         )
-    
-    def save(self, commit=True):
-        
-        user = super(AssignTerritoryForm, self).save(commit=False)
-        user = AssignQuota(
-            user_profile        = self.cleaned_date['user_profile'],
-            territory_choices   = self.cleaned_data['territory_choices'] ,
-        
-        )
-        if commit:
-            user.save()
-        return user
+  
