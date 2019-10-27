@@ -7,9 +7,16 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models import Q
 from accounts.models import User
-from centermanager.models import (
-    CommissionSetting, Matriculation, MatriculationCourseCategory,
-    MatriculationStatusCategory, SanctionSetting, TargetSheet, SchoolYear)
+from centermanager.models import ( 
+                                MatriculationSeniorHighSchool,
+                                MatriculationHigherEducationNC,
+                                MatriculationHigherEducationRC,
+                                SanctionSetting,
+                                CommissionSettingSHS,
+                                CommissionSettingHENC,
+                                CommissionSettingHERC,
+                                CommissionSettingICL,
+                                TargetSheet, SchoolYear )
 
 from django.views.generic.dates import YearMixin
 
@@ -91,11 +98,11 @@ class SchoolYearForm(forms.ModelForm):
             if end_year < datetime.date.today():
                 raise forms.ValidationError('Date Cannot Be on Past Try Again!!')
                 
-            if end_year >= today:
-                raise forms.ValidationError('Cannot Accept Future Dates More Than 1 Year A Head')
+            # if end_year >= today:
+            #     raise forms.ValidationError('Cannot Accept Future Dates More Than 1 Year A Head')
             
-            if _start_year.exists():
-                raise forms.ValidationError('Current Year Already Have A Value!')
+            # if _start_year.exists():
+            #     raise forms.ValidationError('Current Year Already Have A Value!')
             
         return super(SchoolYearForm, self).clean(*args, **kwargs)
 
@@ -134,74 +141,24 @@ class TargetSheetForm(forms.ModelForm):
         
 
 ''' Matriculation Form '''
-
-class MatriculationForm(forms.ModelForm):
-
-    cash_amount_per_unit = forms.CharField(label='Cash Amount Per Unit', widget=forms.NumberInput(),)
-    cash_miscellaneous_fee = forms.CharField(label='Cash Miscellaneous Fee', widget=forms.NumberInput(),)
-    cash_lab_fee = forms.CharField(label='Cash Laboratory Fee', widget=forms.NumberInput(),)
-    cash_registration_fee = forms.CharField(label='Cash Registration Fee', widget=forms.NumberInput(),)
-    ins_amount_unit = forms.CharField(label='Installment Amount Per Unit', widget=forms.NumberInput(),)
-    ins_miscellaneous_fee = forms.CharField(label='Installment Miscellaneous Fee', widget=forms.NumberInput(),)
-    ins_lab_fee = forms.CharField(label='Installment Laboratory Fee', widget=forms.NumberInput(),)
-
+class MatriculationSHSForm(forms.ModelForm):
+    
     class Meta:
-        model = Matriculation
-        fields = (
-            'status',
-            'course',
-            'cash_amount_per_unit',
-            'cash_miscellaneous_fee',
-            'cash_lab_fee',
-            'cash_registration_fee',
-            'ins_amount_unit',
-            'ins_miscellaneous_fee',
-            'ins_lab_fee'
-        )
+        model = MatriculationSeniorHighSchool
+        fields = '__all__'
 
-        def __init__(self, *args, **kwargs):
-            super(MatriculationForm, self).__init__(*args, **kwargs)
-            self.fields['status'].label = 'Student Type'
-            self.fields['course'].label = 'Course'
-            self.fields['cash_amount_per_unit'].label = 'Cash Amount Per Unit'
-            self.fields['cash_lab_fee'].label = 'Cash Laboratory Fee'
-            self.fields['cash_miscellaneous_fee'].label = 'Cash Miscellaneous Fee'
-            self.fields['cash_registration_fee'].label = 'Cash Registration Fee'
-            self.fields['ins_amount_unit'].label = 'Installment Amount Per Unit'
-            self.fields['ins_miscellaneous_fee'].label = 'Installment Miscellaneous Fee'
-            self.fields['ins_lab_fee'].label = 'Installment Laboratory Fee'
-
-
-class MatriculationStatusCategoryForm(forms.ModelForm):
+class MatriculationHENCForm(forms.ModelForm):
     class Meta:
-        models = MatriculationStatusCategory
-        fields = (
-            'name',
-        )
-
-        def clean_name(self, *args, **kwargs):
-            name = self.cleaned_data.get('name')
-            qs = MatriculationStatusCategory.objects.filter(name=name)
-            if qs.exists():
-                raise forms.ValidationError('This Name Has Already Been used')
-            return name
-
-
-class MatriculationCourseCategory(forms.ModelForm):
+        model = MatriculationHigherEducationNC
+        fields = '__all__'
+        
+class MatriculationHERCForm(forms.ModelForm):
+    
     class Meta:
-        models = MatriculationCourseCategory
-        fields = (
-            'name',
-        )
-
-        def clean_name(self, *args, **kwargs):
-            name = self.cleaned_data.get('name')
-            qs = MatriculationStatusCategory.objects.filter(name=name)
-            if qs.exists():
-                raise forms.ValidationError('This Name Has Already Been used')
-            return name
-
-
+        model = MatriculationHigherEducationRC
+        fields = '__all__'
+        
+    
 ''' SANCTION SETTING FORM '''
 
 
@@ -246,22 +203,43 @@ class SanctionSettingForm(forms.ModelForm):
         return super(SanctionSettingForm, self).clean(*args, **kwargs)
 ''' Commission Setting Form '''
 
-class CommissionSettingForm(forms.ModelForm):
+class CommissionSettingSHSForm(forms.ModelForm):
+    
     
     class Meta:
-        model = CommissionSetting
-        fields = {
-            'student_type',
-            'tuition_percentage',
-            'misc_fee_status',
-            'reg_fee_status',
-            'stud_fee_status',
-        }
+        model = CommissionSettingSHS
+        fields = '__all__'
+        
+   
+   
+class CommissionSettingHERCForm(forms.ModelForm):
+    
+    class Meta:
+        model = CommissionSettingHERC
+        fields = '__all__'
+        
+        
+class CommissionSettingHENCForm(forms.ModelForm):
+    
+    class Meta:
+        model = CommissionSettingHENC
+        fields = '__all__'
+        
 
-    def __init__(self, *args, **kwargs):
-        super(CommissionSettingForm, self).__init__(*args, **kwargs)
-        self.fields['student_type'].label = 'Student Type'
-        self.fields['tuition_percentage'].label = 'Tuition Percentage'
-        self.fields['misc_fee_status'].label = 'Miscellaneuos Fee Status'
-        self.fields['reg_fee_status'].label = 'Regular Fee Status'
-        self.fields['stud_fee_status'].label = 'Student Fee Status'
+class CommissionSettingICLForm(forms.ModelForm):
+     
+     class Meta:
+         model = CommissionSettingICL
+         fields = '__all__'
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     

@@ -17,7 +17,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView,
 from marketinghead.models import AssignQuota, AssignTerritory
 
 from .forms import UserUpdateForm, ProfileUpdateForm, EmployeeCreationForm, ChangePasswordForm
-
+from centermanager.mixins import AjaxFormMixin
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -33,7 +33,7 @@ class UsersListView(LoginRequiredMixin, TemplateView):
     model = User
     context_object_name = 'users'
     template_name = 'registration/register_list.html'
-
+    success_url = '/accounts/add/user/'
     def get_queryset(self):
         queryset = self.model.objects.all()
 
@@ -64,54 +64,12 @@ class UsersListView(LoginRequiredMixin, TemplateView):
         return self.render_to_response(context)
 
 
-class CreateUserView(LoginRequiredMixin, CreateView):
+class CreateUserView(LoginRequiredMixin, AjaxFormMixin, CreateView):
     model = User
     form_class = EmployeeCreationForm
     template_name = 'registration/register.html'
+    success_url = '/accounts/add/user/'
 
-    def post(self, request, *args, **kwargs):
-        self.object = None
-        form = self.get_form()
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
-
-            return self.form_valid(form)
-        return self.form_invalid(form)
-
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        ''' Send Email To The New User to be followed'''
-        # current_site = self.request.get_host()
-        # protocol = self.request.scheme
-        # send_email_to_new_user.delay(
-        #     user.email,
-        #     self.request.user.email,
-        #     domain=current_site,
-        #     protocol=protocol
-        #     )
-
-        if self.request.is_ajax():
-            data = {
-                'success_url': reverse_lazy(
-                    'acccounts:users_list'
-                ),
-                'error': False
-            }
-            return JsonResponse(data)
-        return super(CreateUserView, self).form_valid(form)
-
-    def form_invalid(self, form):
-        response = super(CreateUserView, self).form_invalid(form)
-        if self.request.is_ajax():
-            return JsonResponse(data)
-        return response
-    
-    # def get_form_kwargs(self):
-    #     kwargs = super(CreateUserView, self).get_form_kwargs()
-    #     kwargs.update({"request_user": self.request.user})
-    #     return kwargs
-    
     def get_context_data(self, **kwargs):
         context = super(CreateUserView, self).get_context_data(**kwargs)
         context['user_form'] = context['form']
@@ -119,7 +77,6 @@ class CreateUserView(LoginRequiredMixin, CreateView):
         if 'errors' in kwargs:
             context['errors'] = kwargs['errors']
         return context
-
 
 class UserDetailView(LoginRequiredMixin, DetailView):
     model = User

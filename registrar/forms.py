@@ -1,43 +1,58 @@
 from django import forms
 
-from registrar.models import RequirementsModel, AvailableCourseModel
+from registrar.models import (
+    RequirementsModel,
+    RequirementsTransfereeModel,
+    CourseModel,
+)
 
 
 
 
 class RequirementsForm(forms.ModelForm):
-    
     class Meta:
         model = RequirementsModel
         fields = (
             'requirements_name',
-            'category',
         )
-
-    def clean_name(self, *args, **kwargs):
+        
+    def clean_requirements_name(self):
         requirements = self.cleaned_data.get('requirements_name')
         queryset = RequirementsModel.objects.filter(requirements_name=requirements)
         if queryset.exists():
-            raise forms.ValidationError('This Name Has Already Been used.')
+            raise forms.ValidationError('This {} Has Already Been Used'.format(self.requirements_name))
         return requirements
+    
 
-
-
-
-class AvailableCourseForm(forms.ModelForm):
+class RequirementsTransfereeForm(forms.ModelForm):
     
     class Meta:
-        model = AvailableCourseModel
+        model = RequirementsTransfereeModel
+        fields= (
+            'requirements_name',
+        )
+    
+    def clean_requirements_name(self):
+        requirements = self.cleaned_data.get('requirements_name')
+        queryset = RequirementsModel.objects.filter(requirements_name=requirements)
+        if queryset.exists():
+            raise forms.ValidationError('This {} Has Already Been Used'.format(self.requirements_name ))
+        return requirements
+    
+
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        model = CourseModel
         fields = (
             'course_name',
-            'category',
+            'course_description',
         )
 
-    def clean_course_name(self, *args, **kwargs):
-        course = self.cleaned_data.get('course_name')
-        queryset = AvailableCourseModel.objects.filter(course_name=course)
+    def clean_course_name(self):
+        course   = self.cleaned_data.get('course_name')
+        queryset = CourseModel.objects.filter(course_name=course)
         if queryset.exists():
-            raise forms.ValidationError('This Course Name Has Already Been used')
-        return course
+            raise forms.ValidationError('This {} Has Alteady Been Used'.format(self.course_name) )
     
     

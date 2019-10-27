@@ -8,7 +8,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from multiselectfield import MultiSelectField
 import arrow    
 from django import forms
-
+from django.urls import reverse
 ''' 
     We Creating or own User model in admin
     Creates and save user with the given email and password
@@ -164,7 +164,10 @@ class User(AbstractUser):
             full_name = self.email
 
         return full_name
-
+    
+    def get_absolute_url(self):
+        return reverse("user_list", kwargs={"pk": self.pk})
+    
     def __str__(self):
         return self.email
 

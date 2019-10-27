@@ -167,12 +167,12 @@ class AssignQuota(models.Model):
 class AssignTerritory(models.Model):
     
     territory_choices = (
-        (1 , 'DISTRICT I'),
-        (2 , 'DISTRICT II'),
-        (3 , 'DISTRICT III'),
-        (4 , 'DISTRICT IV'),
-        (5 , 'DISTRICT V'),
-        (6 , 'DISTRICT VI'),
+        ('district I' , 'DISTRICT I'),
+        ('district II' , 'DISTRICT II'),
+        ('district III' , 'DISTRICT III'),
+        ('district IV' , 'DISTRICT IV'),
+        ('district V' , 'DISTRICT V'),
+        ('district VI' , 'DISTRICT VI'),
 
     )
     user_profile         = models.ForeignKey(User, on_delete=models.CASCADE, null=True, related_name='user_profile' )
