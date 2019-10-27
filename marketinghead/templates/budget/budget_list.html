@@ -38,9 +38,18 @@
             <nav aria-label="breadcrumb" class="row align-items-center justify-content-between"
                 style="padding-top:2%; padding-right:2%; padding-left:2%;">
                 <h5 class=" mb-0 text-gray-800">School Year: </h5>
+                <div class="row float-right">
+                    <div class="d-sm-flex align-items-center mr-2">
+                        <a href="{% url 'marketing_head:budget_request' %}" class="btn btn-primary"> VIEW REQUEST</a>
+                    </div>
+                    {% if request.user.is_marketinghead %}
                 <div class="d-sm-flex align-items-center">
                     <a href="{% url 'marketing_head:budget' %}" class="btn btn-primary"> ADD BUDGET</a>
                 </div>
+                {% endif %}
+            </div>
+
+                
             </nav>
 
 
@@ -55,14 +64,15 @@
                 {% include 'messages.html' %}
 
                 <div class="row d-flex justify-content-center" style="min-height:50%;">
-
+                    
                     <!-- Retail -->
                     <div class="col-xl-3 col-md-6 mb-4">
                         <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Budget of school year</div>
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Budget
+                                            of school year</div>
                                         <div class="row no-gutters align-items-center">
 
                                             {% for budget_list in budget %}
@@ -81,49 +91,51 @@
 
                     <!-- Retail -->
                     <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Available Budget</div>
-                                            <div class="row no-gutters align-items-center">
-    
-                                                {% for budget_list in budget %}
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                        {{ budget_list.amount }}</div>
-                                                </div>
-                                                {% endfor %}
-                                                 total ng lahat ng na add na budget
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="card border-left-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Available
+                                            Budget</div>
+                                        <div class="row no-gutters align-items-center">
 
-                        <!-- Retail -->
-                    <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Used Budget</div>
-                                            <div class="row no-gutters align-items-center">
-    
-                                                {% for budget_list in budget %}
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                                        {{ budget_list.amount }}</div>
-                                                </div>
-                                                {% endfor %}
-                                                 total ng lahat ng na add na budget
+                                            {% for budget_list in budget %}
+                                            <div class="col-auto">
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    {{ budget_list.amount }}</div>
                                             </div>
+                                            {% endfor %}
+                                            total ng lahat ng na add na budget
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Retail -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Used
+                                            Budget</div>
+                                        <div class="row no-gutters align-items-center">
+
+                                            {% for budget_list in budget %}
+                                            <div class="col-auto">
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    {{ budget_list.amount }}</div>
+                                            </div>
+                                            {% endfor %}
+                                            total ng lahat ng na add na budget
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <hr>

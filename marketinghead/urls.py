@@ -6,7 +6,8 @@ from . import views
 app_name = 'marketing_head'
 
 urlpatterns = [
-    
+    path('collateral/request/', views.collateral_request, name='collateral_request'),
+    path('budget/request/', views.budget_request, name='budget_request'),
     
     path('budget/list/', views.BudgetListView.as_view(), name='budget_list'),
     path('budget/create/', views.BudgetCreateView.as_view(), name='budget'),

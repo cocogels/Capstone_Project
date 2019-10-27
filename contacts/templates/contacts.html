@@ -31,7 +31,7 @@
 </div>
 </div>
 <!---->
-<div class="card">
+<div class="card" style="min-height: 30vw;">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs"> 
                 <li class="nav-item">
@@ -44,12 +44,15 @@
           </div>
       <div class="card-body">
     <!-- Start of Breadcrumb -->
-    <div class="d-sm-flex float-right mb-4">
-            <a href="{% url 'contacts:add_contact' %}" class="btn btn-primary" >ADD CONTACTS</a>
-          
-    <div class="float-left">
-     
+     <div class="float-left text-dark font-weight-bold">
+     Quota: {{ quota.a_senior_high }}{{ quota.a_higher_education }}{{ quota.a_retail }}{{ quota.a_corporate }}{{ quota.a_owwa }}
     </div>
+    <div class="d-sm-flex float-right mb-4 ">
+     
+            <a href="{% url 'contacts:add_contact' %}" class="btn btn-primary" >ADD CONTACTS</a>
+
+    
+  
     </div>
 <br>
     
@@ -74,30 +77,39 @@
     </nav> 
       <!---->
       <center>
-      <div style="max-width:80%">
+      <div style="max-width:90%">
         <table class="table table-bordered" style="height: 100%;">
-          <thead class="bg-primary text-light">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Address</th>
-              <th scope="col">Contact Type</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          {% for contact in icl_contacts %}
-          <tbody>
-            <tr>
-              <th scope="row">{{ contact.id }}</th>
-              <td>{{ contact.name }}</td>
-              <td>{{ contact.address }}</td>
-              <td>{{ contact.org_type_id }}</td>
-              <td>
-                    <a href="#" class="">VIEW</a>
-              </td>
-            </tr>
-          </tbody>
-          {% endfor %}
+            <table class="table table-bordered" style="height: 100%;">
+                <thead>
+                  <tr style="color: white; background-color: #1a92c9;">
+                    <th scope="col">CONTACTS</th>
+                    <th scope="col" >PROPOSAL LETTER</th>
+                    <th scope="col" >INTERESTED</th>
+                    <th scope="col" >NOT INTERESTED</th>
+                    <th scope="col" >SIGN MOA</th>
+                    <th scope="col">PARTNERS</th>
+                  </tr>
+                </thead>
+
+              <tbody>
+                <tr>
+                  <th scope="row">
+                    <a href="{% url 'career_consultant:activity1' %}">
+                      <div class="card bg-light text-dark p-2" style="min-height: 5vw;">
+                        Raja Soliman
+                        <div class="text-xs">Added by: Agati</div>
+                      </div>
+                    </a>
+                      
+                      
+                  </th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
 
         </table> 
       </div>

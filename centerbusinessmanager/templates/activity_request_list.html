@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}
+        <title>Marketing | Target Sheet</title>
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
+      
+<div class="float-left">
+ 
+</div>
+</div>
+<!---->
+<div class="card" style="height: 50%;">
+
+      <div class="card-body " style="min-height: 30vw;">
+
+<br><br>
+    
+<!-- page content -->
+    <div class="content-section">
+        {% include 'messages.html' %}
+        <center>
+            <div style="max-width:90%">
+              <table class="table table-bordered" style="height: 100%;">
+                <thead class="bg-primary text-light">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Organization Name</th>
+                    <th scope="col">Activity Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Submitted by</th>
+                    {% if request.user.is_centerbusinessmanager %}
+                    <th scope="col">Remarks</th>
+                    {% else %}
+                    <th scope="col">Status</th>
+                    {% endif %}
+                  </tr>
+                </thead>
+               
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>December 25, 2019</td>
+                    <td>Raja Soliman High School</td>
+                    <td>Career Talk</td>
+                    <td>Manila</td>
+                    <td>Agati, Abbygail</td>
+                    {% if request.user.is_centerbusinessmanager %}
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle float-right mr-5 p-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <span class="text"> Remarks </span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Approve</a>
+                              <a class="dropdown-item" href="#">Reject</a>
+                              <a class="dropdown-item" href="#">Revise</a>
+                            </div>
+                          </div>
+                    </td>
+                    {% else %}
+                    <td>For Approval</td>
+                    {% endif %}
+                  </tr>
+                </tbody>
+              </table> 
+            </div>
+          </center>
+
+
+    </div>
+</div>
+</div>
+</div>
+<br>
+
+
+
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

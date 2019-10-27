@@ -14,7 +14,7 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Target Sheet</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
 
 
@@ -23,108 +23,108 @@
 {% block content %}
 <div class="container-fluid">
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
-      
-<div class="float-left">
- 
-</div>
-</div>
-<!---->
-<div class="card">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs"> 
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'contacts:list' %}">Contacts</a>
-                  </li>              
-              <li class="nav-item">
-                <a class="nav-link text-dark" href="#">Leads</a>
-              </li>
-            </ul>
-          </div>
-      <div class="card-body">
-    <!-- Start of Breadcrumb -->
-    <div class="card-body">          
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
 
-    
-            <div class="card-body">
-              <form action="" method="POST">                      
-                      {% csrf_token %}
-                                     
-                 <fieldset class="form-group" >
-                             {{ form|crispy }}
-                 </fieldset> 
-             
-                 <div class="row float-right " style="padding-right: 5%;">        
-                     <div class="form-group ">
-                         <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                      </div>
-                                     &nbsp
-                 <div class="form-group float-left">            
-                     <a href="{% url 'contacts:list'%}" class="btn btn-outline-info">
-                                     Cancel
-                     </a>    
-                                     
- 
-              </div>  
-                 </div>
-                 </div>               
-                 </form>
-               </div> 
-<br>
-    
-    <!-- end -->
+    <div class="float-left">
 
-<!-- End of Bread Crumb -->
-    <br>
-
-<!-- page content -->
-    <div class="content-section">
-        {% include 'messages.html' %}
-   
-    <hr>
-    <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav> 
-      <!---->
-      <center>
-      <div style="max-width:80%">
-        <table class="table table-bordered" style="height: 100%;">
-          <thead class="bg-primary text-light">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Address</th>
-              <th scope="col">Contact Type</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          {% for contact in icl_contacts %}
-          <tbody>
-            <tr>
-              <th scope="row">{{ contact.id }}</th>
-              <td>{{ contact.name }}</td>
-              <td>{{ contact.address }}</td>
-              <td>{{ contact.org_type_id }}</td>
-              <td>
-                    <a href="#" class="">VIEW</a>
-              </td>
-            </tr>
-          </tbody>
-          {% endfor %}
-
-        </table> 
-      </div>
-    </center>
     </div>
-</div>
-</div>
+  </div>
+  <!---->
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'contacts:list' %}">Contacts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Leads</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <!-- Start of Breadcrumb -->
+      <div class="card-body">
+
+
+        <div class="card-body">
+          <form action="" method="POST">
+            {% csrf_token %}
+
+            <fieldset class="form-group">
+              {{ form|crispy }}
+            </fieldset>
+
+            <div class="row float-right " style="padding-right: 5%;">
+              <div class="form-group ">
+                <button class="btn btn-outline-info" type="submit">Submit</button>
+              </div>
+              &nbsp
+              <div class="form-group float-left">
+                <a href="{% url 'contacts:list'%}" class="btn btn-outline-info">
+                  Cancel
+                </a>
+
+
+              </div>
+            </div>
+        </div>
+        </form>
+      </div>
+      <br>
+
+      <!-- end -->
+
+      <!-- End of Bread Crumb -->
+      <br>
+
+      <!-- page content -->
+      <div class="content-section">
+        {% include 'messages.html' %}
+
+        <hr>
+        <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+        <!---->
+        <center>
+          <div style="max-width:95%">
+            <table class="table table-bordered" style="height: 100%;">
+              <thead>
+                <tr style="color: white;background-color: #1a92c9;  ">
+                  <th scope="col">CONTACTS</th>
+                  <th scope="col" >PROPOSAL LETTER</th>
+                  <th scope="col" >INTERESTED</th>
+                  <th scope="col" >NOT INTERESTED</th>
+                  <th scope="col" >SIGN MOA</th>
+                  <th scope="col">PARTNERS</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for contact in icl_contacts %}
+                <tr>
+                  <th scope="row"></th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </center>
+      </div>
+    </div>
+  </div>
 </div>
 <br>
 

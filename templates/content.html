@@ -37,304 +37,360 @@
       </div>
     </div>
 
-    <div class="card card-deck float-right" style="min-width:59%; max-width:59%; margin-right: 10%; padding-right: 1%;">
-      <!--CENTER MANAGER-->
-      {% if request.user.is_centermanager or request.user.is_centerbusinessmanager %}
-      <!-- navigation Buttons -->
-      <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
-        <!-- School year -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-auto">
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+    <div class="card card-deck float-right"
+      style="min-height: 30vw; margin-right: 10%; padding-right: 1%; min-width:59%; max-width:59%;">
+      <div class="card" style="border:white;">
+        <!--CENTER MANAGER-->
+        {% if request.user.is_centermanager or request.user.is_centerbusinessmanager %}
+        <!-- navigation Buttons -->
+        <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
+          <!-- School year -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!--Informatics Higher Education -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Sales Pipeline</div>
-                  <div class="btn btn-success mb-0 mr-3 text-light float-right">View</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <!-- OWWA-->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  {% if request.user.is_centermanager %}
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Employee Accounts
+          <!--Informatics Higher Education -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Sales Pipeline
+                    </div>
+                    <div class="btn btn-success mb-0 mr-3 text-light float-right">View</div>
                   </div>
-                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
 
-                  {% if request.user.is_centerbusinessmanager %}
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Career Consultant
+
+
+          <!-- OWWA-->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    {% if request.user.is_centermanager %}
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Employee Accounts
+                    </div>
+                    {% endif %}
+
+                    {% if request.user.is_centerbusinessmanager %}
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Career Consultant
+                    </div>
+                    {% endif %}
+                    <a href="{% url 'centermanager:employee_list' %}" class="btn mb-0 mr-3 text-light float-right"
+                      style="background-color: #ac8daf;">View</a>
                   </div>
-                  {% endif %}
-                  <a href="{% url 'centermanager:employee_list' %}" class="btn mb-0 mr-3 text-light float-right"
-                    style="background-color: #ac8daf;">View</a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-
-        <!-- Corporate -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #f66767,#f9d5bb);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School Settings</div>
-                  <a href="{% url 'centermanager:school_year_list' %}" class="btn mb-0 mr-3 text-light float-right"
-                    style="background-color: #f66767;">View</a>
+          <!-- School year -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #ffe343, #ffffe6);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Activity
+                    </div>
+                    <a href="{% url 'cbm:activity_list' %}" class="btn mb-0 mr-3 text-light float-right" style="background-color: #ffe343;">View</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      {% endif %}
-      <!--MARKETING HEAD-->
-      {% if request.user.is_marketinghead %}
-      <!-- navigation Buttons -->
-      <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
-        <!-- School year -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
+          <!-- OWWA-->
+          
+          <div class="col-xl-5 col-md-6 mb-4">
+              <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ee479b,#eebdd6);">
+                <div class="card-body" style="padding-bottom: 1%;">
                   <div class="row no-gutters align-items-center">
-                    <div class="col-auto">
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Budget</div>
+                      <a href="{% url 'marketing_head:budget_list' %}" class="btn mb-0 mr-3 text-light float-right"
+                        style="background-color: #ee479b;">View</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- Corporate -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #f66767,#f9d5bb);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School Settings
+                    </div>
+                     {% if request.user.is_centerbusinessmanager %}
+                     <a href="#" class="btn mb-0 mr-3 text-light float-right" style="background-color: #f66767;">View</a>
+                     {% else %}
+
+                    <a href="{% url 'centermanager:school_year_list' %}" class="btn mb-0 mr-3 text-light float-right" style="background-color: #f66767;">View</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endif %}
+        <!--MARKETING HEAD-->
+        {% if request.user.is_marketinghead %}
+        <!-- navigation Buttons -->
+        <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
+          <!-- School year -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!--Informatics Higher Education -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Career Consultant
+          <!--Informatics Higher Education -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Career Consultant
+                    </div>
+                    <a href="{% url 'accounts:user_list' %}"
+                      class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
                   </div>
-                  <a href="{% url 'accounts:user_list' %}"
-                    class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
 
-
-        <!-- OWWA-->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Budget</div>
-                  <a href="{% url 'marketing_head:budget_list' %}" class="btn mb-0 mr-3 text-light float-right"
-                    style="background-color: #ac8daf;">View</a>
+          
+          <!-- OWWA-->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Budget</div>
+                    <a href="{% url 'marketing_head:budget_list' %}" class="btn mb-0 mr-3 text-light float-right"
+                      style="background-color: #ac8daf;">View</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-
-
-        <!-- Corporate -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #f66767,#f9d5bb);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Collateral</div>
-                  <a href="{% url 'marketing_head:collateral_list' %}" class="btn mb-0 mr-3 text-light float-right"
-                    style="background-color: #f66767;">View</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
-      <!--REGISTRAR-->
-      {% if request.user.is_registrar %}
-      <!-- navigation Buttons -->
-      <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
-        <!-- School year -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
+          <!-- School year -->
+          <div class="col-xl-5 col-md-6 mb-4">
+              <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #ffe343, #ffffe6);">
+                <div class="card-body" style="padding-bottom: 1%;">
                   <div class="row no-gutters align-items-center">
-                    <div class="col-auto">
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Activity
+                      </div>
+                      <a href="{% url 'cbm:activity_list' %}" class="btn mb-0 mr-3 text-light float-right" style="background-color: #ffe343;">View</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          <!-- Corporate -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #f66767,#f9d5bb);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Collateral</div>
+                    <a href="{% url 'marketing_head:collateral_list' %}" class="btn mb-0 mr-3 text-light float-right"
+                      style="background-color: #f66767;">View</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+        {% endif %}
+
+        <!--REGISTRAR-->
+        {% if request.user.is_registrar %}
+        <!-- navigation Buttons -->
+        <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
+          <!-- School year -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!--Informatics Higher Education -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Students
+          <!--Informatics Higher Education -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Students
+                    </div>
+                    <a href="#" class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
                   </div>
-                  <a href="#" class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- OWWA-->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School Settings
+                    </div>
+                    <a href="{% url 'registrar:course_list' %}" class="btn mb-0 mr-3 text-light float-right"
+                      style="background-color: #ac8daf;">View</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Corporate -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card h-90 py-2" style="border-color: white; ">
+              <div class="card-body" style="padding-bottom: 1%; ">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">&nbsp</div>
+                    <a class="btn mb-0 mr-3 text-light float-right">&nbsp</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        {% endif %}
 
-
-
-        <!-- OWWA-->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School Settings</div>
-                  <a href="{% url 'registrar:course_list' %}" class="btn mb-0 mr-3 text-light float-right"
-                    style="background-color: #ac8daf;">View</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Corporate -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card h-90 py-2" style="border-color: white; ">
-            <div class="card-body" style="padding-bottom: 1%; ">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">&nbsp</div>
-                  <a class="btn mb-0 mr-3 text-light float-right">&nbsp</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% endif %}
-
-      {% if request.user.is_shs or request.user.is_ihe or request.user.is_icl %}
-      <!-- navigation Buttons -->
-      <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
-        <!-- School year -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
-            <div class="card-body">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
-                  <div class="row no-gutters align-items-center">
-                    <div class="col-auto">
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+        {% if request.user.is_shs or request.user.is_ihe or request.user.is_icl %}
+        <!-- navigation Buttons -->
+        <div class="row d-flex justify-content-center" style="min-height:50%; padding-top:2%;">
+          <!-- School year -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c6cbef, #8186d5);">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School year</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">2018 - 2019</div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!--Informatics Higher Education -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Sales Pipeline
+          <!--Informatics Higher Education -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right, #c2e8ce, #c0ffb3);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Sales Pipeline
+                    </div>
+                    {% if request.user.is_icl %}
+                    <a href="{% url 'contacts:list' %}"
+                      class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
+                    {% endif %}
+                    {% if request.user.is_shs %}
+                    <a href="{% url 'contacts:shs_list' %}"
+                      class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
+                    {% endif %}
+                    {% if request.user.is_ihe %}
+                    <a href="{% url 'contacts:ihe_list' %}"
+                      class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
+                    {% endif %}
                   </div>
-                  {% if request.user.is_icl %}
-                  <a href="{% url 'contacts:list' %}" class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
-                  {% endif %}
-                  {% if request.user.is_shs %}
-                  <a href="{% url 'contacts:shs_list' %}"
-                    class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
-                  {% endif %}
-                  {% if request.user.is_ihe %}
-                  <a href="{% url 'contacts:ihe_list' %}"
-                    class="btn btn-success mb-0 mr-3 text-light float-right">View</a>
-                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- OWWA-->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Transaction and
+                      Field Work</div>
+                    <a href="{% url 'career_consultant:activity' %}" class="btn mb-0 mr-3 text-light float-right"
+                      style="background-color: #ac8daf;">View</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Corporate -->
+          <div class="col-xl-5 col-md-6 mb-4">
+            <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #f66767,#f9d5bb);">
+              <div class="card-body" style="padding-bottom: 1%;">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School Settings
+                    </div>
+                    <a href="#" class="btn mb-0 mr-3 text-light float-right" style="background-color: #f66767;">View</a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-
-
-        <!-- OWWA-->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #ac8daf,#f1d4d4);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Transaction and Field Work</div>
-                  <a href="#" class="btn mb-0 mr-3 text-light float-right" style="background-color: #ac8daf;">View</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Corporate -->
-        <div class="col-xl-5 col-md-6 mb-4">
-          <div class="card shadow h-90 py-2" style="background-image: linear-gradient(to right,  #f66767,#f9d5bb);">
-            <div class="card-body" style="padding-bottom: 1%;">
-              <div class="row no-gutters align-items-center">
-                <div class="col mr-2">
-                  <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">School Settings</div>
-                  <a href="#" class="btn mb-0 mr-3 text-light float-right"
-                    style="background-color: #f66767;">View</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% endif %}
       </div>
-      {% endif %}
     </div>
   </div>
 
