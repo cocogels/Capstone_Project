@@ -99,7 +99,8 @@
                                     {% endfor %}
                                    {% endif %} 
 
-                                   {% if request.user.is_centerbusinessmanager %}      
+                                   {% if request.user.is_centerbusinessmanager %}     
+
                                    <thead class="bg-primary text-light">
                                        <tr>
                                             <th scope="col">Id</th>
@@ -110,7 +111,9 @@
                                             <th scope="col">Action</th>
                                        </tr>
                                    </thead>
+
                                    {% for user in employee_obj_list %}
+                                   
                                    <tbody>
                                        <tr>
                                            <td>{{ user.id }}</td>
@@ -125,8 +128,10 @@
                                            </td>
                                        </tr>
                                    </tbody>
+
                                    {% endfor %}
                                   {% endif %} 
+
                                 </table>
                             </div>
                         </center>

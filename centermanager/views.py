@@ -5,6 +5,7 @@ from datetime import date, timedelta
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
+
 from centermanager.models import (
     MatriculationSeniorHighSchool,
     MatriculationHigherEducationNC,
@@ -556,7 +557,7 @@ class CommissionSettingListView(TemplateView):
 ''' --------------------------COMMISSION SHS ----------------------------------'''
 class CommissionSettingSHSUpdate(UpdateView):
     model = CommissionSettingSHS
-    form_class = MatriculationSHSForm
+    form_class = CommissionSettingSHSForm
     template_name = 'commission/shs_update.html'
     
     def post(self, request, *args, **kwargs):

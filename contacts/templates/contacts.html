@@ -94,13 +94,14 @@
               <tbody>
                 <tr>
                   <th scope="row">
-                    <a href="{% url 'career_consultant:activity1' %}">
+                      {% for iclContact in icl_contacts %}
+                    <a href="{% url 'contacts:edit_contact' iclContact.pk %}">
                       <div class="card bg-light text-dark p-2" style="min-height: 5vw;">
-                        Raja Soliman
-                        <div class="text-xs">Added by: Agati</div>
+                        {{ iclContact.name}}
+                        <div class="text-xs text-capitalize">Added by: {{ user.last_name}} ,{{ user.first_name}} </div>
                       </div>
                     </a>
-                      
+                    {% endfor %}
                       
                   </th>
                   <td></td>

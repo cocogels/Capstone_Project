@@ -181,23 +181,23 @@ class SanctionSettingForm(forms.ModelForm):
         self.fields['fourth_sanction'].label = 'Fourth Month Sanction'
         self.fields['fifth_sanction'].label = 'Fifth Month Sanction'
 
-        if instance and instance.pk:
-            self.fields['first_sanction'].widget.attrs['readonly'] = True
-            self.fields['second_sanction'].widget.attrs['readonly'] = True
-            self.fields['third_sanction'].widget.attrs['readonly'] = True
-            self.fields['fourth_sanction'].widget.attrs['readonly'] = True
-            self.fields['fifth_sanction'].widget.attrs['readonly'] = True
+        # if instance and instance.pk:
+        #     self.fields['first_sanction'].widget.attrs['readonly'] = True
+        #     self.fields['second_sanction'].widget.attrs['readonly'] = True
+        #     self.fields['third_sanction'].widget.attrs['readonly'] = True
+        #     self.fields['fourth_sanction'].widget.attrs['readonly'] = True
+        #     self.fields['fifth_sanction'].widget.attrs['readonly'] = True
 
 
     def clean(self, *args, **kwargs):
         once = date.today() + timedelta(days=365*365)
     
         
-        queryset = SanctionSetting.objects.all()
+        # queryset = SanctionSetting.objects.all()
   
          
-        if queryset.exists():
-            raise forms.ValidationError('You Can Only Create Once ')
+        # if queryset.exists():
+        #     raise forms.ValidationError('You Can Only Create Once ')
         
         return super(SanctionSettingForm, self).clean(*args, **kwargs)
 ''' Commission Setting Form '''

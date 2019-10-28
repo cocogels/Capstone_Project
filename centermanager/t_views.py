@@ -43,7 +43,7 @@ class TargetSheetListView(TemplateView):
         context['per_page'] = self.request.POST.get('per_page')
 
         targetsheet = TargetSheet.objects.all()
-        context['school_year_list'] = targetsheet
+        context['targetsheet'] = targetsheet
         return context
     
     
@@ -69,8 +69,8 @@ class TargetSheetCreateView(CreateView):
     
     def post(self, request, *args, **kwargs,):
         self.object = None
-        school_year = SchoolYear.objects.get(active_year=True)
-        form = TargetSheetForm(request.POST, instance=school_year)
+       # school_year = SchoolYear.objects.get(active_year=True)
+        form = TargetSheetForm(request.POST,)
         if form.is_valid():
             target_sheet_obj = form.save(commit=False)
             target_sheet_obj.save()
@@ -81,8 +81,7 @@ class TargetSheetCreateView(CreateView):
 
             
     def form_valid(self, form):
-        form.instance.active_year_id = SchoolYear.objects.get(active_year=True)
-        target_sheet_obj = form.save()
+        #form.instance.active_year_id = SchoolYear.objects.get(active_year=True)
         if self.request.is_ajax():
             return JsonResponse(
                 {

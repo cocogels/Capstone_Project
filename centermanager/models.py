@@ -64,12 +64,7 @@ class SchoolYear(models.Model):
 
     def save(self, *args, **kwargs):
         if self.id is None:
-            SchoolYear.objects.create(
-                school_year=Case(
-                    When
-                )
-            )
-        self.active_year = self.start_year <= self.end_year
+            self.active_year = self.start_year <= self.end_year
         super(SchoolYear, self).save(*args, **kwargs)        
         if self.pk is not None:
             if self.active_year == True:
@@ -205,6 +200,7 @@ class SanctionSetting(models.Model):
         max_length=255, blank=False, default="Termination")
     date_created = models.DateTimeField(_("Date Created"), auto_now_add=True)
     date_updated = models.DateTimeField(_("Date Updated"), auto_now=True)
+
 
     @property
     def created_on_arrow(self):

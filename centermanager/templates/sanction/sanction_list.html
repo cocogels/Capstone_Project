@@ -56,10 +56,12 @@
         <h5 class=" mb-0 text-gray-800"> </h5> 
       
 <div class="float-left">
+{% for sanction in sanction_list %}
 
-<a href="{% url 'centermanager:create_sanction' %}" class="btn float-left" >
+<a href="{% url 'centermanager:sanction_update' sanction.pk %}" class="btn float-left" >
     <span class="text btn btn-primary">Edit Sanction</span>
 </a>            
+{% endfor %}
 </div>
 </div>
     <!-- End of Bread Crumb -->

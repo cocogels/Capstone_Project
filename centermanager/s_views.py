@@ -112,43 +112,45 @@ class SanctionSettingUpdateView(UpdateView):
     model = SanctionSetting
     form_class = SanctionSettingForm
     template_name = 'sanction/create_sanction.html'
+    success_url = '/center/sanction/list/'
+    
+    # def dispatch(self, request, *args, **kwargs):
+    #     if self.request.is_centermanager:
+    #         self.users = User.objects.filter(is_active=True).order_by('email')
+    #     else:
+    #         self.users = User.objects.filter(
+    #             is_centermanager=True).order_by('email')
+    #     return super(SanctionSettingUpdateView, self).dispatch(request, *args, **kwargs)
 
-    def dispatch(self, request, *args, **kwargs):
-        if self.request.is_centermanager:
-            self.users = User.objects.filter(is_active=True).order_by('email')
-        else:
-            self.users = User.objects.filter(
-                is_centermanager=True).order_by('email')
-        return super(SanctionSettingUpdateView, self).dispatch(request, *args, **kwargs)
+    # def post(self, request, *args, **kwargs):
+    #     self.object = self.get_object()
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         sanction_obj = form.save(commit=False)
+    #         sanction_obj.save()
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            sanction_obj = form.save(commit=False)
-            sanction_obj.save()
+    #         return self.form_valid(form)
+    #     return self.form_invalid(form)
 
-            return self.form_valid(form)
-        return self.form_invalid(form)
+    # def form_valid(self):
+    #     sanction_obj = form.save(commit=False)
+    #     if self.request.is_ajax():
+    #         return JsonResponse(
+    #             {
+    #                 'error': False,
+    #             }
+    #         )
+    #     return redirect('centermanager:sanction_list')
 
-    def form_valid(self):
-        if self.request.is_ajax():
-            return JsonResponse(
-                {
-                    'error': False,
-                }
-            )
-        return redirect('centermanager:sanction_list')
-
-    def form_invalid(self, form):
-        if self.request.is_ajax():
-            return JsonResponse(
-                {
-                    'error': True,
-                    'sanction_error': form.errors,
-                }
-            )
-        return redirect('centermanager:create_sanction')
+    # def form_invalid(self, form):
+    #     if self.request.is_ajax():
+    #         return JsonResponse(
+    #             {
+    #                 'error': True,
+    #                 'sanction_error': form.errors,
+    #             }
+    #         )
+    #     return redirect('centermanager:create_sanction')
 
     def get_context_data(self, **kwargs):
         context = super(SanctionSettingUpdateView, self).get_context_data(**kwargs)

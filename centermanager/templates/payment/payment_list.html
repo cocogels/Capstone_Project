@@ -53,28 +53,28 @@
       </ul>
     </div>
     {% endif %}
-<!---------------------------------------CAREER CONSULTATN----------------------------------------------->
+    <!---------------------------------------CAREER CONSULTATN----------------------------------------------->
     {% if request.user.is_shs or request.user.is_ihe or request.user.is_icl %}
     <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="{% url 'centermanager:school_year_list' %}">Sanction</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="{% url 'centermanager:target' %}">Commisiion</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="{% url 'centermanager:sanction_list' %}">Student Requirements</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="{% url 'centermanager:commission_list' %}">Available Course</a>
-          </li>
-            </li>
-        </ul>
-      </div>
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{% url 'centermanager:school_year_list' %}">Sanction</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{% url 'centermanager:target' %}">Commisiion</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{% url 'centermanager:sanction_list' %}">Student Requirements</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="{% url 'centermanager:commission_list' %}">Available Course</a>
+        </li>
+        </li>
+      </ul>
+    </div>
     {% endif %}
 
     <div class="card-body">
@@ -83,120 +83,158 @@
         {% include 'messages.html' %}
 
         <div class="card-deck">
+<!--------------------------------------------------------------------------------------------------------------------------------------------->          
           <div class="card">
             <div class="card-body">
+
               <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Senior High School</h5>
-              <form>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Registration Fee:</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Miscellaneous Fee:</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Laboratory Fee: </label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">ID Fee:</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Fee per Unit(Cash): </label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Fee per Unit(Installment):</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary float-right">Edit</button>
-              </form>
+              <br>
+              {% for shs in shs_list %}
+              <div style="margin-right: 2%; margin-left: 2%;">
+                  <table class="table table-bordered" style="height: 100%;">
+                      <thead class="bg-primary text-light">
+                          <tr>
+                              <th scope="col">Payment Name</th>
+                              <th scope="col">Name</th>
+                            </tr>
+                      </thead>
+                               <tbody>
+                          <tr>
+                              <td>Registration Fee</td>
+                              <td>{{ shs.registration_fee }}</td>
+                          </tr>
+                          <tr>
+                              <td>Laboratory Fee</td>
+                              <td>{{ shs.laboratry_fee }}</td>
+                          </tr>
+                          <tr>
+                              <td>Miscellaneous Fee</td>
+                              <td>{{ shs.miscellaneous_fee }}</td>
+                          </tr>
+                          <tr>
+                              <td>ID Fee</td>
+                              <td>{{ shs.id_fee }}</td>
+                          </tr>
+                          <tr>
+                              <td>Fee per Unit (Cash)</td>
+                              <td>{{ shs.unit_fee_cash }}</td>
+                          </tr>
+                          <tr>
+                              <td>Fee per UNit (Installment)</td>
+                              <td>{{ shs.unit_fee_installment }}</td>
+                          </tr>
+  
+                      </tbody>
+                  </table>
+              </div>
+                <a class="btn btn-primary float-right" href="{% url 'centermanager:shs_update' shs.pk %}" >Edit</a>
+              
+              {% endfor %}
             </div>
           </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education (Night Class)</h5>
-              <form>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Registration Fee:</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Miscellaneous Fee:</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Laboratory Fee: </label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">ID Fee:</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Fee per Unit(Cash): </label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Fee per Unit(Installment):</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary float-right">Edit</button>
-              </form>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education (Regular Class)</h5>
-              <form>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Registration Fee:</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Miscellaneous Fee:</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Laboratory Fee: </label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">ID Fee:</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="inputEmail4">Fee per Unit(Cash): </label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="0">
-                  </div>
-                  <div class="form-group col-md-6">
-                    <label for="inputPassword4">Fee per Unit(Installment):</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="0">
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary float-right">Edit</button>
-              </form>
-            </div>
-          </div>
+
+<!-----------------------------------------------HIGHER EDUCATION------------------------------------------------------------------->          
+
+<div class="card">
+    <div class="card-body">
+
+      <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">HIGHER EDUCATION (NIGHT CLASS)</h5>
+      <br>
+      {% for shs in he_nc_list %}
+      <div style="margin-right: 2%; margin-left: 2%;">
+          <table class="table table-bordered" style="height: 100%;">
+              <thead class="bg-primary text-light">
+                  <tr>
+                      <th scope="col">Payment Name</th>
+                      <th scope="col">Name</th>
+                    </tr>
+              </thead>
+                       <tbody>
+                  <tr>
+                      <td>Registration Fee</td>
+                      <td>{{ shs.registration_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>Laboratory Fee</td>
+                      <td>{{ shs.laboratry_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>Miscellaneous Fee</td>
+                      <td>{{ shs.miscellaneous_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>ID Fee</td>
+                      <td>{{ shs.id_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>Fee per Unit (Cash)</td>
+                      <td>{{ shs.unit_fee_cash }}</td>
+                  </tr>
+                  <tr>
+                      <td>Fee per UNit (Installment)</td>
+                      <td>{{ shs.unit_fee_installment }}</td>
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+        <a class="btn btn-primary float-right" href="{% url 'centermanager:shs_update' shs.pk %}" >Edit</a>
+      
+      {% endfor %}
+    </div>
+  </div>
+<!-----------------------------------------------HIGHER EDUCATION (REGULAR CLASS))------------------------------------------------------------------->          
+
+  
+<div class="card">
+    <div class="card-body">
+
+      <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">HIGHER EDUCATION (NIGHT CLASS)</h5>
+      <br>
+      {% for shs in he_rc_list %}
+      <div style="margin-right: 2%; margin-left: 2%;">
+          <table class="table table-bordered" style="height: 100%;">
+              <thead class="bg-primary text-light">
+                  <tr>
+                      <th scope="col">Payment Name</th>
+                      <th scope="col">Name</th>
+                    </tr>
+              </thead>
+                       <tbody>
+                  <tr>
+                      <td>Registration Fee</td>
+                      <td>{{ shs.registration_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>Laboratory Fee</td>
+                      <td>{{ shs.laboratry_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>Miscellaneous Fee</td>
+                      <td>{{ shs.miscellaneous_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>ID Fee</td>
+                      <td>{{ shs.id_fee }}</td>
+                  </tr>
+                  <tr>
+                      <td>Fee per Unit (Cash)</td>
+                      <td>{{ shs.unit_fee_cash }}</td>
+                  </tr>
+                  <tr>
+                      <td>Fee per UNit (Installment)</td>
+                      <td>{{ shs.unit_fee_installment }}</td>
+                  </tr>
+
+              </tbody>
+          </table>
+      </div>
+        <a class="btn btn-primary float-right" href="{% url 'centermanager:shs_update' shs.pk %}" >Edit</a>
+      
+      {% endfor %}
+    </div>
+  </div>
+<!--------------------------------------------------------------------------------------------------------------------------------->          
         </div>
       </div>
     </div>
