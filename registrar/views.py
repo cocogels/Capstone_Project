@@ -27,7 +27,7 @@ from registrar.forms import (
 ) 
 
 """ Requirements Views """
-class RequirementsListView(ListView):
+class RequirementsListView(TemplateView):
     
     template_name = 'stud_requirements/student_requirements_list.html'
             
@@ -40,7 +40,7 @@ class RequirementsListView(ListView):
 class RrequirementsTransCreateView(CreateView):
     model = RequirementsTransfereeModel
     form_class = RequirementsTransfereeForm
-    template_name = 'stud_requirements/create_requirements_trans.html'
+    template_name = 'stud_requirements/student_requirements_list.html'
     
     def post(self, request, *args, **kwargs):
         self.object = None
@@ -206,6 +206,7 @@ class RequirementsDetailView(DetailView):
     template_name = 'requirements/requirements_detail.html'
     
     def get_queryset(self):
+        queryset = self.models.all()
         queryset = super(RequirementsDetailView, self).get_queryset()
         return queryset.select_related('requirements_name')
     
@@ -269,7 +270,7 @@ class RequirementsUpdateView(UpdateView):
 """ Available Course Views """
 
 class CourseListView(ListView):
-    model = CourseForm
+    model = CourseModel
     context_object_name = 'course_obj_list'
     template_name = 'available_course/course_list.html'
     
@@ -311,41 +312,41 @@ class CourseCreateView(CreateView):
     model = CourseModel
     form_class = CourseForm
     template_name = 'available_course/create_course.html'
-    
-    def post(self, request, *args, **kwargs):
-        self.object = None
-        form = self.get_form()
-        if form.is_valid():
-            course_obj = form.save(commit=False)
-            course_obj.save()
+    success_url = '/registrar/create/course/'
+    # def post(self, request, *args, **kwargs):
+    #     self.object = None
+    #     form = self.get_form()
+    #     if form.is_valid():
+    #         course_obj = form.save(commit=False)
+    #         course_obj.save()
             
-            return self.form_valid(form)
-        return self.form_invalid(form)
+    #         return self.form_valid(form)
+    #     return self.form_invalid(form)
     
-    def form_valid(self, form):
-        course_obj = form.save(commit=False)
-        current_site = get_current_site(self.request)
+    # def form_valid(self, form):
+    #     course_obj = form.save(commit=False)
+    #     current_site = get_current_site(self.request)
         
-        if self.request.is_ajax():
-            return JsonResponse(
-                {
-                    'error': False,
-                }
-            )
+    #     if self.request.is_ajax():
+    #         return JsonResponse(
+    #             {
+    #                 'error': False,
+    #             }
+    #         )
         
-        if self.request.POST.get('savenewform'):
-            return redirect('registrar:add_requirements')
-        return redirect('registrar:requirements_list')
+    #     if self.request.POST.get('savenewform'):
+    #         return redirect('registrar:add_requirements')
+    #     return redirect('registrar:course_list')
     
 
-    def form_invalid(self, form):
-        if self.request.is_ajax():
-            return JsonResponse(
-                {
-                    'error':True,
-                    'course_errors': form.errors
-                }
-            )
+    # def form_invalid(self, form):
+    #     if self.request.is_ajax():
+    #         return JsonResponse(
+    #             {
+    #                 'error':True,
+    #                 'course_errors': form.errors
+    #             }
+    #         )
     
     def get_context_data(self, **kwargs):
         context = super(CourseCreateView, self).get_context_data(**kwargs)

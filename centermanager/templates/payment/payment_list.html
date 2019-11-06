@@ -178,7 +178,7 @@
               </tbody>
           </table>
       </div>
-        <a class="btn btn-primary float-right" href="{% url 'centermanager:shs_update' shs.pk %}" >Edit</a>
+        <a class="btn btn-primary float-right" href="{% url 'centermanager:henc_update' shs.pk %}" >Edit</a>
       
       {% endfor %}
     </div>
@@ -189,7 +189,7 @@
 <div class="card">
     <div class="card-body">
 
-      <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">HIGHER EDUCATION (NIGHT CLASS)</h5>
+      <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">HIGHER EDUCATION REGULAR CLASS)</h5>
       <br>
       {% for shs in he_rc_list %}
       <div style="margin-right: 2%; margin-left: 2%;">
@@ -229,7 +229,7 @@
               </tbody>
           </table>
       </div>
-        <a class="btn btn-primary float-right" href="{% url 'centermanager:shs_update' shs.pk %}" >Edit</a>
+        <a class="btn btn-primary float-right" href="{% url 'centermanager:herc_update' shs.pk %}" >Edit</a>
       
       {% endfor %}
     </div>

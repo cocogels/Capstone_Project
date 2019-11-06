@@ -32,24 +32,60 @@
 </div>
 <!---->
 <div class="card" style="min-height: 30vw;">
-        <div class="card-header">
+        <!-- <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs"> 
                 <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'contacts:ihe_list' %}">Contacts</a>
+                    <a class="nav-link active" href="{% url 'contacts:list' %}">Contacts</a>
                   </li>              
               <li class="nav-item">
                 <a class="nav-link text-dark" href="#">Leads</a>
               </li>
             </ul>
-          </div>
+          </div> -->
       <div class="card-body">
     <!-- Start of Breadcrumb -->
-    <div class="d-sm-flex float-right mb-4">
-            <a href="{% url 'contacts:ihe_add_contact' %}" class="btn btn-primary" >ADD CONTACTS</a>
-          
-    <div class="float-left">
-     
+     <div class="float-left text-dark font-weight-bold">
+
+     Quota:   {% for quota in quota_list %}
+               {% if quota.a_senior_high == None %}
+
+                {% else %}
+                Senior High School: &nbsp  {{ quota.a_senior_high}} <br>
+                {% endif %}
+                
+                {% if quota.a_higher_education == None %}
+
+                {% else %}
+                Higher Education: &nbsp &nbsp   {{ quota.a_higher_education}} <br>
+                {% endif %}
+
+                {% if quota.a_retail == None %}
+
+                {% else %}
+                ICL (Retail): &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  {{ quota.a_retail}} <br>
+                {% endif %}
+
+                {% if quota.a_corporate == None %}
+
+                {% else %}
+                ICL (Corporate): &nbsp &nbsp &nbsp &nbsp {{ quota.a_corporate}} <br>
+                {% endif %}
+
+                {% if quota.a_owwa == None %}
+
+                {% else %}
+                OWWA: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ quota.a_owwa}} <br>
+                {% endif %}
+                
+                {% endfor %}
+
     </div>
+    <div class="d-sm-flex float-right mb-4 ">
+     
+            <a href="{% url 'contacts:ihe_add_contact' %}" class="btn btn-primary" >ADD CONTACTS</a>
+
+    
+  
     </div>
 <br>
     
@@ -74,36 +110,41 @@
     </nav> 
       <!---->
       <center>
-      <div style="max-width:90%">
+      <div style="max-width:100%">
         <table class="table table-bordered" style="height: 100%;">
-            <thead>
-                <tr style="color: white; background-color: #1a92c9;">
-                  <th scope="col">CONTACTS</th>
-                  <th scope="col" >PROPOSAL LETTER</th>
-                  <th scope="col" >INTERESTED</th>
-                  <th scope="col" >NOT INTERESTED</th>
-                  <th scope="col" >SIGN MOA</th>
-                  <th scope="col">PARTNERS</th>
+            <table class="table table-bordered" style="height: 100%;">
+                <thead class="text-center">
+                  <tr style="color: white; background-color: #1a92c9;">
+                    <th scope="col">CONTACTS</th>
+                    <th scope="col" >CONNECT  <br>  (Email , Call)</th>
+                    <th scope="col" >NOT INTERESTED</th>
+                    <th scope="col" >LEADS</th>
+                    <th scope="col" >REGISTERED</th>
+                    <th scope="col">RESERVED</th>
+                    <th scope="col">ENROLLED</th>
+                  </tr>
+                </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">
+                      {% for shsContact in ihe_contacts %}
+                    <a href="{% url 'contacts:ihe_view_contact' shsContact.pk %}">
+                      <div class="card bg-light text-dark p-2 m-2" style="min-height: 5vw;">
+                        {{ shsContact.name}}
+                        <div class="text-xs text-capitalize">Added by: {{ user.last_name}} ,{{ user.first_name}} </div>
+                      </div>
+                    </a>
+                    {% endfor %}
+                      
+                  </th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
                 </tr>
-              </thead>
-
-            <tbody>
-              <tr>
-                <th scope="row">
-                    <a href="{% url 'career_consultant:activity1' %}">
-                        <div class="card bg-light text-dark p-2" style="min-height: 5vw;">
-                          Raja Soliman
-                          <div class="text-xs">Added by: Agati</div>
-                        </div>
-                      </a>
-                </th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
+              </tbody>
 
         </table> 
       </div>

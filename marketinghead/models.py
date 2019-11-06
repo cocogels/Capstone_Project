@@ -9,6 +9,7 @@ from datetime import date
 from taggit.managers import TaggableManager
 from django.core.exceptions import ValidationError
 
+
 from django.conf import settings
 
 def present_or_future_date(value):

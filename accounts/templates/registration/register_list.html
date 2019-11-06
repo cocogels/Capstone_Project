@@ -37,7 +37,7 @@
                     <a href="{% url 'accounts:create_user' %}" class="btn float-left">
                         <span class="text btn btn-primary">Add Career Consultant</span>
                     </a>
-                 
+
                     {% if request.user.is_marketinghead %}
                     <a href="{% url 'marketing_head:add_territory' %}" class="btn float-left">
                         <span class="text btn btn-primary">Assign Territory</span>
@@ -72,10 +72,14 @@
                             <th scope="col">Lastname</th>
                             <th scope="col">Role</th>
                             <th scope="col">Territory</th>
+                            <th scope="col">Quota</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    {% for user in user_obj_list %}
+                    
+                    {% for user in cc_obj_list %}
+
+
                     <tbody>
                         <tr>
                             <td>{{ user.id }}</td>
@@ -88,18 +92,58 @@
                                 {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
                                 {{ user.is_registrar|yesno:"Registrar," }}
                             </td>
+
                             <td>
-                                
-                                {{ user.territory }}
+
+                                {{ user.territory_choices }}
 
 
                             </td>
+
                             <td>
+                            <td>
+
                                 <a href="#" class="btn btn-success btn-sm">VIEW</a>
                             </td>
                         </tr>
                     </tbody>
+
                     {% endfor %}
+
+                    {% if request.user.is_centermanager %}
+                    {% for user in user_obj_list %}
+
+
+                    <tbody>
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.email  }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+
+                            <td>
+                                {{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
+                                {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
+                                {{ user.is_registrar|yesno:"Registrar," }}
+                            </td>
+
+                            <td>
+
+                                {{ user.territory_choices }}
+
+
+                            </td>
+
+                            <td>
+                            <td>
+
+                                <a href="#" class="btn btn-success btn-sm">VIEW</a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                    {% endfor %}
+                    {% endif %}                    
                 </table>
             </div>
         </center>

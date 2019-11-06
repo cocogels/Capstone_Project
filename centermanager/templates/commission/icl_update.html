@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}
+<title>Marketing | Target Sheet</title>
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
+
+        <div class="float-left">
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:school_year_list' %}">School Year</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:target' %}">Target Sheet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'centermanager:commission_list' %}">Commission</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <br>
+            <div class="content-section">
+                {% include 'messages.html' %}
+
+
+
+
+                <div class="card-body">
+                    <div class="card-body">
+                        <form class='ajax-form' action="." method="POST"
+                            data-url='{{ request.build_absolute_url|safe }}' enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <fieldset class="form-group">
+                                {{ form|crispy }}
+
+                            </fieldset>
+                            <div class="row float-right " style="padding-right: 5%;">
+                                <div class="form-group ">
+                                    <button class="btn btn-outline-info" type="submit">Submit</button>
+                                </div>
+                                &nbsp
+                                <div class="form-group float-left">
+                                    <a href="{% url 'centermanager:commission_list'%}" class="btn btn-outline-info">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+                <br>
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Senior High School</h5>
+                            <br>
+                            {% for shs in commission_shs_list %}
+                            <div style="margin-right: 2%; margin-left: 2%;">
+                                <table class="table table-bordered" style="height: 100%;">
+                                    <thead class="bg-primary text-light">
+                                        <tr>
+                                            <th scope="col">Commission Name</th>
+                                            <th scope="col">Specification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Count per Student</td>
+                                            <td>{{ shs.student }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Enrolled</td>
+                                            <td>{{ shs.student_choices }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tuition Fee</td>
+                                            <td>{{ shs.tuition_fee }}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a class="btn btn-primary float-right"
+                                href="{% url 'centermanager:com_shs_update' shs.pk %}">Edit</a>
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <!--------------------------------------------------------------------------------------------------------------------------------------------->
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher
+                                Education(Regular Class)</h5>
+                            <br>
+                            {% for shs in commission_herc_lst %}
+                            <div style="margin-right: 2%; margin-left: 2%;">
+                                <table class="table table-bordered" style="height: 100%;">
+                                    <thead class="bg-primary text-light">
+                                        <tr>
+                                            <th scope="col">Commission Name</th>
+                                            <th scope="col">Specification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Count per Student</td>
+                                            <td>{{ shs.student }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Enrolled</td>
+                                            <td>{{ shs.student_choices }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tuition Fee</td>
+                                            <td>{{ shs.tuition_fee }}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a class="btn btn-primary float-right" href="{% url 'centermanager:com_herc_update' shs.pk %}">Edit</a>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <!--------------------------------------------------------------------------------------------------------------------------------------------->
+
+                </div>
+                <br>
+                <div class="card-deck">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education (Night
+                                Class)</h5>
+                            <br>
+                            {% for shs in commission_henc_lst %}
+                            <div style="margin-right: 2%; margin-left: 2%;">
+                                <table class="table table-bordered" style="height: 100%;">
+                                    <thead class="bg-primary text-light">
+                                        <tr>
+                                            <th scope="col">Commission Name</th>
+                                            <th scope="col">Specification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Count per Student</td>
+                                            <td>{{ shs.student }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Enrolled</td>
+                                            <td>{{ shs.student_choices }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tuition Fee</td>
+                                            <td>{{ shs.tuition_fee }}</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a class="btn btn-primary float-right" href="{% url 'centermanager:com_henc_update' shs.pk %}">Edit</a>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Informatics Corporate
+                                Learning</h5>
+                            <br>
+                            {% for shs in commission_icl_lst %}
+                            <div style="margin-right: 2%; margin-left: 2%;">
+                                <table class="table table-bordered" style="height: 100%;">
+                                    <thead class="bg-primary text-light">
+                                        <tr>
+                                            <th scope="col">Commission Name</th>
+                                            <th scope="col">Specification</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Total Collection</td>
+                                            <td>{{ shs.total_collection }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <a class="btn btn-primary float-right" href="{% url 'centermanager:com_icl_update' shs.pk %}">Edit</a>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

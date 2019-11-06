@@ -98,7 +98,8 @@
             <tr>
               <th scope="col">Collateral Name</th>
               <th scope="col">Unit</th>
-              <th scope="col">Quantityl</th>
+              <th scope="col">Quantity</th>
+              <th scope="col"> Action</th>
             </tr>
           </thead>
           {% for collateral_list in collateral_list %}
@@ -107,6 +108,9 @@
                   <th scope="row">{{ collateral_list.name }}</th>
                   <td>{{ collateral_list.unit }}</td>
                   <td>{{ collateral_list.quantity }}</td>
+                  <td>
+                    <a href="{% url 'marketing_head:collateral_update' collateral_list.pk %}" class="btn btn-success" style="padding: 3px;">UPDATE</a>
+                  </td>
               </tr>
           </tbody>
           {% endfor %}

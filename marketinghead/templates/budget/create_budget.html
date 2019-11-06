@@ -35,37 +35,9 @@
 
       <div class="card-body">
     <!-- Start of Breadcrumb -->
-    <nav aria-label="breadcrumb" class="row align-items-center justify-content-between" style="padding-top:2%; padding-right:2%; padding-left:2%;">
-            <h5 class=" mb-0 text-gray-800">School Year: </h5>   
-    </nav>
-
-    <div class="card-body">          
+    
 
     
-           <div class="card-body">
-             <form action="" method="POST">                      
-                     {% csrf_token %}
-                                    
-                <fieldset class="form-group" >
-                            {{ form|crispy }}
-                </fieldset> 
-            
-                <div class="row float-right " style="padding-right: 5%;">        
-                    <div class="form-group ">
-                        <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                     </div>
-                                    &nbsp
-                <div class="form-group float-left">            
-                    <a href="{% url 'marketing_head:budget_list'%}" class="btn btn-outline-info">
-                                    Cancel
-                    </a>    
-                                    
-
-             </div>  
-                </div>
-                </div>               
-                </form>
-              </div>        
     
     <!-- end -->
 
@@ -86,10 +58,14 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
-                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Available Budget</div>
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">total Budget</div>
                 <div class="row no-gutters align-items-center">
                   <div class="col-auto">
-                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">100%</div>
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                       {% for budget_total in budget_total %} 
+                        {{ budget_total }}
+                      {% endfor %}
+                    </div>
                   </div>
                  
                 </div>
@@ -99,7 +75,33 @@
         </div>
       </div>
     </div>
-   
+    <div class="card-body">          
+
+    
+        <div class="card-body">
+          <form action="" method="POST">                      
+                  {% csrf_token %}
+                                 
+             <fieldset class="form-group" >
+                         {{ form|crispy }}
+             </fieldset> 
+         
+             <div class="row float-right " style="padding-right: 5%;">        
+                 <div class="form-group ">
+                     <button class="btn btn-outline-info" type="submit">Submit</button>                   
+                  </div>
+                                 &nbsp
+             <div class="form-group float-left">            
+                 <a href="{% url 'marketing_head:budget_list'%}" class="btn btn-outline-info">
+                                 Cancel
+                 </a>    
+                                 
+
+          </div>  
+             </div>
+             </div>               
+             </form>
+           </div>       
     <hr>
     <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
       <ul class="pagination">
@@ -118,6 +120,7 @@
             <tr>
               <th scope="col">Amount</th>
               <th scope="col">Date of Arrival</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           {% for budget_list in budget_list %}
@@ -125,6 +128,9 @@
               <tr>
                   <th scope="row">{{ budget_list.amount }}</th>
                   <td>{{ budget_list.arrival }}</td>
+                  <td>
+                    <a href="{% url 'marketing_head:budget_update' budget_list.pk %}" class="btn btn-success" style="padding: 3px;">UPDATE</a>
+                  </td>
               </tr>
           </tbody>
           {% endfor %}

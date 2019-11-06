@@ -106,7 +106,8 @@
                     </div>
                     </form>
                 </div>
-                <div class="card-deck">
+                <br>
+                <div class="card-deck" style="margin: 0 auto;  float: none; margin-bottom: 10px;">
                     <div class="card">
                         <div class="card-body">
 
@@ -146,7 +147,7 @@
                                 <!--<button type="submit" class="btn btn-primary float-right" href="{% url 'centermanager:com_shs_update' shs=pk %}" >Edit</button>-->
 
                             </form>
-                            {% endfor %}f
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="card">
@@ -184,7 +185,7 @@
                                         <input type="password" class="form-control" id="inputPassword4" placeholder="0">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary float-right">Edit</button>
+                                <a type="submit" class="btn btn-primary float-right" href="{% url 'centermanager:henc_update' shs=pk %}" >Edit</a>
                             </form>
                         </div>
                     </div>
@@ -223,7 +224,7 @@
                                         <input type="password" class="form-control" id="inputPassword4" placeholder="0">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary float-right">Edit</button>
+                                <a type="submit" class="btn btn-primary float-right" href="{% url 'centermanager:herc_update' shs=pk %}" >Edit</a>
                             </form>
                         </div>
                     </div>

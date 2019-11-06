@@ -22,7 +22,9 @@
 
 {% block content %}
 <div class="container-fluid">
-   
+  <div class="d-sm-flex align-items-center">
+    <a href="{% url 'accounts:user_list' %}" class="btn btn-primary"> BACK</a>
+  </div>
   <br>
   <div class="card">
     <div class="card-body">
@@ -32,34 +34,34 @@
       <div class="content-section">
         {% include 'messages.html' %}
         <div class="card" style="width: 60%; margin: 0 auto; float: none; margin-bottom: 10px; ">
-        <div class="card-body" >          
-
-    
           <div class="card-body">
-            <form action="" method="POST">                      
-                    {% csrf_token %}
-                                   
-               <fieldset class="form-group" >
-                           {{ form|crispy }}
-               </fieldset> 
-           
-               <div class="row float-right " style="padding-right: 5%;">        
-                   <div class="form-group ">
-                       <button class="btn btn-outline-info" type="submit">Submit</button>                   
-                    </div>
-                                   &nbsp
-               <div class="form-group float-left">            
-                   <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-info">
-                                   Cancel
-                   </a>    
-                                   
-      
-            </div>  
-               </div>
-               </div>               
-               </form>
-             </div> 
-      </div>
+
+
+            <div class="card-body">
+              <form action="" method="POST">
+                {% csrf_token %}
+
+                <fieldset class="form-group">
+                  {{ form|crispy }}
+                </fieldset>
+
+                <div class="row float-right " style="padding-right: 5%;">
+                  <div class="form-group ">
+                    <button class="btn btn-outline-info" type="submit">Submit</button>
+                  </div>
+                  &nbsp
+                  <div class="form-group float-left">
+                    <a href="{% url 'accounts:user_list' %}" class="btn btn-outline-info">
+                      Cancel
+                    </a>
+
+
+                  </div>
+                </div>
+            </div>
+            </form>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -92,15 +94,15 @@
             <tr>
               <td>{{ user.id }}</td>
               <td>{{ user.email  }}</td>
-              <td>{{ user.first_name }}</td>
-              <td>{{ user.last_name }}</td>
-
+              <td class="text-capitalize">{{ user.first_name }}</td>
+              <td class="text-capitalize">{{ user.last_name }}</td>
+              <td>none</td>
               <td>
                 {{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
                 {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
                 {{ user.is_registrar|yesno:"Registrar," }}
               </td>
-              <td>none</td>
+              
               <td>
                 <a href="#" class="btn btn-success btn-sm">VIEW</a>
               </td>

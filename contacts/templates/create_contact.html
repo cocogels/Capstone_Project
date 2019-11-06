@@ -24,7 +24,7 @@
 <div class="container-fluid">
 
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
+    <a href="{% url 'contacts:list' %}" class="btn btn-primary"> BACK</a>
 
     <div class="float-left">
 
@@ -32,7 +32,7 @@
   </div>
   <!---->
   <div class="card">
-    <div class="card-header">
+    <!-- <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
           <a class="nav-link active" href="{% url 'contacts:list' %}">Contacts</a>
@@ -41,7 +41,7 @@
           <a class="nav-link text-dark" href="#">Leads</a>
         </li>
       </ul>
-    </div>
+    </div> -->
     <div class="card-body">
       <!-- Start of Breadcrumb -->
       <div class="card-body">
@@ -82,46 +82,6 @@
       <div class="content-section">
         {% include 'messages.html' %}
 
-        <hr>
-        <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
-          <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </nav>
-        <!---->
-        <center>
-          <div style="max-width:95%">
-            <table class="table table-bordered" style="height: 100%;">
-              <thead>
-                <tr style="color: white;background-color: #1a92c9;  ">
-                  <th scope="col">CONTACTS</th>
-                  <th scope="col" >PROPOSAL LETTER</th>
-                  <th scope="col" >INTERESTED</th>
-                  <th scope="col" >NOT INTERESTED</th>
-                  <th scope="col" >SIGN MOA</th>
-                  <th scope="col">PARTNERS</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {% for contact in icl_contacts %}
-                <tr>
-                  <th scope="row"></th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </center>
       </div>
     </div>
   </div>

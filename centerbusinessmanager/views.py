@@ -18,7 +18,10 @@ from centermanager.mixins import AjaxFormMixin
 from django.http import HttpResponse, JsonResponse
 
 ''' activity '''
+def activity_detailed(request):
+    return render(request, 'detailed.html')
+    
+def activity_pending(request):
+    return render(request, 'pending.html')
 
-def activity_list(request):
-    return render(request, 'activity_request_list.html')
 

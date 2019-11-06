@@ -50,6 +50,10 @@ class UsersListView(LoginRequiredMixin, TemplateView):
         context = super(UsersListView, self).get_context_data(**kwargs)
         active_users = self.get_queryset().filter(is_active=True)
         inactive_users = self.get_queryset().filter(is_active=False)
+        quota = AssignQuota.objects.all()
+        territory = AssignTerritory.objects.all()
+        context["quota_list"] = quota
+        context['territory_list'] = territory
         context['active_users'] = active_users
         context['inactive_users'] = inactive_users
         context['per_page'] = self.request.POST.get('per_page')
@@ -57,7 +61,8 @@ class UsersListView(LoginRequiredMixin, TemplateView):
             ('True', ' Active'),
             ('False', 'In Active')
         ]
-        context['user_obj_list'] = AssignTerritory.objects.all()
+        context['cc_obj_list'] = User.objects.exclude(is_superuser=True).exclude(is_centermanager=True).exclude(is_centerbusinessmanager=True).exclude(is_marketinghead=True).exclude(is_registrar=True)
+        
         return context
 
 
@@ -77,7 +82,7 @@ class CreateUserView(LoginRequiredMixin, AjaxFormMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreateUserView, self).get_context_data(**kwargs)
         context['user_form'] = context['form']
-        context['user_list'] = User.objects.all()
+        context['user_list'] = User.objects.exclude(is_superuser=True).exclude(is_centermanager=True).exclude(is_centerbusinessmanager=True).exclude(is_marketinghead=True).exclude(is_registrar=True)
         if 'errors' in kwargs:
             context['errors'] = kwargs['errors']
         return context

@@ -82,16 +82,16 @@
                                     {% for user in employee_obj_list %}
                                     <tbody>
                                         <tr>
-                                            <td>{{ user.id }}</td>
-                                            <td>{{ user.email }}</td>
-                                            <td>{{ user.first_name }}</td>
-                                            <td>{{ user.last_name }}</td>
+                                            <td class="text-capitalize">{{ user.id }}</td>
+                                            <td >{{ user.email }}</td>
+                                            <td class="text-capitalize">{{ user.first_name }}</td>
+                                            <td class="text-capitalize">{{ user.last_name }}</td>
 
-                                            <td>{{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
+                                            <td class="text-capitalize">{{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
                                                 {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
                                                 {{ user.is_registrar|yesno:"Registrar," }}
                                             </td>
-                                            <td>
+                                            <td class="text-capitalize">
                                                 <a href="#" class="btn btn-success btn-sm">VIEW</a>
                                             </td>
                                         </tr>
@@ -112,18 +112,18 @@
                                        </tr>
                                    </thead>
 
-                                   {% for user in employee_obj_list %}
+                                   {% for user in cc_obj_list %}
                                    
                                    <tbody>
                                        <tr>
-                                           <td>{{ user.id }}</td>
+                                           <td class="text-capitalize">{{ user.id }}</td>
                                            <td class="text-capitalize">{{ user.last_name }} , {{ user.first_name }}</td>
                                            <td>{{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
                                                {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
                                                {{ user.is_registrar|yesno:"Registrar," }}</td>
-                                           <td>{{ user.assignterritory_id }}</td>
-                                           <td>Quota</td>
-                                           <td>
+                                           <td class="text-capitalize">{{ user.assignterritory_id }}</td>
+                                           <td class="text-capitalize">Quota</td>
+                                           <td class="text-capitalize">
                                                <a href="#" class="btn btn-success btn-sm">VIEW</a>
                                            </td>
                                        </tr>

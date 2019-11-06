@@ -22,8 +22,13 @@
 
 {% block content %}
 <div class="container-fluid">
-   
-  <br>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <a href="{% url 'accounts:user_list' %}" class="btn btn-primary"> BACK</a>
+
+        <div class="float-left">
+
+        </div>
+    </div>
   <div class="card">
     <div class="card-body">
       <br>
@@ -31,10 +36,123 @@
       <!-- page content -->
       <div class="content-section">
         {% include 'messages.html' %}
+        
+        {% for target in targetsheet %}
+        <div class="row d-flex justify-content-center" style="min-height:50%;">
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-2 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Senior High School </div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ target.seniorhigh }}</div>
+                      </div>
+                      <div class="col">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Informatics Higher Education -->
+          <div class="col-xl-2 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Informatics Higher Education
+                    </div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ target.higher_ed }}</div>
+                      </div>
+                      <div class="col">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- OWWA-->
+          <div class="col-xl-2 col-md-6 mb-4">
+            <div class="card border-left-dark shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Owwa: Overseas Workers Welfare
+                      Administration</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ target.owwa }}</div>
+                      </div>
+                      <div class="col">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Corporate -->
+          <div class="col-xl-2 col-md-6 mb-4">
+            <div class="card border-left-warning h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Informatics Corporate
+                      Learning: Corporate</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ target.corporate }}</div>
+                      </div>
+                      <div class="col">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Retail -->
+          <div class="col-xl-2 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Informatics Corporate Learning:
+                      Retail</div>
+                    <div class="row no-gutters align-items-center">
+                      <div class="col-auto">
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ target.retail }}</div>
+                      </div>
+                      <div class="col">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        {% endfor %}
         <div class="card" style="width: 60%; margin: 0 auto; float: none; margin-bottom: 10px; ">
+          
         <div class="card-body" >          
 
-    
+
           <div class="card-body">
             <form action="" method="POST">                      
                     {% csrf_token %}
@@ -80,7 +198,7 @@
           <tbody>
             <tr>
               <td>{{ quota.id }}</td>
-              <td>{{ user.last_name }} , {{ user.first_name }}</td>
+              <td>{{ quota.assigned_to }}</td>
               <td>
                 {{ user.is_centermanager|yesno:"Center Manager," }}{{ user.is_marketinghead|yesno:"Marketing Head," }}{{ user.is_centerbusinessmanager|yesno:"Center Business Manager," }}
                                 {{ user.is_ihe|yesno:"Career Consultant," }}{{ user.is_icl|yesno:"Career Consultant," }}{{ user.is_shs|yesno:"Career Consultant," }}{{ user.is_budgetary|yesno:"Career Consultant," }}
@@ -122,7 +240,7 @@
 
               </td>
               <td>
-                <a href="#" class="btn btn-success btn-sm">VIEW</a>
+                <a href="{%url 'marketing_head:quota_update' quota.pk %}" class="btn btn-success btn-sm">UPDATE</a>
               </td>
             </tr>
           </tbody>

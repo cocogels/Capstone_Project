@@ -14,7 +14,7 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | Target Sheet</title>
+<title>Marketing | Target Sheet</title>
 {% endblock title %}
 
 
@@ -23,101 +23,149 @@
 {% block content %}
 <div class="container-fluid">
 
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
-      
-<div class="float-left">
- 
-</div>
-</div>
-<!---->
-<div class="card" style="min-height: 30vw;">
-        <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs"> 
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'contacts:list' %}">Contacts</a>
-                  </li>              
-              <li class="nav-item">
-                <a class="nav-link text-dark" href="#">Leads</a>
-              </li>
-            </ul>
-          </div>
-      <div class="card-body">
-    <!-- Start of Breadcrumb -->
-     <div class="float-left text-dark font-weight-bold">
-     Quota: {{ quota.a_senior_high }}{{ quota.a_higher_education }}{{ quota.a_retail }}{{ quota.a_corporate }}{{ quota.a_owwa }}
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
+
+    <div class="float-left">
+
     </div>
-    <div class="d-sm-flex float-right mb-4 ">
-     
-            <a href="{% url 'contacts:add_contact' %}" class="btn btn-primary" >ADD CONTACTS</a>
+  </div>
+  <!---->
+  <div class="card" style="min-height: 30vw;">
 
-    
-  
-    </div>
-<br>
-    
-    <!-- end -->
+    <div class="card-body">
+      <!-- Start of Breadcrumb -->
+      <div class="float-left text-dark font-weight-bold">
 
-<!-- End of Bread Crumb -->
-    <br>
+        Quota: {% for quota in quota_list %}
+        {% if quota.a_senior_high == None %}
 
-<!-- page content -->
-    <div class="content-section">
+        {% else %}
+        Senior High School: &nbsp {{ quota.a_senior_high}} <br>
+        {% endif %}
+
+        {% if quota.a_higher_education == None %}
+
+        {% else %}
+        Higher Education: &nbsp &nbsp {{ quota.a_higher_education}} <br>
+        {% endif %}
+
+        {% if quota.a_retail == None %}
+
+        {% else %}
+        ICL (Retail): &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ quota.a_retail}} <br>
+        {% endif %}
+
+        {% if quota.a_corporate == None %}
+
+        {% else %}
+        ICL (Corporate): &nbsp &nbsp &nbsp &nbsp {{ quota.a_corporate}} <br>
+        {% endif %}
+
+        {% if quota.a_owwa == None %}
+
+        {% else %}
+        OWWA: &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp {{ quota.a_owwa}} <br>
+        {% endif %}
+
+        {% endfor %}
+
+      </div>
+      <div class="d-sm-flex float-right mb-4 ">
+
+        <a href="{% url 'contacts:add_contact' %}" class="btn btn-primary">ADD CONTACTS</a>
+
+
+
+      </div>
+      <br>
+
+      <!-- end -->
+
+      <!-- End of Bread Crumb -->
+      <br>
+
+      <!-- page content -->
+      <div class="content-section">
         {% include 'messages.html' %}
-   
-    <hr>
-    <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav> 
-      <!---->
-      <center>
-      <div style="max-width:90%">
-        <table class="table table-bordered" style="height: 100%;">
-            <table class="table table-bordered" style="height: 100%;">
-                <thead>
-                  <tr style="color: white; background-color: #1a92c9;">
-                    <th scope="col">CONTACTS</th>
-                    <th scope="col" >PROPOSAL LETTER</th>
-                    <th scope="col" >INTERESTED</th>
-                    <th scope="col" >NOT INTERESTED</th>
-                    <th scope="col" >SIGN MOA</th>
-                    <th scope="col">PARTNERS</th>
+
+        <hr>
+        <!---------------------------------------------------------------------------------------------------------------------->
+        <div class="card">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs"> 
+              <li class="nav-item">
+                  <a class="nav-link active" href="#">Contacts</a>
+                </li>              
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Sent Proposal Letter</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Interested</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Not Interested</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Sign M.O.A.</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="#">Partners</a>
+            </li>
+          </ul>
+          </div>
+            <div class="card-body">
+              <nav aria-label="breadcrumb" class="row" style="padding-left:1%; margin-bottom: 15px;">
+                <h4></h4>
+                <!-- search field -->
+                <div class="topbar-divider d-none d-sm-block" style="padding-right:79%"></div>
+                <div class="input-group float-right" style="max-width: 20%;">
+                  <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                    aria-describedby="addon-wrapping">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="background-color: 0080ff;"> Search</span>
+                  </div>
+                </div>
+              </nav>
+
+              <!-- TABLE -->
+              <table class="table table-hover table-bordered ">
+                <thead style="text-align: center;">
+                  <tr class="bg-primary text-light ">
+                    <th scope="col">Contact  Name </th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Email </th>
+                    <th scope="col">Date Added</th>
+                    <th scope="col">Added by</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
+                {% for iclContact in icl_contacts %}
+                <tbody>
+                  <tr>
+                    <th scope="row">{{ iclContact.name}}</th>
+                    <td class="text-capitalize">{{ iclContact.address}}</td>
+                    <td>{{ iclContact.email}}</td>
+                    <td>{{ iclContact.date_created}}</td>
+                    <td class="text-capitalize">{{ user.last_name}} ,{{ user.first_name}}</td>
+                    <td> 
+                      <center>
+                        <a href="{% url 'contacts:view_contact' iclContact.pk %}" class="btn btn-success">View</a>&nbsp;
+                        <a href="{% url 'contacts:edit_contact' iclContact.pk %}" class="btn btn-info">Edit</a>
+                      </center> 
+                    </td>
+                  </tr>
+                </tbody>
+                {% endfor %}
+              </table>
+            </div>
+        </div>
 
-              <tbody>
-                <tr>
-                  <th scope="row">
-                      {% for iclContact in icl_contacts %}
-                    <a href="{% url 'contacts:edit_contact' iclContact.pk %}">
-                      <div class="card bg-light text-dark p-2" style="min-height: 5vw;">
-                        {{ iclContact.name}}
-                        <div class="text-xs text-capitalize">Added by: {{ user.last_name}} ,{{ user.first_name}} </div>
-                      </div>
-                    </a>
-                    {% endfor %}
-                      
-                  </th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
+        <!---------------------------------------------------------------------------------------------------------------------->
 
-        </table> 
       </div>
-    </center>
     </div>
-</div>
-</div>
+  </div>
 </div>
 <br>
 

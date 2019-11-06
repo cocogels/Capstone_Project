@@ -32,7 +32,7 @@
 </div>
 <!---->
 <div class="card">
-        <div class="card-header">
+        <!-- <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs"> 
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'contacts:ihe_list' %}">Contacts</a>
@@ -41,7 +41,7 @@
                 <a class="nav-link text-dark" href="#">Leads</a>
               </li>
             </ul>
-          </div>
+          </div> -->
       <div class="card-body">
     <!-- Start of Breadcrumb -->
     <div class="card-body">          
@@ -94,33 +94,44 @@
     </nav> 
       <!---->
       <center>
-      <div style="max-width:80%">
-        <table class="table table-bordered" style="height: 100%;">
-          <thead class="bg-primary text-light">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Address</th>
-              <th scope="col">Contact Type</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          {% for contact in ihe_contacts %}
-          <tbody>
-            <tr>
-              <th scope="row">{{ contact.id }}</th>
-              <td>{{ contact.name }}</td>
-              <td>{{ contact.address }}</td>
-              <td>{{ contact.org_type_id }}</td>
-              <td>
-                    <a href="#" class="">VIEW</a>
-              </td>
-            </tr>
-          </tbody>
-          {% endfor %}
-
-        </table> 
-      </div>
+          <div style="max-width:100%">
+              <table class="table table-bordered" style="height: 100%;">
+                  <table class="table table-bordered" style="height: 100%;">
+                      <thead class="text-center">
+                        <tr style="color: white; background-color: #1a92c9;">
+                          <th scope="col">CONTACTS</th>
+                          <th scope="col" >CONNECT  <br>  (Email , Call)</th>
+                          <th scope="col" >NOT INTERESTED</th>
+                          <th scope="col" >LEADS</th>
+                          <th scope="col" >REGISTERED</th>
+                          <th scope="col">RESERVED</th>
+                          <th scope="col">ENROLLED</th>
+                        </tr>
+                      </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">
+                            {% for shsContact in ihe_contacts %}
+                          <a href="{% url 'contacts:ihe_view_contact' shsContact.pk %}">
+                            <div class="card bg-light text-dark p-2 m-2" style="min-height: 5vw;">
+                              {{ shsContact.name}}
+                              <div class="text-xs text-capitalize">Added by: {{ user.last_name}} ,{{ user.first_name}} </div>
+                            </div>
+                          </a>
+                          {% endfor %}
+                            
+                        </th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+      
+              </table> 
+            </div>
     </center>
     </div>
 </div>
