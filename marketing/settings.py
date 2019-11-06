@@ -59,9 +59,8 @@ INSTALLED_APPS = [
     'taggit',
     'simple_pagination',
     'viewflow',
-    'viewflow.frontend',
-    'material',
-    'material.frontend',
+    'django_fsm',
+    #'django_extensions',
     #'django_tables2',
     #handling our crm content
     'crm_blog.apps.CrmBlogConfig',
@@ -75,6 +74,7 @@ INSTALLED_APPS = [
     'category',
     'components',
     'activitycalendar',
+    'activity',
 ]
 
 
@@ -291,31 +291,35 @@ BOOTSTRAP4 = {
 }
 
 ''' DJANGO REST SETTINGS  '''
+REST_FRAMEWORK = {
+    
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
 
 
-
-DEFAULT_RENDERER_CLASSES = (
-    'rest_framework.renderers.JSONRenderer',
-    'rest_framework.renderers.BrowsableAPIRenderer',
-)
-
-
-DEFAULT_PARSER_CLASSES = (
-    'rest_framework.parsers.JSONParser',
-    'rest_framework.parsers.FormParser',
-    'rest_framework.parsers.MultiPartParser'
-)
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser'
+    ),
 
 
-DEFAULT_AUTHENTICATION_CLASSES = (
-    'rest_framework.authentication.SessionAuthentication',
-    'rest_framework.authentication.BasicAuthentication'
-)
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ),
 
 
-DEFAULT_PERMISSION_CLASSES = (
-    'rest_framework.permissions.AllowAny',
-)
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+
+}
+
+
+    
 
 TAGGIT_CASE_INSENSITIVE = True
 

@@ -1,0 +1,72 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- Full Calendar CSS -->
+    <link rel="stylesheet" href="{% static '/assets/fullcalendar/core/main.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/fullcalendar/daygrid/main.css'%}">
+
+</head>
+<body>
+    <form action="." id="activity-form">
+        <div class="form-group">
+            {% csrf_token %}
+            <div class="form-group     
+                <labelfor="first_name">Start Date</label>
+                <input type="text" class="" id="start_date" name="start_date"/>
+
+                <labelfor="end_date">End Date</label>
+                    <input type="text" class=" id="end_date" name="end_date" />
+            </div>
+            <br/>
+            <div class="form-group">
+                    <label>Activity Name</label>
+                    <input type="text" class="" id="activity_name" name="activity_name"/>
+            </div>
+            <br>
+            <div class="form-group">
+                <label for="">Location</label>
+                <input type="text" class="" id="location" name="location"/>
+            </div>
+             <div class="form-group">
+                 <label for="">Description</label>
+                 <input type="text" class="" id="description" name="description" />
+             </div>
+            <br>
+            <div>
+                <input type="submit"  value="Submit"/>
+            </div>
+        </div>
+    </form>
+   
+    <div>
+        <div id="calendar"></div>
+    </div>
+
+
+
+    <!-- Built in JS plugins -->
+    <script src="{% static '/assets/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static '/assets/bootbox/bootbox.min.js' %}"></script>
+    
+    <!-- Activity JS -->
+    <script src="{% static '/assets/activity/create-activity.js' %}"></script>
+    <script src="{% static '/assets/activity/calendar.js' %}"></script>
+    
+    <!-- Full Calendar Plugins -->
+    <script src="{% static '/assets/fullcalendar/core/main.js' %}"></script>
+    <script src="{% static '/assets/fullcalendar/daygrid/main.js' %}"></script>
+    <script src="{% static '/assets/fullcalendar/interaction/main.js' %}"></script>
+    
+
+
+ 
+    
+</body>
+</html>

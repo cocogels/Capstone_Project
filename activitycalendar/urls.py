@@ -1,6 +1,5 @@
 from django.urls import path, include
 
-from activitycalendar.views import CalendarTemplateView,CalendarCreateView
 
 from . import views 
  
