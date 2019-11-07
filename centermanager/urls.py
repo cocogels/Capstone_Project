@@ -30,8 +30,8 @@ urlpatterns = [
     path('commission/list/', views.CommissionSettingListView.as_view(), name='commission_list'),  
 #   path('commission/<int:pk>/details/', views.CommissionDetailView.as_view(), name='commission_detial'),
     path('commission/<int:pk>/shs/edit', views.CommissionSettingSHSUpdate.as_view(), name='com_shs_update'),
-    path('commission/<int:pk>/higher-education/nc/edit', views.CommissionSettingHERCUpdate.as_view(), name='com_herc_update'),
-    path('commission/<int:pk>/higher-education/rc/edit', views.CommissionSettingHENCUpdate.as_view(), name='com_henc_update'),
+    path('commission/<int:pk>/higher-education/rc/edit', views.CommissionSettingHERCUpdate.as_view(), name='com_herc_update'),
+    path('commission/<int:pk>/higher-education/nc/edit', views.CommissionSettingHENCUpdate.as_view(), name='com_henc_update'),
     path('commission/<int:pk>/icl/edit', views.CommissionSettingICLUpdate.as_view(), name='com_icl_update'),
 
     

@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}
+<title>Marketing | Target Sheet</title>
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static '/assets/css/activity/form.css' %}">
+<link rel="stylesheet" href="{% static '/assets/css/activity/kronos.css'%}">
+
+
+
+
+
+<div class="container-fluid">
+
+
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb arr-right">
+            <li class="breadcrumb-item"><a href="{% url 'crm_blog:home' %}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'career_consultant:activity' %}">Activity</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Create Activity</li>
+        </ol>
+    </nav>
+    <!---->
+    <div class="card" style="height: 50%;">
+
+        <div class="card-body " style="min-height: 30vw;">
+
+
+
+            <br><br>
+
+            <!-- page content -->
+            <div class="content-section">
+                {% include 'messages.html' %}
+                <div class="card" style=" border: white; margin: 0 auto;  float: none; margin-bottom: 10px;">
+                    <form role='form' id="activity-form" method='POST' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h4>
+                            <center> Activity Form </center>
+                        </h4>
+                        <div class="border-top my-6"></div><br>
+                        <div class="floating-form">
+                            <div class="floating-label">
+                                <input class="floating-input" id='activity_name' name='activity_name' type="text"
+                                    placeholder=" " required />
+                                <span class="highlight"></span>
+                                <label>Activity Name</label>
+                            </div>
+
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <strong>Start Date:</strong>
+                                    <input class="form-control" id='start_date' name='start_date' type="text"
+                                        placeholder=" " required />
+                                    <span> <img src="{% static '/assets/css/activity/images/ico-calendar.gif'%}" alt="" srcset=""> </span>
+                                </div>
+                                &nbsp; &nbsp; &nbsp;
+                                <div class="form-group">
+                                    <strong>End Date</strong>
+                                    <input class="form-control" id='end_date' name='end_date' type="text"
+                                        placeholder=" " required />
+                                    <span> <img src="{% static '/assets/css/activity/images/ico-calendar.gif'%}" alt=""
+                                            srcset=""> </span>
+
+                                </div>
+                            </div><br>
+                            <div class="floating-label">
+                                <input class="floating-input" id='location' name='location' type="text" placeholder=" "
+                                    required />
+                                <span class="highlight"></span>
+                                <label>Location</label>
+                            </div>
+                            <div class="floating-label">
+                                <input class="floating-input" id='budget' name='budget' type="number" placeholder=" "
+                                    required />
+                                <span class="highlight"></span>
+                                <label>Budget</label>
+                            </div>
+                            <h4>Collateral</h4>
+                            <div class="border-top my-6"></div><br>
+                            <div class="floating-label">
+                                <input class="floating-input" id='tarpaulin' name='tarpaulin' type="number"
+                                    placeholder=" " />
+                                <span class="highlight"></span>
+                                <label>Tarpaulin</label>
+                            </div>
+                            <div class="floating-label">
+                                <input class="floating-input" id='standy' name='standy' type="number" placeholder=" " />
+                                <span class="highlight"></span>
+                                <label>Standy</label>
+                            </div>
+                            <h4>Flyers</h4><br>
+                            <div class="form-inline">
+                                <div class="floating-label">
+                                    <input class="floating-input" id='flyer_shs' name='flyer_shs' type="number"
+                                        placeholder=" " />
+                                    <span class="highlight"></span>
+                                    <label>SHS</label>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="floating-label">
+                                    <input class="floating-input" id='flyer_ihs' name='flyer_ihs' type="number"
+                                        placeholder=" " />
+                                    <span class="highlight"></span>
+                                    <label>IHS</label>
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+                                <div class="floating-label">
+                                    <input class="floating-input" id='tarpaulin' name='tarpaulin' type="number"
+                                        placeholder=" " />
+                                    <span class="highlight"></span>
+                                    <label>Night Class</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <strong>Description</strong>
+                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                            </div>
+
+                            <div class="float-right">
+                                <button class="btn btn-primary">Submit</button>
+                                <a class="btn btn-primary" href="{% url 'career_consultant:activity' %}">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="c-datepicker-date-editor c-datepicker-single-editor example">
+    <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+    <input type="text" autocomplete="off" name="" placeholder="Select" class="c-datepicker-data-input only-date"
+        value="">
+</div>
+
+
+
+
+
+
+
+
+
+<script src="{% static '/assets/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static '/assets/js/moment.min.js' %}"></script>
+<script src="{% static '/assets/js/activity/kronos.js' %}"></script>
+<script src="{% static '/assets/js/activity/datepicker.js' %}"></script>
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

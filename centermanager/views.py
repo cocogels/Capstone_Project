@@ -68,7 +68,8 @@ class EmployeeListView(TemplateView):
     
     def get_context_data(self, **kwargs):
         context = super(EmployeeListView, self).get_context_data(**kwargs)
-        context['employee_obj_list'] = self.get_queryset()
+        context['employee_obj_list'] = self.get_queryset().exclude(is_superuser=True).exclude(is_centermanager=True)
+        context['cc_obj_list'] = self.get_queryset().exclude(is_superuser=True).exclude(is_centermanager=True).exclude(is_centerbusinessmanager=True).exclude(is_marketinghead=True).exclude(is_registrar=True)
         context['per_page'] = self.request.POST.get('per_page')    
         context['users'] = User.objects.filter(is_active=True).order_by('email')
         
@@ -141,7 +142,7 @@ class EmployeeRegistration(CreateView):
     def get_context_data(self, **kwargs):
         context = super(EmployeeRegistration, self).get_context_data(**kwargs)
         context['employee_form'] = context["form"]
-        context['employee_list'] = User.objects.all() #can be used in any page
+        context['employee_list'] = User.objects.all().exclude(is_superuser=True).exclude(is_centermanager=True)
         context['users'] = self.users
         return context
     
@@ -596,6 +597,10 @@ class CommissionSettingSHSUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["shs_form"] = context['form'] 
+        # context['commission_shs_list'] = CommissionSettingSHS.objects.all()
+        context['commission_henc_lst'] = CommissionSettingHENC.objects.all()
+        context['commission_herc_lst'] = CommissionSettingHERC.objects.all()
+        context['commission_icl_lst'] = CommissionSettingICL.objects.all()
         return context
 
 
@@ -642,6 +647,10 @@ class CommissionSettingHENCUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["henc_form"] = context['form'] 
+        context['commission_shs_list'] = CommissionSettingSHS.objects.all()
+        #context['commission_henc_lst'] = CommissionSettingHENC.objects.all()
+        context['commission_herc_lst'] = CommissionSettingHERC.objects.all()
+        context['commission_icl_lst'] = CommissionSettingICL.objects.all()
         return context
     
     
@@ -687,6 +696,10 @@ class CommissionSettingHERCUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["herc_form"] = context['form'] 
+        context['commission_shs_list'] = CommissionSettingSHS.objects.all()
+        context['commission_henc_lst'] = CommissionSettingHENC.objects.all()
+        # context['commission_herc_lst'] = CommissionSettingHERC.objects.all()
+        context['commission_icl_lst'] = CommissionSettingICL.objects.all()
         return context
     
 ''' ------------------------------ ICL COMMMISSION --------------------------- '''
@@ -714,7 +727,7 @@ class CommissionSettingICLUpdate(UpdateView):
                     'error':False
                 }
             )
-        return redirect('centermanager:com_icl_update')
+        return redirect('centermanager:commission_list')
     
     def form_invalid(self, form):
         if self.request.is_ajax():
@@ -731,6 +744,10 @@ class CommissionSettingICLUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["icl_form"] = context['form'] 
+        context['commission_shs_list'] = CommissionSettingSHS.objects.all()
+        context['commission_henc_lst'] = CommissionSettingHENC.objects.all()
+        context['commission_herc_lst'] = CommissionSettingHERC.objects.all()
+        #context['commission_icl_lst'] = CommissionSettingICL.objects.all()
         return context  
     
     

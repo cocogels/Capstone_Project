@@ -3,13 +3,14 @@
 {% include 'head.html' %}
 {% endblock head %}
 
-<bod id="page-top">
+<body id="page-top">
 
-
+{% block extrahead %}
+{% endblock extrahead%}
 <div id="wrapper">
     {% block sidebar %}
 
-    {% endblock sidebar %}
+    {% endblock sidebar %} 
 
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -44,9 +45,7 @@
 
 {% endblock js_block %}
 
-{% block scripts  %}
-    {% include 'script.html' %}
-{% endblock scripts %}
+
 </body>
 
 </html>

@@ -31,7 +31,9 @@
           {{ user.is_registrar|yesno:"Registrar," }}
           {{ user.is_ihe|yesno:" : Higher Education," }}{{ user.is_icl|yesno:" : Corporate Learning," }}{{ user.is_shs|yesno:" : Senior High," }}{{ user.is_budgetary|yesno:" : Budgetary," }}
         </p>
-
+        {% if request.user.is_shs or request.user.is_ihe or request.user.is_icl %}
+        <p class="card-text text-capitalize pt-0" >Territory: </p>
+        {% endif %}
         {% endif %}
         <a href="#" class="btn btn-primary">Update</a>
       </div>
@@ -108,7 +110,7 @@
                   <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-uppercase mb-1" style="color:#394a6d;">Activity
                     </div>
-                    <a href="{% url 'cbm:activity_list' %}" class="btn mb-0 mr-3 text-light float-right" style="background-color: #ffe343;">View</a>
+                    <a href="{% url 'cbm:activity_pending' %}" class="btn mb-0 mr-3 text-light float-right" style="background-color: #ffe343;">View</a>
                   </div>
                 </div>
               </div>

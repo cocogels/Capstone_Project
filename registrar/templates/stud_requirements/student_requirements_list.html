@@ -44,13 +44,13 @@
         </div>
         <div class="card-body">
             <!-- Start of Breadcrumb -->
-            <div class="d-sm-flex float-right mb-4">
+            <!-- <div class="d-sm-flex float-right mb-4">
                 <a href="{% url 'registrar:add_course' %}" class="btn btn-primary">ADD STUDENT REQUIREMENTS</a>
 
                 <div class="float-left">
 
                 </div>
-            </div>
+            </div> -->
             <br>
 
             <!-- end -->
@@ -86,19 +86,19 @@
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col">Requirements</th>
-                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
+                                    {% for req in requirements_list %}
                                     <tbody>
                                         <tr>
-                                            <th scope="row"></th>
-                                            <td>
+                                            <th scope="row">{{req.require_id}}</th>
+                                            <td>{{req.requirements_name}}
                                             </td>
-                                            <td></td>
                                         </tr>
                                     </tbody>
+                                    {% endfor %}
                                 </table>
-                                <button type="submit" class="btn btn-primary float-right">Edit</button>
+                                <a class="btn btn-primary float-right" href="{% url 'registrar:add_requirements'%}">Add</a>
                             </div>
                         </div>
                     </div>
@@ -112,20 +112,21 @@
                                         <tr>
                                             <th scope="col">ID</th>
                                             <th scope="col"> Requirements</th>
-                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
+                                    {% for req in requirements_transferee_list %}
                                     <tbody>
                                         <tr>
-                                            <th scope="row"></th>
-                                            <td>
+                                            <th scope="row">{{req.require_trans_id}}</th>
+                                            <td>{{req.requirements_name}}
                                             </td>
-                                            <td></td>
                                         </tr>
                                     </tbody>
+                                    {% endfor %}
+
                                 </table>
                             </div>
-                            <button type="submit" class="btn btn-primary float-right">Edit</button>
+                            <a class="btn btn-primary float-right" href="{% url 'registrar:add_trans_requirements' %}">Add</a>
 
                         </div>
                     </div>

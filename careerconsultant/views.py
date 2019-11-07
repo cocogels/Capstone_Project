@@ -30,4 +30,10 @@ def activity1(request):
 def activity2(request):
     return render(request, 'requested_activity.html')
 
+def activitylist(request):
+    return render(request, 'activity_list.html')
+
+def request_activity(request):
+    return render(request, 'activity_request.html')
+
 

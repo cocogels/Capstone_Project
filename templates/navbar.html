@@ -51,28 +51,28 @@
                 -->
                
                 {% if request.user.is_centermanager %}
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="{% url 'crm_blog:home' %}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>
                 {% endif %}
 
                 {% if request.user.is_ihe %}
-                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">
+                    <a class="dropdown-item" href="{% url 'crm_blog:home' %}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>
                 {% endif %}
 
                 {% if request.user.is_shs %}
-                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">
+                    <a class="dropdown-item" href="{% url 'crm_blog:home' %}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>
                 {% endif %}
                 
                 {% if request.user.is_icl %}
-                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">
+                    <a class="dropdown-item" href="{% url 'crm_blog:home' %}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>

@@ -9,6 +9,7 @@ from django.views.generic import ( CreateView, UpdateView, DetailView, TemplateV
 from contacts.models import ICL_ContactModel, SHS_ContactModel, IHE_ContactModel
 from contacts.forms import ICLContactForm, SHSContactForm, IHEContactForm
 from accounts.models import User
+from marketinghead.models import AssignQuota
 from django.db.models import Q
 
 ''' ICL CONTACT  VIEWS '''
@@ -68,6 +69,8 @@ class ICLContactListView(TemplateView):
         context['contact_obj_list'] = self.get_queryset()
         icl_contacts = ICL_ContactModel.objects.all()
         context['icl_contacts'] = icl_contacts
+        quota = AssignQuota.objects.all()
+        context['quota_list'] = quota
         context['per_page'] = self.request.POST.get('per_page')
         context['users'] = User.objects.filter(
             is_active=True
@@ -156,6 +159,8 @@ class ICLContactCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(ICLContactCreateView, self).get_context_data(**kwargs)
         context['contact_form'] = context['form']
+        icl_contacts = ICL_ContactModel.objects.all()
+        context['icl_contacts'] = icl_contacts
      #   context['users'] = self.users
     #    context['assignedto_list'] = [
      #       int(i) for i in self.request.POST.getlist('assigned_to', []) if i
@@ -193,7 +198,7 @@ class ICLContactDetailView(DetailView):
 
         if self.request.user != context['object'].created_by:
             users_mention = [{'last_name': context['object'].created_by.last_name}]
-            
+        
         return context
 
 class ICLContactUpdateView(UpdateView):
@@ -278,7 +283,7 @@ class ICLContactUpdateView(UpdateView):
         context['assignedto_list'] = [
             int(i) for i in self.request.POST.getlist('assigned_to',[]) if i
         ]
-        
+
         return context
     
     
@@ -537,6 +542,8 @@ class IHEContactListView(TemplateView):
         context['contact_obj_list'] = self.get_queryset()
         ihe_contacts = IHE_ContactModel.objects.all()
         context['ihe_contacts'] = ihe_contacts
+        quota = AssignQuota.objects.all()
+        context['quota_list'] = quota
         context['per_page'] = self.request.POST.get('per_page')
         context['users'] = User.objects.filter(
             is_active=True
@@ -606,7 +613,8 @@ class IHEContactCreateView(CreateView):
         context['assignedto_list'] =[
             int(i) for i in self.request.POST.getlist('assigned_to',[]) if i
         ]
-        
+        ihe_contacts = IHE_ContactModel.objects.all()
+        context['ihe_contacts'] = ihe_contacts
         return context
     
 class IHEContactDetailView(DetailView):

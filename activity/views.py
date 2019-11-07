@@ -42,6 +42,8 @@ from activity.models import(
 class RequestActivityCreateView(ListCreateAPIView):
     serializer_class = CreateActivitySerializer
     permission_class = [IsAuthenticated]
+    # renderer_classes = [TemplateHTMLRenderer]
+    # template_name = '/careerconsultant/templates/activity_request.html'
     queryset = Activity.objects.all()
     
     def perform_create(self, serializer):

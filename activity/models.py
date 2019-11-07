@@ -40,15 +40,20 @@ class Activity(models.Model):
     )
 
     activity_id     = models.AutoField(primary_key=True)
-    user            = models.ForeignKey(User, on_delete=models.CASCADE,)
-    start_date      = models.DateTimeField(null=False, blank=False)
-    end_date        = models.DateTimeField(null=False, blank=False)
+    user            = models.ForeignKey(User, related_name='user_request', on_delete=models.CASCADE,)
+    approver        = models.ForeignKey(User, related_name='user_approver', on_delete=models.CASCADE, null=True)
+    start_date      = models.DateField(null=False, blank=False)
+    end_date        = models.DateField(null=False, blank=False)
     activity_name   = models.CharField(max_length=100)
     location        = models.CharField(max_length=150)
     description     = models.TextField(max_length=255)
     comment         = models.TextField(max_length=255, blank=True)
-    #BUDGET
-    #COLLATERAL
+    budget          = models.IntegerField(null=True, blank=True)
+    tarpaulin       = models.IntegerField(null=True, blank=True)
+    standy          = models.IntegerField(null=True, blank=True)
+    flyer_shs       = models.IntegerField(null=True, blank=True)
+    flyer_ihe       = models.IntegerField(null=True, blank=True)
+    flyer_nc        = models.IntegerField(null=True, blank=True)
     status = FSMIntegerField(choices=STATUS_CHOICES, default=STATUS_CREATED, protected=True)
     date_created    = models.DateTimeField(_('Date Created'), auto_now_add=True)
     date_updated    = models.DateTimeField(_("Date Updated"), auto_now=True)
@@ -65,25 +70,36 @@ class Activity(models.Model):
     
     @transition(field=status, source=[STATUS_CREATED], target=PENDING_1)
     def cbm_pending(self):
-        self.user = self.user
-        self.activity_name = self.activity_name
-        self.start_date = self.start_date
-        self.end_date   = self.end_date
-        self.location = self.location
-        self.description = self.description
-        #COLLATERAL
-        #BUDGET
+        self.user           = self.user
+        self.approver       = self.approver
+        self.activity_name  = self.activity_name
+        self.start_date     = self.start_date
+        self.end_date       = self.end_date
+        self.location       = self.location
+        self.description    = self.description
+        self.budget         = self.budget
+        self.tarpaulin      = self.tarpaulin
+        self.standy         = self.standy
+        self.flyer_shs      = self.flyer_shs
+        self.flyer_ihe      = self.flyer_ihe
+        self.flyer_nc       = self.flyer_nc 
         print("Requested Activity {} Pending!".format(self.activity_name))
     
     @transition(field=status, source=[PENDING_1], target=CANCELLED)
     def cancel(self):
-        self.activity_name = activity_name
-        self.start_date = start_date
-        self.end_date = end_date
-        self.location = location
-        self.description = description
-        #COLLATERAL
-        #BUDGET
+        self.user           = self.user
+        self.approver       = self.approver
+        self.activity_name  = self.activity_name
+        self.start_date     = self.start_date
+        self.end_date       = self.end_date
+        self.location       = self.location
+        self.description    = self.description
+        self.budget         = self.budget
+        self.tarpaulin      = self.tarpaulin
+        self.standy         = self.standy
+        self.flyer_shs      = self.flyer_shs
+        self.flyer_ihe      = self.flyer_ihe
+        self.flyer_nc       = self.flyer_nc
         print('Requested Activity {} Cancelled'.format(self.activity_name))
     
     
@@ -91,66 +107,89 @@ class Activity(models.Model):
     
     @transition(field=status, source=[PENDING_1], target=REVISED_1)
     def cbm_revised(self):
-        self.user = self.user
-        self.activity_name = self.activity_name
-        self.start_date = self.start_date   
-        self.end_date = self.end_date
-        self.location = self.location
-        self.description = self.description
-        self.comment = self.comment
-        #COLLATERAL
-        #BUDGET
+        self.user           = self.user
+        self.approver       = self.approver
+        self.activity_name  = self.activity_name
+        self.start_date     = self.start_date
+        self.end_date       = self.end_date
+        self.location       = self.location
+        self.description    = self.description
+        self.budget         = self.budget
+        self.tarpaulin      = self.tarpaulin
+        self.standy         = self.standy
+        self.flyer_shs      = self.flyer_shs
+        self.flyer_ihe      = self.flyer_ihe
+        self.flyer_nc       = self.flyer_nc
         
         print("Requested Activity {} Revised!".format(self.activity_name))
     
     @transition(field=status, source=[REVISED_1], target=PENDING_1)
     def cbm_revised_complete(self):
-        self.user = self.user
-        self.activity_name = self.activity_name 
-        self.start_date = self.start_date
-        self.end_date = self.end_date
-        self.location = self.location
-        self.description = self.description
-        #Collateral
-        #Budget
+        self.user           = self.user
+        self.approver       = self.approver
+        self.activity_name  = self.activity_name
+        self.start_date     = self.start_date
+        self.end_date       = self.end_date
+        self.location       = self.location
+        self.description    = self.description
+        self.budget         = self.budget
+        self.tarpaulin      = self.tarpaulin
+        self.standy         = self.standy
+        self.flyer_shs      = self.flyer_shs
+        self.flyer_ihe      = self.flyer_ihe
+        self.flyer_nc       = self.flyer_nc
         print("Revised Activity {} ".format(self.activity_name))
             
     @transition(field=status, source=[PENDING_1], target=REJECTED)
     def cbm_rejected(self):
         self.user = self.user
-        self.activity_name = self.activity_name
-        self.start_date = self.start_date
-        self.end_date = self.end_date
-        self.location = self.location
-        self.description = self.description
-        self.comment = self.comment
-        #COLLATERAL
-        #Budget
+        self.approver = self.approver
+        self.activity_name  = self.activity_name
+        self.start_date     = self.start_date
+        self.end_date       = self.end_date
+        self.location       = self.location
+        self.description    = self.description
+        self.budget         = self.budget
+        self.tarpaulin      = self.tarpaulin
+        self.standy         = self.standy
+        self.flyer_shs      = self.flyer_shs
+        self.flyer_ihe      = self.flyer_ihe
+        self.flyer_nc       = self.flyer_nc
         print('Requested Activtity {}'.format(self.activity_name))
         
         
     @transition(field=status, source=[PENDING_1], target=APPROVED_1)
     def cbm_approved(self):
-        self.user = self.user
-        self.activity_name = self.activity_name
-        self.start_date = self.start_date
-        self.end_date = self.end_date
-        self.location = self.location
-        self.description = self.description
-        #Collateral
-        #Budget
+        self.user           = self.user
+        self.approver       = self.approver
+        self.activity_name  = self.activity_name
+        self.start_date     = self.start_date
+        self.end_date       = self.end_date
+        self.location       = self.location
+        self.description    = self.description
+        self.budget         = self.budget
+        self.tarpaulin      = self.tarpaulin
+        self.standy         = self.standy
+        self.flyer_shs      = self.flyer_shs
+        self.flyer_ihe      = self.flyer_ihe
+        self.flyer_nc       = self.flyer_nc
         print("Requested Activity {} Approved!".format(self.activity_name))
     
     @transition(field=status, source=[APPROVED_1], target=PENDING_2)
     def cbm_approved_transfer(self):    
-        self.user = self.user
-        self.activity_name = self.activity_name
-        self.start_date = self.start_date
-        self.end_date = self.end_date
-        self.location = self.location
-        self.description = self.desciption
-        #Collateral
-        #Budget
+        self.user           = self.user
+        self.approver       = self.approver
+        self.activity_name  = self.activity_name
+        self.start_date     = self.start_date
+        self.end_date       = self.end_date
+        self.location       = self.location
+        self.description    = self.description
+        self.budget         = self.budget
+        self.tarpaulin      = self.tarpaulin
+        self.standy         = self.standy
+        self.flyer_shs      = self.flyer_shs
+        self.flyer_ihe      = self.flyer_ihe
+        self.flyer_nc       = self.flyer_nc
         print('Approved Activity {} Transfer'.format(self.activity_name))
     
     '''

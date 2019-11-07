@@ -1,0 +1,213 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block header %}
+{% include 'header.html' %}
+{% endblock header %}
+
+{% block sidebar %}
+
+{% endblock sidebar %}
+
+{% block navbar %}
+{% include 'navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}
+<title>Marketing | Target Sheet</title>
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <a href="{% url 'crm_blog:home' %}" class="btn btn-primary"> BACK</a>
+
+    <div class="float-left">
+
+    </div>
+  </div>
+  <!---->
+  <div class="card" style="height: 50%;">
+
+    <div class="card-body " style="min-height: 30vw;">
+
+      <br><br>
+
+      <!-- page content -->
+      <div class="content-section">
+        {% include 'messages.html' %}
+        <div class="card" style="min-height: 70vh;">
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'cbm:activity_pending' %}">Pending</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="#">Revise</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="#">Reject</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="#">Approve</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-body">
+
+            <!-- <center>
+            <div style="max-width:90%">
+              <table class="table table-bordered" style="height: 100%;">
+                <thead class="bg-primary text-light">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Organization Name</th>
+                    <th scope="col">Activity Name</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Submitted by</th>
+                    {% if request.user.is_centerbusinessmanager %}
+                    <th scope="col">Remarks</th>
+                    {% else %}
+                    <th scope="col">Status</th>
+                    {% endif %}
+                  </tr>
+                </thead>
+               
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>December 25, 2019</td>
+                    <td>Raja Soliman High School</td>
+                    <td>Career Talk</td>
+                    <td>Manila</td>
+                    <td>Agati, Abbygail</td>
+                    {% if request.user.is_centerbusinessmanager %}
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle float-right mr-5 p-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             <span class="text"> Remarks </span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Approve</a>
+                              <a class="dropdown-item" href="#">Reject</a>
+                              <a class="dropdown-item" href="#">Revise</a>
+                            </div>
+                          </div>
+                    </td>
+                    {% else %}
+                    <td>For Approval</td>
+                    {% endif %}
+                  </tr>
+                </tbody>
+              </table> 
+            </div>
+          </center> -->
+            <!---->
+            <div class="card p-3" style="border:white; width:90%; margin: 0 auto;  float: none; margin-bottom: 10px;">
+              <!-- Card deck -->
+              <div class="card-deck">
+
+                <!-- Card -->
+                <div class="card mb-4" style="min-height: 30vh;">
+
+
+
+                  <!--Card content-->
+                  <div class="card-body">
+                    <!--Title-->
+                    <h4 class="card-title text-dark" style="font-family: 'Ubuntu', sans-serif;">Career Talk</h4>
+                    <span class="text-xs">Submitted By: </span>
+                    <!--Text-->
+                    <p class="card-text">Description ,Some quick example text to build on the card title and make up
+                      the bulk of the
+                      card's content.</p>
+                    <p>Date:</p<br>
+                      <p>Location:</p>
+                      <hr>
+                      <p>Budget Request:</p>
+                      <hr>
+                      <p>Collateral Request</p>
+                      <hr>
+                      <p>Approval Process:</p>
+                      <div class="row ml-2">
+                        <div class="progress mr-1" style="width: 30%;">
+                        <div class="progress-bar text-xs" role="progressbar" style="width: 100%;" aria-valuenow="25"
+                          aria-valuemin="0" aria-valuemax="100">CBM: Approved</div>
+                      </div>
+                      <div class="progress mr-1" style="width: 30%;">
+                          <div class="progress-bar text-xs" role="progressbar" style="width: 100%;" aria-valuenow="25"
+                            aria-valuemin="0" aria-valuemax="100">MH: Approved</div>
+                        </div>
+                           <div class="progress mr-1" style="width: 30%;">
+                          <div class="progress-bar text-xs" role="progressbar" style="width: 100%;" aria-valuenow="25"
+                            aria-valuemin="0" aria-valuemax="100">CM: Pending</div>
+                        </div>
+                        <hr>
+                        <center>
+                          <button type="button" class="btn btn-primary btn-sm mr-2">Approve</button> 
+                            <button type="button" class="btn btn-secondary btn-sm mr-2">Revise</button>
+                            <button type="button" class="btn btn-secondary btn-sm">Reject</button>
+                        </center>
+                            
+                      </div>
+                     
+                  </div>
+
+                </div>
+                <!-- Card -->
+
+                <!-- Card -->
+                <div class="card mb-4">
+                  <!--Card content-->
+                  <div class="card-body">
+
+                    <!--Title-->
+                    <h4 class="card-title">Card title</h4>
+                    <!--Text-->
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                      card's content.</p>
+                  </div>
+
+                </div>
+                <!-- Card -->
+
+                <!-- Card -->
+                <div class="card mb-4">
+                  <!--Card content-->
+                  <div class="card-body">
+
+                    <!--Title-->
+                    <h4 class="card-title">Card title</h4>
+                    <!--Text-->
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                      card's content.</p>
+                  </div>
+
+                </div>
+                <!-- Card -->
+
+              </div>
+              <!-- Card deck -->
+            </div>
+            <!---->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+
+{% endblock content %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock footer %}

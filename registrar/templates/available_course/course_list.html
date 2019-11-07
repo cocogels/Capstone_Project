@@ -85,33 +85,20 @@
               <th scope="col">Action</th>
             </tr>
           </thead>
-          <tbody>
+          {% for course in course_obj_list %}
+          <tbody> 
             <tr>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-              <td>
+              <th scope="row">{{ course.}}</th>
+              <td>{{ course.course_id}}</td>
+              <td>{{ course.course_name}}</td>
+              <td>{{ course.course_description}}
               </td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-              <td>
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <th scope="row"></th>
-              <td></td>
-              <td></td>
-              <td>
-              </td>
-              <td></td>
+              <td>{{ course.date_created}}</td>
             </tr>
           </tbody>
+          {% endfor %}
         </table> 
+        
       </div>
     </center>
     </div>

@@ -10,9 +10,12 @@ from django.urls import reverse
 from django.db.models import Q
 from django.template.loader import render_to_string
 from marketinghead.models import Budget, Collateral, AssignQuota, AssignTerritory
+from centermanager.models import TargetSheet
 from marketinghead.forms import BudgetForm, CollateralForm, AssignQuotaForm, AssignTerritoryForm
 from accounts.models import User
 from django.core.exceptions import PermissionDenied
+from django.db.models import Sum
+
 
 def budget_request(request):
     return render(request, 'budget/budget_request.html')
@@ -47,6 +50,8 @@ class AssignQuotaListView(LoginRequiredMixin, TemplateView):
         context['assign_obj_list'] = self.get_queryset()
         quota = AssignQuota.objects.all()
         context['quota'] = quota
+        target = TargetSheet.objects.all()
+        context['targetsheet'] = target
 
         context['assignedto_list'] = [
             int(i) for i in self.request.POST.getlist('assigned_to', []) if i
@@ -136,6 +141,9 @@ class CreateAssignQuota(LoginRequiredMixin, CreateView):
         context['assign_list'] = self.get_queryset()
         quota = AssignQuota.objects.all()
         context['quota_list'] = quota
+        target = TargetSheet.objects.all()
+        context['targetsheet'] = target
+
         return context
 
 
@@ -349,7 +357,7 @@ class TerritoryAssign(CreateView):
 
         if self.request.POST.get('savenewform'):
             return redirect('marketing_head:add_territory')
-        return redirect('accounts:user_list')
+        return redirect('marketing_head:add_territory')
 
     def form_invalid(self, form):
         if self.request.is_ajax():
@@ -365,7 +373,9 @@ class TerritoryAssign(CreateView):
     
     def get_context_data(self, **kwargs):
         context = super(TerritoryAssign, self).get_context_data(**kwargs)
+        territory = AssignTerritory.objects.all()
         context['territory_form'] = context['form']
+        context['territory'] = territory
         context['users'] = self.users
         context['assignedto_list'] = [
             int(i) for i in self.request.POST.getlist('assigned_to', [])
@@ -543,6 +553,8 @@ class BudgetCreateView(CreateView):
         context['budget_form'] = context['form']
         budget = Budget.objects.all()
         context['budget_list'] = budget
+        # budget_total = Budget.objects.all().aggregate(Sum('amount'))
+        context['budget_total'] = Budget.objects.all().aggregate(Sum('amount'))
         return context
     
 
@@ -580,7 +592,7 @@ class BudgetUpdateView(UpdateView):
     def form_valid(self, form):
         budget_obj = form.save(commit=False)
         messages_text = 'Your {} was Updated Successfully!'.format(form.instance)
-        messages.success(self.request, message_text)
+        messages.success(self.request, messages_text)
         currrent_site = get_current_site(self.request)
         
         if self.request.is_ajax():
@@ -725,7 +737,7 @@ class CollateralDetailView(DetailView):
 class CollateralUpdateView(UpdateView):
     model = Collateral
     form_class = CollateralForm
-    template_name = 'collateral/create_colalteral'
+    template_name = 'collateral/create_collateral.html'
     
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -766,7 +778,7 @@ class CollateralUpdateView(UpdateView):
         )
         
     def get_context_data(self, **kwargs):
-        context = super(CollateralUpdateVoew, self).get_context_data(**kwargs)
+        context = super(CollateralUpdateView, self).get_context_data(**kwargs)
         context['collateral_obj'] = self.object
         context['collateral_form'] = context['form']
         

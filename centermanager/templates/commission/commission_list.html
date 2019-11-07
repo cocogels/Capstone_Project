@@ -56,141 +56,149 @@
                 {% include 'messages.html' %}
 
                 <div class="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Senior High School</h5>
-                            <br>
-                            <form>
-                                <div class="form">
-                                    <div class="form-group row">
-                                        <label for="colFormLabelSm"
-                                            class="col-sm-3 col-form-label col-form-label-sm">Count Per Student
-                                            :</label>
-                                        <div class="col-sm">
-                                            <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                placeholder="count per student">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="colFormLabelSm"
-                                            class="col-sm-3 col-form-label col-form-label-sm">Enrolled :</label>
-                                        <div class="col-sm">
-                                            <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                placeholder="Enrolled">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                            <label for="colFormLabelSm"
-                                                class="col-sm-3 col-form-label col-form-label-sm">Tuition fee :</label>
-                                            <div class="col-sm">
-                                                <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                    placeholder="col-form-label-sm">
-                                            </div>
-                                        </div>
-                                    </div>
-                                <button type="submit" class="btn btn-primary float-right">Edit</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education(Regular Class)</h5>
-                            <br>
-                            <form>
-                                <div class="form">
-                                    <div class="form-group row">
-                                        <label for="colFormLabelSm"
-                                            class="col-sm-3 col-form-label col-form-label-sm">Count Per Student
-                                            :</label>
-                                        <div class="col-sm">
-                                            <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                placeholder="count per student">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="colFormLabelSm"
-                                            class="col-sm-3 col-form-label col-form-label-sm">Enrolled :</label>
-                                        <div class="col-sm">
-                                            <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                placeholder="Enrolled">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="colFormLabelSm"
-                                            class="col-sm-3 col-form-label col-form-label-sm">Tuition fee :</label>
-                                        <div class="col-sm">
-                                            <input type="email" class="form-control form-control-sm" id="colFormLabelSm" placeholder="Tuition Fee">
-                                        </div>
-                                    </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Senior High School</h5>
+                                <br>
+                                {% for shs in commission_shs_list %}
+                                <div style="margin-right: 2%; margin-left: 2%;">
+                                    <table class="table table-bordered" style="height: 100%;">
+                                        <thead class="bg-primary text-light">
+                                            <tr>
+                                                <th scope="col">Commission Name</th>
+                                                <th scope="col">Specification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Count per Student</td>
+                                                <td>{{ shs.student }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Enrolled</td>
+                                                <td>{{ shs.student_choices }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tuition Fee</td>
+                                                <td>{{ shs.tuition_fee }}</td>
+                                            </tr>
+    
+                                        </tbody>
+                                    </table>
                                 </div>
-
-                                <button type="submit" class="btn btn-primary float-right">Edit</button>
-                            </form>
+                                <a class="btn btn-primary float-right"
+                                    href="{% url 'centermanager:com_shs_update' shs.pk %}">Edit</a>
+    
+                                {% endfor %}
+    
+                            </div>
+                        </div>
+                        <!--------------------------------------------------------------------------------------------------------------------------------------------->
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher
+                                    Education(Regular Class)</h5>
+                                <br>
+                                {% for shs in commission_herc_lst %}
+                                <div style="margin-right: 2%; margin-left: 2%;">
+                                    <table class="table table-bordered" style="height: 100%;">
+                                        <thead class="bg-primary text-light">
+                                            <tr>
+                                                <th scope="col">Commission Name</th>
+                                                <th scope="col">Specification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Count per Student</td>
+                                                <td>{{ shs.student }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Enrolled</td>
+                                                <td>{{ shs.student_choices }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tuition Fee</td>
+                                                <td>{{ shs.tuition_fee }}</td>
+                                            </tr>
+    
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a class="btn btn-primary float-right" href="{% url 'centermanager:com_herc_update' shs.pk %}">Edit</a>
+    
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!--------------------------------------------------------------------------------------------------------------------------------------------->
+    
+                    </div>
+                    <br>
+                    <div class="card-deck">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education (Night
+                                    Class)</h5>
+                                <br>
+                                {% for shs in commission_henc_lst %}
+                                <div style="margin-right: 2%; margin-left: 2%;">
+                                    <table class="table table-bordered" style="height: 100%;">
+                                        <thead class="bg-primary text-light">
+                                            <tr>
+                                                <th scope="col">Commission Name</th>
+                                                <th scope="col">Specification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Count per Student</td>
+                                                <td>{{ shs.student }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Enrolled</td>
+                                                <td>{{ shs.student_choices }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tuition Fee</td>
+                                                <td>{{ shs.tuition_fee }}</td>
+                                            </tr>
+    
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a class="btn btn-primary float-right" href="{% url 'centermanager:com_henc_update' shs.pk %}">Edit</a>
+    
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Informatics Corporate
+                                    Learning</h5>
+                                <br>
+                                {% for shs in commission_icl_lst %}
+                                <div style="margin-right: 2%; margin-left: 2%;">
+                                    <table class="table table-bordered" style="height: 100%;">
+                                        <thead class="bg-primary text-light">
+                                            <tr>
+                                                <th scope="col">Commission Name</th>
+                                                <th scope="col">Specification</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Total Collection</td>
+                                                <td>{{ shs.total_collection }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a class="btn btn-primary float-right" href="{% url 'centermanager:com_icl_update' shs.pk %}">Edit</a>
+    
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="card-deck">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Higher Education (Night
-                                Class)</h5>
-                            <br>
-                            <form>
-                                    <div class="form">
-                                            <div class="form-group row">
-                                                <label for="colFormLabelSm"
-                                                    class="col-sm-3 col-form-label col-form-label-sm">Count Per Student
-                                                    :</label>
-                                                <div class="col-sm">
-                                                    <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                        placeholder="count per student">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="colFormLabelSm"
-                                                    class="col-sm-3 col-form-label col-form-label-sm">Enrolled :</label>
-                                                <div class="col-sm">
-                                                    <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                        placeholder="Enrolled">
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="colFormLabelSm"
-                                                    class="col-sm-3 col-form-label col-form-label-sm">Tuition fee :</label>
-                                                <div class="col-sm">
-                                                    <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                        placeholder="Tuition Fee">
-                                                </div>
-                                            </div>
-                                        </div>
-        
-                                        <button type="submit" class="btn btn-primary float-right">Edit</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="text-m font-weight-bold text-uppercase mb-1 text-primary">Informatics Corporate
-                                Learning</h5>
-                            <br>
-                            <form>
-                                    <div class="form">
-                                            <div class="form-group row">
-                                                <label for="colFormLabelSm"
-                                                    class="col-sm-3 col-form-label col-form-label-sm">Total Collection :</label>
-                                                <div class="col-sm">
-                                                    <input type="email" class="form-control form-control-sm" id="colFormLabelSm"
-                                                        placeholder="Total Fee">
-                                                </div>
-                                            </div>
-                                        </div>
-        
-                                        <button type="submit" class="btn btn-primary float-right">Edit</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

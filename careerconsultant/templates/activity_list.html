@@ -31,58 +31,53 @@
 </div>
 </div>
 <!---->
-<div class="card" style="height: 50%;">
-
-      <div class="card-body " style="min-height: 30vw;">
-
+<div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs"> 
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'career_consultant:activity' %}">All Activity</a>
+                  </li>              
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'career_consultant:activity2' %}">Activity(Request)</a>
+              </li>
+            </ul>
+          </div>
+      <div class="card-body">
+    <!-- Start of Breadcrumb -->
+    <div class="d-sm-flex float-right mb-4">
+            <a href="#" class="btn btn-primary" >REQUEST ACTIVITY</a>
+    </div>
 <br><br>
     
 <!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
         <center>
-            <div style="max-width:90%">
+            <div style="max-width:80%">
               <table class="table table-bordered" style="height: 100%;">
                 <thead class="bg-primary text-light">
                   <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Date</th>
                     <th scope="col">Organization Name</th>
                     <th scope="col">Activity Name</th>
+                    <th scope="col">Date</th>
                     <th scope="col">Location</th>
-                    <th scope="col">Submitted by</th>
-                    {% if request.user.is_centerbusinessmanager %}
                     <th scope="col">Remarks</th>
-                    {% else %}
-                    <th scope="col">Status</th>
-                    {% endif %}
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                
                 <tbody>
                   <tr>
                     <th scope="row">1</th>
-                    <td>December 25, 2019</td>
                     <td>Raja Soliman High School</td>
                     <td>Career Talk</td>
+                    <td>December 25, 2019</td>
                     <td>Manila</td>
-                    <td>Agati, Abbygail</td>
-                    {% if request.user.is_centerbusinessmanager %}
+                    <td>Done</td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-primary dropdown-toggle float-right mr-5 p-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             <span class="text"> Remarks </span>
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Approve</a>
-                              <a class="dropdown-item" href="#">Reject</a>
-                              <a class="dropdown-item" href="#">Revise</a>
-                            </div>
-                          </div>
+                          <a href="#" class="btn btn-success">VIEW</a>
                     </td>
-                    {% else %}
-                    <td>For Approval</td>
-                    {% endif %}
                   </tr>
                 </tbody>
               </table> 
@@ -95,6 +90,18 @@
 </div>
 </div>
 <br>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
