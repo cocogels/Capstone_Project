@@ -54,7 +54,7 @@
             <div class="content-section">
                 {% include 'messages.html' %}
                 <div class="card" style=" border: white; margin: 0 auto;  float: none; margin-bottom: 10px;">
-                    <form role='form' id="activity-form" method='POST' enctype="multipart/form-data">
+                    <form id="activity-form" method='POST' action="http://127.0.0.1:8000/activity/request/"  enctype="application/x-www-form-urlencoded"">
                         {% csrf_token %}
                         <h4>
                             <center> Activity Form </center>
@@ -127,7 +127,7 @@
                                 </div>
                                 &nbsp;&nbsp;&nbsp;
                                 <div class="floating-label">
-                                    <input class="floating-input" id='tarpaulin' name='tarpaulin' type="number"
+                                    <input class="floating-input" id='nightclass' name='nigthclass' type="number"
                                         placeholder=" " />
                                     <span class="highlight"></span>
                                     <label>Night Class</label>
@@ -140,7 +140,7 @@
                             </div>
 
                             <div class="float-right">
-                                <button class="btn btn-primary">Submit</button>
+                                <input class="btn btn-primary" id="submit" type="submit" value="Submit" />
                                 <a class="btn btn-primary" href="{% url 'career_consultant:activity' %}">Cancel</a>
                             </div>
                         </div>
@@ -153,12 +153,6 @@
     </div>
 </div>
 <br>
-<div class="c-datepicker-date-editor c-datepicker-single-editor example">
-    <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
-    <input type="text" autocomplete="off" name="" placeholder="Select" class="c-datepicker-data-input only-date"
-        value="">
-</div>
-
 
 
 
@@ -169,6 +163,8 @@
 
 <script src="{% static '/assets/js/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static '/assets/js/moment.min.js' %}"></script>
+<script src="{% static '/assets/js/activity/csrf.js' %}"></script>
+<script src="{% static '/assets/js/activity/create-activity.js' %}"></script>
 <script src="{% static '/assets/js/activity/kronos.js' %}"></script>
 <script src="{% static '/assets/js/activity/datepicker.js' %}"></script>
 {% endblock content %}

@@ -34,7 +34,7 @@ from activity.models import(
     Activity,
 )
 
-
+from rest_framework.parsers import JSONParser,FormParser
 
 ''' 
     Activity Calendar API Views
@@ -45,6 +45,7 @@ class RequestActivityCreateView(ListCreateAPIView):
     # renderer_classes = [TemplateHTMLRenderer]
     # template_name = '/careerconsultant/templates/activity_request.html'
     queryset = Activity.objects.all()
+    parser_classes = [JSONParser]
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, status=1)

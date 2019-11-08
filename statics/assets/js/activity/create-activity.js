@@ -1,4 +1,5 @@
 // Check if Webpage already loaded then excute the code below
+
 $(document).ready( function(){
     function getCookie(name) {
         var cookieValue = null;
@@ -17,6 +18,7 @@ $(document).ready( function(){
     }
 
     var csrftoken = getCookie('csrftoken');
+
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
@@ -28,22 +30,55 @@ $(document).ready( function(){
             }
         }
     })
-    $(document).on('submit', '#activity-form', function(event){
-        event.preventDefault()
+    $('#activity-form').on('submit', function(e){
+        e.preventDefault()
+    
+        var activityName= $('#activity_name').val()
+        var startDate = $('#start_date').val()
+        var endDate = $('#end_date').val()
+        var location = $('#location').val()
+        var budget = $('#budget').val()
+        var standy = $('#standy').val()
+        var flyer_shs = $('#flyer_shs').val()
+        var flyer_ihs = $('#flyer_ihs').val()
+        var tarpaulin = $('#tarpaulin').val()
+        var nightclass = $('#nightclass').val()
+        var description = $('#description').val()
 
+     
         $.ajax({
-            url: '/activity/api/request/',
-            dataType:'json',
             type: 'POST',
-            data:{
-                start_date: $('#start_date').val(),
-                end_date: $('#end_date').val(),
-                activity_name: $('#activity_name').val(),
-                location: $('#location').val(),
-                description: $('#description').val(),
-                csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value
+            url: 'http://127.0.0.1:8000/activity1/api/request/',
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: {
+                activity_name: activityName,
+                start_date: startDate,
+                end_date: endDate,
+                location: location,
+                budget: budget,
+                standy: standy,
+                tarpaulin: tarpaulin,
+                flyer_shs: flyer_shs,
+                flyer_ihs: flyer_ihs,
+                flyer_nc: nightclass,
+                description: description,
+
+            },
+
+            success: function (json) {
+                alert('Success')
+                console.log(json)
+                console.log('success')
+            },
+            error: function (xhr, errmsg, err) {
+                alert('Fail')
+                console.log(xhr.status + ": " + xhr.responseText)
             }
-            
+
+
+
         })
+      
     })
 })

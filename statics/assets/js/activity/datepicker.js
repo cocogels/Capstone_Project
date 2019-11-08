@@ -7,7 +7,7 @@ $(document).ready( function(){
 
     $('#start_date').kronos({
         periodTo: '#end_date',
-        format: 'mm/dd/yyyy',
+        format: 'dd/mm/yyyy',
         button:{
             month: true,
             trigger: true,
@@ -30,7 +30,7 @@ $(document).ready( function(){
     $('#end_date').kronos({
         periodFrom: '#start_date',
         periodTo: '#end_date',
-        format: 'mm/dd/yyyy',
+        format: 'dd/mm/yyyy',
         button:{
             month: true,
             trigger: true,
