@@ -1,14 +1,17 @@
-from django import forms
-import pytz
 import datetime
+from datetime import date, timedelta
+import pytz
+from bootstrap_datepicker_plus import DatePickerInput
+from django import forms
 from django.core.exceptions import ValidationError
-from bootstrap_datepicker_plus import YearPickerInput
-from accounts.models import User
 from django.utils import timezone
-from centermanager.models import SchoolYearModel, TargetSheet, MatriculationStatusCategory, MatriculationCourseCategory, Matriculation, SanctionSetting, CommissionSetting
+from django.db.models import Q
+from accounts.models import User
+from centermanager.models import (
+    CommissionSetting, Matriculation, MatriculationCourseCategory,
+    MatriculationStatusCategory, SanctionSetting, TargetSheet, SchoolYear)
 
-
-''' School Year Form '''
+from django.views.generic.dates import YearMixin
 
 
 class EmployeeRegistrationForm(forms.ModelForm):
@@ -24,21 +27,18 @@ class EmployeeRegistrationForm(forms.ModelForm):
         model = User
         fields = [
             'email',
-            'is_marketinghead',
-            'is_centerbusinessmanager',
-            'is_registrar',
         ]
 
     def clean_email(self, *args, **kwargs):
         email = self.cleaned_data.get('email')
-        queryset = User.objects.filter(email__iexact=email)
+        queryset = fitler(email__iexact=email)
         if queryset.exists():
             raise forms.ValidationError('This Email Already Registered')
         return email
 
     def save(self, commit=True):
         user = super(EmployeeRegistrationForm, self).save(commit=False)
-        user = User(
+        user = UserMarketing(
             email                       = self.cleaned_data['email'],
             first_name                  = self.cleaned_data['first_name'],
             last_name                   = self.cleaned_data['last_name'],
@@ -52,20 +52,18 @@ class EmployeeRegistrationForm(forms.ModelForm):
         return user
     
     
-
 class SchoolYearForm(forms.ModelForm):
+    
     class Meta:
-        model = SchoolYearModel
+        model = SchoolYear
         fields = [
             'start_year',
-            'end_year',
+            'end_year'
         ]
-
         widgets = {
-            'start_year': YearPickerInput().start_of('school year'),
-            'end_year': YearPickerInput().end_of('school year'),
+            'start_year': DatePickerInput().start_of('school year'),
+            'end_year': DatePickerInput().end_of('school year'),
         }
-
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -74,67 +72,79 @@ class SchoolYearForm(forms.ModelForm):
         self.fields['start_year'].required = True
         self.fields['end_year'].required = True
 
-    def clean_start_year(self):
-        return str(self.cleaned_data['start_year'])
-    
-    def clean_end_year(self):
-        return str(self.cleaned_data['end_year'])
-
-''' Target Sheet Form '''
+    def clean(self, *args, **kwargs):
+        start_year  = self.cleaned_data.get('start_year')
+        end_year    = self.cleaned_data.get('end_year')
+        
+        year = date.today() + timedelta(days=365)
+        _start_year = SchoolYear.objects.filter(start_year__lte=year)
+        
+        today = datetime.date.today() + timedelta(days=365*1)
+        
+        if start_year and end_year:
+            if start_year >= end_year:
+                raise forms.ValidationError('Invalid Date Input')
+            
+            if start_year < datetime.date.today():
+                raise forms.ValidationError('Date Cannot Be on Past Try Again!!')
+        
+            if end_year < datetime.date.today():
+                raise forms.ValidationError('Date Cannot Be on Past Try Again!!')
+                
+            if end_year >= today:
+                raise forms.ValidationError('Cannot Accept Future Dates More Than 1 Year A Head')
+            
+            if _start_year.exists():
+                raise forms.ValidationError('Current Year Already Have A Value!')
+            
+        return super(SchoolYearForm, self).clean(*args, **kwargs)
 
 
 class TargetSheetForm(forms.ModelForm):
 
-    corporate = forms.CharField(widget=forms.NumberInput(
-        attrs={'placeholder': 'Amount'}), label='Corporate', required=False,)
-    retail = forms.CharField(widget=forms.NumberInput(
-        attrs={'placeholder': 'Amount'}), label='Retail', required=False, )
-    owwa = forms.CharField(widget=forms.NumberInput(
-        attrs={'placeholder': 'Amount'}), label='OWWA', required=False, )
-    seniorhigh = forms.CharField(widget=forms.NumberInput(
-        attrs={'placeholder': 'Student'}), label='Senior High', required=False, )
-    higher_ed = forms.CharField(widget=forms.NumberInput(
-        attrs={'placeholder': 'Student'}), label='Higher Education', required=False, )
+    corporate = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Amount'}), label='Corporate', required=False,)
+    retail = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Amount'}), label='Retail', required=False, )
+    owwa = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Amount'}), label='OWWA', required=False, )
+    seniorhigh = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Student'}), label='Senior High', required=False, )
+    higher_ed = forms.CharField(widget=forms.NumberInput(attrs={'placeholder': 'Student'}), label='Higher Education', required=False, )
 
     class Meta:
         model = TargetSheet
         fields = [
             'corporate',
             'retail',
-            'school_year',
             'owwa',
             'seniorhigh',
             'higher_ed',
+            'active_year',
         ]
 
-    def clean(self):
-        years = school_year.cleaned_data.get('school_year')
-        queryset = SchoolYear.objects.filter(start_year__gte=school_year, end_year__lte=school_year)
-        if queryset.exists():
-            raise forms.ValidationError('Target Sheet Already Have This Date')
-        super(TargetSheetForm, self).clean()
-             
+       
+        widgets = {
+            'active_year': forms.HiddenInput(),
+        }
+
+    def clean(self, *args, **kwargs):
+        now = date.today() + timedelta(days=365)
+        querysets = TargetSheet.objects.filter(date_created__lte=now)
+            
+        if querysets.exists():
+            raise forms.ValidationError('Target Sheet Already Been Set for This Year!!')
+        
+        return super(TargetSheetForm, self).clean(*args, **kwargs)
+        
 
 ''' Matriculation Form '''
 
-
-
 class MatriculationForm(forms.ModelForm):
 
-    cash_amount_per_unit = forms.CharField(
-        label='Cash Amount Per Unit', widget=forms.NumberInput(),)
-    cash_miscellaneous_fee = forms.CharField(
-        label='Cash Miscellaneous Fee', widget=forms.NumberInput(),)
-    cash_lab_fee = forms.CharField(
-        label='Cash Laboratory Fee', widget=forms.NumberInput(),)
-    cash_registration_fee = forms.CharField(
-        label='Cash Registration Fee', widget=forms.NumberInput(),)
-    ins_amount_unit = forms.CharField(
-        label='Installment Amount Per Unit', widget=forms.NumberInput(),)
-    ins_miscellaneous_fee = forms.CharField(
-        label='Installment Miscellaneous Fee', widget=forms.NumberInput(),)
-    ins_lab_fee = forms.CharField(
-        label='Installment Laboratory Fee', widget=forms.NumberInput(),)
+    cash_amount_per_unit = forms.CharField(label='Cash Amount Per Unit', widget=forms.NumberInput(),)
+    cash_miscellaneous_fee = forms.CharField(label='Cash Miscellaneous Fee', widget=forms.NumberInput(),)
+    cash_lab_fee = forms.CharField(label='Cash Laboratory Fee', widget=forms.NumberInput(),)
+    cash_registration_fee = forms.CharField(label='Cash Registration Fee', widget=forms.NumberInput(),)
+    ins_amount_unit = forms.CharField(label='Installment Amount Per Unit', widget=forms.NumberInput(),)
+    ins_miscellaneous_fee = forms.CharField(label='Installment Miscellaneous Fee', widget=forms.NumberInput(),)
+    ins_lab_fee = forms.CharField(label='Installment Laboratory Fee', widget=forms.NumberInput(),)
 
     class Meta:
         model = Matriculation
@@ -197,12 +207,6 @@ class MatriculationCourseCategory(forms.ModelForm):
 
 
 class SanctionSettingForm(forms.ModelForm):
-    first_sanction = forms.CharField(label='First Sanction')
-    second_sanction = forms.CharField(label='Second Sanction')
-    third_sanction = forms.CharField(label='Third Sanction')
-    fourth_sanction = forms.CharField(label='Fourth Sanction')
-    fifth_sanction = forms.CharField(label='Fifth Sanction')
-
     class Meta:
         model = SanctionSetting
         fields = (
@@ -217,10 +221,10 @@ class SanctionSettingForm(forms.ModelForm):
         super(SanctionSettingForm, self).__init__(*args, **kwargs)
         instance = getattr(self, 'instance', None)
         self.fields['first_sanction'].label = 'First Month Sanction'
-        self.fields['second_sanction'].label = 'First Month Sanction'
-        self.fields['third_sanction'].label = 'First Month Sanction'
-        self.fields['fourth_sanction'].label = 'First Month Sanction'
-        self.fields['fifth_sanction'].label = 'Student Type'
+        self.fields['second_sanction'].label = 'Second Month Sanction'
+        self.fields['third_sanction'].label = 'Third Month Sanction'
+        self.fields['fourth_sanction'].label = 'Fourth Month Sanction'
+        self.fields['fifth_sanction'].label = 'Fifth Month Sanction'
 
         if instance and instance.pk:
             self.fields['first_sanction'].widget.attrs['readonly'] = True
@@ -230,11 +234,18 @@ class SanctionSettingForm(forms.ModelForm):
             self.fields['fifth_sanction'].widget.attrs['readonly'] = True
 
 
-''' Commission Setting Form '''
-
-
-
+    def clean(self, *args, **kwargs):
+        once = date.today() + timedelta(days=365*365)
     
+        
+        queryset = SanctionSetting.objects.all()
+  
+         
+        if queryset.exists():
+            raise forms.ValidationError('You Can Only Create Once ')
+        
+        return super(SanctionSettingForm, self).clean(*args, **kwargs)
+''' Commission Setting Form '''
 
 class CommissionSettingForm(forms.ModelForm):
     

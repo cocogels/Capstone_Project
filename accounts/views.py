@@ -5,26 +5,31 @@ from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.decorators import login_required
 
-from django.http import JsonResponse, Http404, HttpResponse
+from django.http import JsonResponse, Http404, HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from accounts.models import User
-
+from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from django.views.generic import (CreateView, DeleteView, DetailView,
     TemplateView, UpdateView, ListView, View)
 from marketinghead.models import AssignQuota, AssignTerritory
 
-from .forms import UserUpdateForm, ProfileUpdateForm, EmployeeCreationForm
+from .forms import UserUpdateForm, ProfileUpdateForm, EmployeeCreationForm, ChangePasswordForm
 
 
 
-class ProfileView(TemplateView):
+class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'user/profile.html'
     
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['user_obj'] = self.request.user
+        return context
     
-class UsersListView(TemplateView):
+    
+class UsersListView(LoginRequiredMixin, TemplateView):
     model = User
     context_object_name = 'users'
     template_name = 'registration/register_list.html'
@@ -60,17 +65,23 @@ class UsersListView(TemplateView):
         return self.render_to_response(context)
 
 
-class CreateUserView(CreateView):
+class CreateUserView(LoginRequiredMixin, CreateView):
     model = User
     form_class = EmployeeCreationForm
     template_name = 'registration/register.html'
 
+    def post(self, request, *args, **kwargs):
+        self.object = None
+        form = self.get_form()
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+
+            return self.form_valid(form)
+        return self.form_invalid(form)
+
     def form_valid(self, form):
         user = form.save(commit=False)
-        if form.cleaned_data.get('password'):
-            user.set_password(form.cleaned_data.get('password'))
-        user.save()
-
         ''' Send Email To The New User to be followed'''
         # current_site = self.request.get_host()
         # protocol = self.request.scheme
@@ -110,7 +121,7 @@ class CreateUserView(CreateView):
         return context
 
 
-class UserDetailView(DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
     context_object_name = 'users'
     template_name = 'user_detail.html'
@@ -210,108 +221,127 @@ class UpdateUserView(UpdateView):
         return context
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def user_registration(request):
-
-    if request.method == 'POST':
-        form = EmployeeCreationForm(request.POST)
+class ChangePasswordView(LoginRequiredMixin, TemplateView):
+    template_name = 'registration/change_password.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(ChangePasswordView, self).get_context_data(**kwargs)
+        context['change_password_form'] = ChangePasswordForm()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        error, errors = "",""
+        form = ChangePasswordForm(request.POST, user=request.user)
         if form.is_valid():
-            form = form.save()
-            messages.success(
-                request, 'You Have Successfuly Registered User Account..!!')
-            return redirect('accounts:register_list')
+            user = request.user
+            user.set_password(request.POST.get('Newpassword'))
+            user.is_active=True
+            user.save()
+            return HttpResponseRedirect('/')
         else:
-            messages.error(
-                request, 'Account Registration Failed Try Again..!!!')
-            return redirect('accounts:register')
-    else:
-        form = EmployeeCreationForm()
-
-    template_name = 'registration/register.html'
-
-    context = {
-        "form": form,
-    }
-    return render(request, template_name, context)
+            errors = form.errors
+        return render(request, 'registration/change_password.html',
+                      {'error': error, 'errors':errors,
+                       'change_password_form': form}
+                      )
 
 
-class RegistrationListView(ListView):
-    model = User
-    template_name = 'registration/register_list.html'
-    queryset = User.objects.all()
 
 
-''' ------------------------------------------------------------------------------ '''
 
 
-def user_profile(request):
 
-    if request.method == 'POST':
-        user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(
-            request.POST, instance=request.user.profile)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Your Account Has Been Updated..!')
-            return redirect('accounts:profile')
-        else:
-            messages.error(
-                request, 'Update Profile Information Failed Try Again..!!!')
-            return redirect('accounts:profile')
 
-    else:
-        user_form = UserUpdateForm()
-        profile_form = ProfileUpdateForm()
 
-    template_name = 'user/profile.html'
-    context = {
-        'user_form': user_form,
-        'profile_form': profile_form,
-    }
 
-    return render(request, template_name, context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def user_registration(request):
+
+#     if request.method == 'POST':
+#         form = EmployeeCreationForm(request.POST)
+#         if form.is_valid():
+#             form = form.save()
+#             messages.success(
+#                 request, 'You Have Successfuly Registered User Account..!!')
+#             return redirect('accounts:register_list')
+#         else:
+#             messages.error(
+#                 request, 'Account Registration Failed Try Again..!!!')
+#             return redirect('accounts:register')
+#     else:
+#         form = EmployeeCreationForm()
+
+#     template_name = 'registration/register.html'
+
+#     context = {
+#         "form": form,
+#     }
+#     return render(request, template_name, context)
+
+
+# class RegistrationListView(ListView):
+#     model = User
+#     template_name = 'registration/register_list.html'
+#     queryset = all()
+
+
+# ''' ------------------------------------------------------------------------------ '''
+
+
+# def user_profile(request):
+
+#     if request.method == 'POST':
+#         user_form = UserUpdateForm(request.POST, instance=request.user)
+#         profile_form = ProfileUpdateForm(
+#             request.POST, instance=request.user.profile)
+
+#         if user_form.is_valid() and profile_form.is_valid():
+#             user_form.save()
+#             profile_form.save()
+#             messages.success(request, 'Your Account Has Been Updated..!')
+#             return redirect('accounts:profile')
+#         else:
+#             messages.error(
+#                 request, 'Update Profile Information Failed Try Again..!!!')
+#             return redirect('accounts:profile')
+
+#     else:
+#         user_form = UserUpdateForm()
+#         profile_form = ProfileUpdateForm()
+
+#     template_name = 'user/profile.html'
+#     context = {
+#         'user_form': user_form,
+#         'profile_form': profile_form,
+#     }
+
+#     return render(request, template_name, context)

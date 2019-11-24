@@ -29,6 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# celery Tasks
+CELERY_BROKER_URL = 'redis://localhost:6379/'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
+CELERY_ACCEPT_CONTENT = ['json']
+
 
 # Application definition
 
@@ -53,6 +58,11 @@ INSTALLED_APPS = [
     'django_filters',
     'taggit',
     'simple_pagination',
+    'viewflow',
+    'viewflow.frontend',
+    'material',
+    'material.frontend',
+    'django_tables2',
     #handling our crm content
     'crm_blog.apps.CrmBlogConfig',
     #handling  adding cm  set details
@@ -60,15 +70,11 @@ INSTALLED_APPS = [
     'marketinghead',
     'centerbusinessmanager',
     'registrar',
-    'careerconsultant',
     'contacts',
     'category',
     'components',
-    'schedule',
-    #phone
-    'phonenumber_field',
-    #'phone_field',
-
+    'activitycalendar',
+  
     
 ]
 
@@ -85,7 +91,6 @@ AUTH_USER_MODEL = 'accounts.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
-
 
 
 
@@ -127,7 +132,7 @@ WSGI_APPLICATION = 'marketing.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_capstone3',
+        'NAME': 'capstone3',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -135,7 +140,7 @@ DATABASES = {
         'AUTOCOMMIT':True,
         'ATOMIC_REQUEST': False,
         'charset': 'utf8mb4',
-        
+        'TIME_ZONE': 'UTC',
         'init_command': 'SET innodb_strict_mode=1',
         'OPTIONS': {
             'init_command': 'SET sql_mode="STRICT_TRANS_TABLES"',
@@ -186,13 +191,6 @@ import datetime
 from django.core.validators import MinValueValidator
 DATE_VALIDATORS=[MinValueValidator(datetime.date(1970,1,1))]
 
-
-#Setting Phone Number
-PHONENUMBER_DEFAULT_REGION='PH'
-PHONENUMBER_DB_FORMAT =True
-INTERNATIONAL = True
-NATIONAL = True
-RFC3966 = True
 
 LOGIN_REDIRECT_URL = 'crm_blog:home'
 LOGOUT_REDIRECT_URL = 'login'
@@ -316,7 +314,7 @@ DEFAULT_AUTHENTICATION_CLASSES = (
 )
 
 
-DEFAUKT_PERMISSION_CLASSES = (
+DEFAULT_PERMISSION_CLASSES = (
     'rest_framework.permissions.AllowAny',
 )
 

@@ -6,7 +6,6 @@ from django.utils.timezone import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractUser, User, Group
 from django.utils.translation import gettext, gettext_lazy as _
 from multiselectfield import MultiSelectField
-from taggit.managers import TaggableManager
 import arrow    
 from django import forms
 
@@ -141,7 +140,7 @@ class User(AbstractUser):
     is_budgetary                    = models.BooleanField(verbose_name='BUDGETARY', default=False)
     is_ihe                          = models.BooleanField(verbose_name='IHE', default=False)
     is_shs                          = models.BooleanField(verbose_name='SHS', default=False)
-    is_icl                          = models.BooleanField(verbose_name='ICL', default=False)        
+    is_icl                          = models.BooleanField(verbose_name='ICL', default=False)
     date_joined                     = models.DateTimeField(_('Date Joined'),auto_now_add=True)
 
     

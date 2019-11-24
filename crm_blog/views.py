@@ -10,11 +10,3 @@ def blog_home_view(request):
     return render(request, template_name, {'title': 'Home'})
 
 
-
-
-class ViewTargetListView(ListView):
-    model = TargetSheet
-    template_name = 'target/view_target_list.html'  
-    queryset = TargetSheet.objects.all()
-    
-    

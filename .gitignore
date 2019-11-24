@@ -8,3 +8,8 @@
 /centerbusinessmanager/migrations
 /components/migrations
 /careerconsultant/migrations
+<<<<<<< Updated upstream
+=======
+/templates
+node_modules
+>>>>>>> Stashed changes

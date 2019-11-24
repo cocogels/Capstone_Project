@@ -15,7 +15,7 @@
 {% endblock navbar %}
 
 {% block title %}
-        <title>Marketing | TargetSheet</title>
+        <title>Marketing | Account</title>
 {% endblock title %}
 {% load crispy_forms_tags %}
 
@@ -37,7 +37,11 @@
     
     <!-- End of Bread Crumb -->
     <br>
-
+    {% for e in employee_obj_list %}
+        {{ e.email }}
+        {{ e.first_name }}
+        {{ e.last_name }}
+    {% endfor %}
 <!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
@@ -61,8 +65,7 @@
     
         <div class="card-body"> 
             <div class="card" style="border-color: #36B9CC; max-width: 50%; margin-left:25%">     
-           
-                        
+     
             
         
     </div>

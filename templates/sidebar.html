@@ -1,0 +1,297 @@
+<!-- Sidebar -->
+<ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+
+
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    {% if request.user.is_superuser %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url  'admin:index' %}">
+            <center>
+                <strong> ADMIN</strong>
+            </center>
+
+
+            <a class="nav-link" href="{% url 'admin:index' %}">
+                <strong>
+                    ADMIN
+                </strong>
+
+            </a>
+    </li>
+    {% endif %}
+
+
+    {% if request.user.is_marketinghead %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong>
+               <center> Marketing Head </center> 
+            </strong>
+        </a>
+    </li>
+<hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'marketing_head:budget_list' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-file-invoice"></i>
+            <span>
+                <strong>
+                    Budget
+                </strong>
+            </span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'accounts:register'%}" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-user-plus"></i>
+            <span>
+                <strong>
+                    Add Employer
+                </strong>
+            </span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+    
+    
+        <a class="nav-link collapsed" href="{% url 'marketing_head:collateral_list' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-book-open"></i>
+            <span>
+                <strong>
+                    Collateral
+                </strong>
+            </span>
+        </a>
+    </li>
+    
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'marketing_head:assign_list' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-share"></i>
+            <span>
+                <strong>
+                    Quota
+                </strong>
+            </span>
+        </a>
+    </li>
+
+    {% endif %}
+
+    {% if request.user.is_centerbusinessmanager %}
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong>
+                Center Business Manager
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if request.user.is_registrar %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong>
+                Registrar
+            </strong>
+        </a>
+    </li>
+<hr class="sidebar-divider my-0">
+<li class="nav-item">
+    <a class="nav-link collapsed" href="{% url 'registrar:requirements' %}" aria-expanded="true"
+        aria-controls="collapseTwo">
+        <i class="fas fa-chess-bishop"></i>
+        <span>
+            <strong>
+                Requirements
+            </strong>
+        </span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link collapsed" href="{% url 'registrar:available-course'%}" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-user-plus"></i>
+        <span>
+            <strong>
+                Available Course
+            </strong>
+        </span>
+    </a>
+</li>
+
+    {% endif %}
+
+
+    <!-- Divider -->
+    <!-- Nav Item - Pages Collapse Menu -->
+
+    {% if request.user.is_bugetary and request.user.is_ihe and request.user.is_shs and request.user.is_icl %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <span>
+             <strong>
+                Career Consultant
+             </strong>
+            </span>
+        </a>
+    </li>
+
+    {% endif %}
+
+    {% if request.user.is_bugetary %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong>
+                budgetary
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if request.user.is_ihe %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'careerconsultant:icl_contact' %}">
+            <i class="fas fa-user-plus"></i>
+            <strong>
+                Colloge (IHE)
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+
+    {% if request.user.is_shs %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <i class="fas fa-user-plus"></i>
+            <strong>
+                Senior High Scholl (SHS)
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+    {% if request.user.is_icl %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <i class="fas fa-user-plus"></i>
+            <strong>
+                Informatics Corporate Lernning (ICL)
+            </strong>
+        </a>
+    </li>
+    {% endif %}
+
+    <!-- Nav Item - Pages Collapse Menu -->
+    {% if request.user.is_centermanager %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <strong>
+                <center>
+                    Center Manager
+                </center>
+            </strong>
+        </a>
+    </li>
+    <hr class="sidebar-divider my-0">
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'crm_blog:home' %}">
+            <i class="far fa-eye"></i>
+            <span>Overview</span></a>
+    </li>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-users-cog"></i>
+            <span>Utilities</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Settings:</h6>
+                <a class="collapse-item" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+                <a class="collapse-item" href="{% url 'centermanager:commission_list' %}">Commission</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-file-invoice"></i>
+            <span>
+                <strong>
+                    Matriculation
+                </strong>
+            </span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-user-plus"></i>
+            <span>
+                <strong>
+                    Add Employer
+                </strong>
+            </span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+
+
+        <a class="nav-link collapsed" href="#" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-school"></i>
+            <span>
+                <strong>
+                    School Year
+                </strong>
+            </span>
+        </a>
+
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'centermanager:target_list' %}" aria-expanded="true"
+            aria-controls="collapseTwo">
+            <i class="fas fa-folder-plus"></i>
+            <span>
+                <strong>
+                    Target Sheet
+                </strong>
+            </span>
+        </a>
+    </li>
+
+
+    {% endif %}
+
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Components:</h6>
+            <a class="collapse-item" href="buttons.html">Buttons</a>
+            <a class="collapse-item" href="cards.html">Cards</a>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->

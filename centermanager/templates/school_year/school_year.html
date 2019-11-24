@@ -80,24 +80,18 @@
                     </form>
                   </div>                   
             </div>
+
+
     
     <!-- DIV THAT SHOWS ALL THE ADDED SCHOOL YEAR-->       
     <div class=" card card-deck float-right" style="min-height:560px; min-width: 70%; ">
         
         <div class="card-body">        
-            {% for school_year_record in school_year_record %}
             <ul>
-                <li>
-                    <strong>Start Year:</strong>
-                    {{ school_year_record.start_year }}
-                </li>
-                <li>
-                    <strong>End Year:</strong>
-                    {{ school_year_record.end_year }}
-                </li>
+                {% for date in date_list %}
+                <li>{{ date|date }}</li>
+                {% endfor %}
             </ul>
-            {% endfor %}
-    
         </div>
     </div> 
     <br><br>
