@@ -50,7 +50,6 @@ def get_start_year():
 class SchoolYear(models.Model):
     
     
-<<<<<<< HEAD
     start_year = models.DateField(unique=True, default=get_start_year)
     end_year = models.DateField(unique=True, default=get_end_year)
     active_year = models.BooleanField(default=False, help_text="This is Current School Year. There Can Only be one.")
@@ -71,10 +70,6 @@ class SchoolYear(models.Model):
         if self.id:
             if self.active_year:
                 SchoolYear.objects.filter(end_year__lte=self.start_year).exclude(id=self.id).update(active_year=False)
-=======
-    school_year = SchoolYearManager()
-  
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
 
     def __str__(self):
         return '{}'.format(self.active_year)

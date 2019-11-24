@@ -73,13 +73,7 @@ INSTALLED_APPS = [
     'contacts',
     'category',
     'components',
-<<<<<<< HEAD
     'activitycalendar',
-  
-    
-=======
-    'schedule',
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
 ]
 
 

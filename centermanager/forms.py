@@ -111,7 +111,6 @@ class TargetSheetForm(forms.ModelForm):
     class Meta:
         model = TargetSheet
         fields = [
-            'school_year',
             'corporate',
             'retail',
             'owwa',
@@ -120,22 +119,9 @@ class TargetSheetForm(forms.ModelForm):
             'active_year',
         ]
 
-<<<<<<< HEAD
-       
         widgets = {
             'active_year': forms.HiddenInput(),
         }
-=======
-    #def clean(self):
-    #    years = school_year.cleaned_data.get('school_year')
-    #    queryset = SchoolYear.objects.filter(start_year__gte=school_year, end_year__lte=school_year)
-    #    if queryset.exists():
-    #        raise forms.ValidationError('Target Sheet Already Have This Date')
-    #    super(TargetSheetForm, self).clean()
-             
-
-''' Matriculation Form '''
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
 
     def clean(self, *args, **kwargs):
         now = date.today() + timedelta(days=365)
@@ -237,11 +223,7 @@ class SanctionSettingForm(forms.ModelForm):
         self.fields['second_sanction'].label = 'Second Month Sanction'
         self.fields['third_sanction'].label = 'Third Month Sanction'
         self.fields['fourth_sanction'].label = 'Fourth Month Sanction'
-<<<<<<< HEAD
         self.fields['fifth_sanction'].label = 'Fifth Month Sanction'
-=======
-        self.fields['fifth_sanction'].label = 'Fifth Month'
->>>>>>> 180452339520ca24726b23483e4e66d43307c895
 
         if instance and instance.pk:
             self.fields['first_sanction'].widget.attrs['readonly'] = True
