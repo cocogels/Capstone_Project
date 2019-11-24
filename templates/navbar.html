@@ -7,56 +7,10 @@
    
  
     <!-- Topbar Navbar -->
-    {% if request.user.is_centermanager %}
-    <li class="nav-item active">
-            <a class="nav-link" href="#">
-                <strong>
-                    <center style="color:white;">
-                        Center Manager
-                    </center>
-                </strong>
-            </a>
-        </li>
-      &nbsp
-      &nbsp
-      &nbsp
-      &nbsp
-    <ul class="navbar-nav mr-auto float-left">
-        <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp 
-        <li>
-            <div class="btn-group">
-                <button type="button" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                         Marketing Information
-                </button>
-                    <div class="dropdown-menu" style="background-color: #272727; border: white;">
-                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:target'%}"><i class="fas fa-folder-plus"></i>&nbsp Target Sheet</a>
-                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:payment_list'%}"><i class="fas fa-file-invoice"></i>&nbsp Matriculations</a>
-                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:sanction_list'%}"><i class="fas fa-gavel"></i>&nbsp Sanction</a>
-                        <a class="dropdown-item" style="color: white" href="{% url 'centermanager:commission_list'%}"><i class="fas fa-hand-holding-usd"></i>&nbsp Commission</a>
-                    </div>
-            </div>
-        </li>&nbsp
-        <li><a class="btn btn-outline-light" href="{% url 'centermanager:employee_list' %}">Accounts</a></li>&nbsp
-        <li><a class="btn btn-outline-light" href="#">Contact</a></li>&nbsp
-        <li><a class="btn btn-outline-light" href="#">Leads</a></li>&nbsp
-        
-    </ul>
-    {% endif %}
+
+
 
     {% if request.user.is_marketinghead %}
-    <li class="nav-item active">
-        <a class="nav-link" href="{% url 'crm_blog:home' %}">
-            <strong>
-                <center style="color:white;">
-                    Marketing Head
-                </center>
-            </strong>
-        </a>
-    </li>
-  &nbsp
-  &nbsp     
-  &nbsp
-  &nbsp
     <ul class="navbar-nav mr-auto float-left">
         <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp
         <li><a class="btn btn-outline-light" href="{% url 'accounts:user_list' %}">Career Consultant</a></li>&nbsp
@@ -66,19 +20,6 @@
     {% endif %}
 
     {% if request.user.is_superuser %}
-    <li class="nav-item active">
-        <a class="nav-link" href="{% url 'crm_blog:home' %}">
-            <strong>
-                <center style="color:white;">
-                    Admin
-                </center>
-            </strong>
-        </a>
-    </li>
-  &nbsp
-  &nbsp     
-  &nbsp
-  &nbsp
     <ul class="navbar-nav mr-auto float-left">
         <li><a class="btn btn-outline-light" href="{% url 'crm_blog:home' %}">Overview</a></li> &nbsp
         <li><a class="btn btn-outline-light" href="{% url 'admin:index' %}">
@@ -89,19 +30,6 @@
     {% endif %}
 
     {% if request.user.is_registrar %}
-    <li class="nav-item active">
-            <a class="nav-link" href="{% url 'crm_blog:home' %}">
-                <strong>
-                    <center style="color:white;">
-                        Registrar
-                    </center>
-                </strong>
-            </a>
-        </li>
-      &nbsp
-      &nbsp     
-      &nbsp
-      &nbsp
         <ul class="navbar-nav mr-auto float-left">
             <li><a class="btn btn-outline-light" href="{% url 'registrar:course_list' %}">Course</a></li> &nbsp
             <li><a class="btn btn-outline-light" href="{% url 'registrar:requirements_list' %}">Requirements</a></li>&nbsp
@@ -110,19 +38,6 @@
     {% endif %}
 
     {% if request.user.is_icl %}
-    <li class="nav-item active">
-            <a class="nav-link" href="{% url 'crm_blog:home' %}">
-                <strong>
-                    <center style="color:white;">
-                        ICL
-                    </center>
-                </strong>
-            </a>
-        </li>
-      &nbsp
-      &nbsp     
-      &nbsp
-      &nbsp
         <ul class="navbar-nav mr-auto float-left">
             <li><a class="btn btn-outline-light" href="#">Overview</a></li> &nbsp
             <li><a class="btn btn-outline-light" href="{% url 'contacts:list' %}">Contacts</a></li>&nbsp
@@ -163,12 +78,21 @@
                 <img class="img-profile rounded-circle" src="#">
                 {% endif %}
 
+                {% if request.user.is_ihe %}
+                {{ user.email }}
+                <img class="img-profile rounded-circle" src="#">
+                {% endif %}                
 
-
-                {% if request.user.is_careerconsultant %}
+                {% if request.user.is_shs %}
                 {{ user.email }}
                 <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
                 {% endif %}
+
+                {% if request.user.is_icl %}
+                {{ user.email }}
+                <img class="img-profile rounded-circle" src="{% static 'marketing_design/img/matic.PNG' %}">
+                {% endif %}
+
                 </span>
                  
             </a>
@@ -190,6 +114,27 @@
                         Profile
                     </a>
                 {% endif %}
+
+                {% if request.user.is_ihe %}
+                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Profile
+                    </a>
+                {% endif %}
+
+                {% if request.user.is_shs %}
+                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Profile
+                    </a>
+                {% endif %}
+                
+                {% if request.user.is_icl %}
+                    <a class="dropdown-item" href="{% url 'accounts:profile' %}">
+                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Profile
+                    </a>
+                {% endif %}                
                 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

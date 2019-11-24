@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-
 {% block header %}
 {% include 'header.html' %}
 {% endblock header %}
@@ -23,12 +22,49 @@
 
 {% block content %}
 <div class="container-fluid">
+<<<<<<< HEAD
+=======
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <a href="{% url 'crm_blog:home' %}" class="btn btn-primary" > BACK</a>
+              
+        <div class="float-left">
+            <a href="#" class="btn float-left" >
+                <span class="text btn btn-primary">Assign Quota</span>
+            </a> 
+        <a href="{% url 'centermanager:create_target' %}" class="btn float-left" >
+            <span class="text btn btn-primary">Add Target Sheet</span>
+        </a>            
+        </div>
+        </div>
+
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
     <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs"> 
+                <li class="nav-item">
+                    <a class="nav-link text-dark" href="{% url 'centermanager:create_school_year' %}">School Year</a>
+                  </li>              
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'centermanager:target' %}">Target Sheet</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:payment_list' %}">Matriculation</a>
+                </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:sanction_list' %}">Sanction</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link text-dark" href="{% url 'centermanager:commission_list' %}">Commission</a>
+              </li>              
+            </ul>
+          </div>
+      <div class="card-body">
     <!-- Start of Breadcrumb -->
     <nav aria-label="breadcrumb" class="row" style="padding-top:2%; padding-right:2%; padding-left:2%;">
-            <h4>Target Sheet</h4>   
+            <h5 class=" mb-0 text-gray-800">School Year: </h5>   
     <!-- search field -->
 
+<<<<<<< HEAD
 
   
     <!-- <form action="" method='GET'>
@@ -46,37 +82,251 @@
     </nav>
 
 
+=======
+        <div class="topbar-divider d-none d-sm-block" style="padding-right:83%"></div>
+     <div class="dropdown float-right" style="max-width: 20%;">            
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      School Year
+                    </a>      
+                    
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="#">2018-2019</a>
+                      <a class="dropdown-item" href="#">2017-2018</a>
+                      <a class="dropdown-item" href="#">2016-2017</a>
+                    </div>
+                  </div>       
+</nav>
+<br>
+              
+
+        
+    
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
     <!-- End of Bread Crumb -->
     <br>
 
 <!-- page content -->
     <div class="content-section">
         {% include 'messages.html' %}
-    
 
-<!-- DIV FOR ADDING TARGET SHEET-->
+    <div class="row d-flex justify-content-center" style="min-height:50%;">
+ <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-danger shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Senior High School </div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  <!--Informatics Higher Education -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Informatics Higher Education</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ 
+
+        <!-- OWWA-->
+        <div class="col-xl-2 col-md-6 mb-4">
+                <div class="card border-left-dark shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">Owwa: Overseas Workers Welfare Administration</div>
+                        <div class="row no-gutters align-items-center">
+                          <div class="col-auto">
+                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                          </div>
+                          <div class="col">
+                            <div class="progress progress-sm mr-2">
+                              <div class="progress-bar bg-dark" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+  <!-- Corporate -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-warning h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Informatics Corporate Learning: Corporate</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <!-- Retail -->
+  <div class="col-xl-2 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Informatics Corporate Learning: Retail</div>
+                <div class="row no-gutters align-items-center">
+                  <div class="col-auto">
+                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">100%</div>
+                  </div>
+                  <div class="col">
+                    <div class="progress progress-sm mr-2">
+                      <div class="progress-bar bg-info" role="progressbar" style="width: 100%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <nav aria-label="Page navigation example" style="margin-button: 1%; padding-left: 84%;">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav> 
+      <!---->
+      <center>
+      <div class="card" style="max-width:80%">
+        <table class="table table-bordered" style="height: 100%;">
+          <thead class="bg-primary text-light">
+            <tr>
+              <th scope="col">Career Consultant</th>
+              <th scope="col">Role</th>
+              <th scope="col">Assigned Quota</th>
+              <th scope="col">Achieved Quota</th>
+              <th scope="col">Date Assigned</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">2018 - 2019</th>
+              <td>Active</td>
+              <td>Active</td>
+              <td>
+              </td>
+              <td>Active</td>
+            </tr>
+            <tr>
+              <th scope="row">2017 - 2018</th>
+              <td>Active</td>
+              <td>Inactive</td>
+              <td>
+              </td>
+              <td>Active</td>
+            </tr>
+            <tr>
+              <th scope="row">2016 - 2017</th>
+              <td>Active</td>
+              <td>Inactive</td>
+              <td>
+              </td>
+              <td>Active</td>
+            </tr>
+          </tbody>
+        </table> 
+      </div>
+    </center>
+    </div>
+</div>
+</div>
+</div>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DIV FOR ADDING TARGET SHEET
 
   
 <div class="card card-deck float-left" style="min-width:30%; max-width:28%; margin-left:2%; "> 
-    <!-- BUTTON ADD TARGET SHEET-->
+     BUTTON ADD TARGET SHEET
     <div class="card-body">          
-    <a href="{% url 'centermanager:create_target' %}" class="btn float-left" >
+        <a href="{% url 'centermanager:create_target' %}" class="btn float-left" >
             <span class="text btn btn-info">Add Target Sheet</span>
-    </a>
-    
+        </a>
+    </div>                   
+</div>
 
-              </div>                   
-        </div>
-
-<!-- DIV THAT SHOWS ALL THE ADDED SANCTION-->       
+DIV THAT SHOWS ALL THE ADDED SANCTION
 <div class=" card card-deck float-right" style="min-height:560px; min-width: 65%; margin-right: 2% ">
-    
+
     <div class="card-body"> 
         <center>
+<<<<<<< HEAD
        <div class="card" style="border-color: #36B9CC; max-width: 50%;">     
+=======
+       {% for target_sheet_record in target_sheet_obj %}             
+       <div class="card" style="border-color: #36B9CC; max-width: 50%;%">     
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
       
-              
+          
        <div class="card-body">   
+<<<<<<< HEAD
        
        <table class="table table-sm">
     
@@ -118,9 +368,51 @@
                    </table>
 
                                   
+=======
+         
+        <table class="table table-sm">
+            <thead class="card-header">
+                <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Target details</th>
+                </tr>
+            </thead>
+            <tbody>
+                            
+                <tr>
+                    <td>ICL: Corporate</td>
+                    <td>{{ target_sheet_record.corporate }}</td>
+                </tr>
+
+                <tr>
+                    <td>ICL: Retail</td>
+                    <td>{{ target_sheet_record.retail }}</td>
+                </tr>
+                
+                <tr>    
+                    <td>OWWA</td>
+                    <td>{{ target_sheet_record.owwa }}</td>
+                
+                </tr>
+                <tr>
+                    <td>Informatics Senior High School</td>
+                    <td>{{ target_sheet_record.seniorhigh }}</td>
+                </tr>
+
+                <tr>
+                    <td>Informatics Higher Education</td>
+                    <td> {{ target_sheet_record.higher_ed }}</td>
+                </tr>
+                          
+            </tbody>
+            </table>
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
        </div>
-   
-</div>
+       </div>
+       <br>
+    {% endfor %}      
+
+
 </center>  
 <br>
 </div>
@@ -133,7 +425,7 @@
 </div>
 </div>
 <br>
-
+-->
 
 {% endblock content %}
 

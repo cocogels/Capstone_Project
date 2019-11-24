@@ -124,6 +124,66 @@
             </div>
             <br><br>
 
+<<<<<<< HEAD
+=======
+<!-- DIV THAT SHOWS ALL THE ADDED SANCTION-->       
+<div class=" card card-deck float-right" style="min-height:560px; min-width: 65%; margin-right: 2% ">
+    
+    <div class="card-body"> 
+        <center>
+       <div class="card" style="border-color: #36B9CC; max-width: 50%;%">     
+      
+              
+       <div class="card-body">   
+       
+       <table class="table table-sm">
+              
+                   <thead class="card-header">
+                       <tr>
+                       <th scope="col">Name</th>
+                       <th scope="col">Target details</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+        {% for target_sheet_record in target_sheet_obj %}                 
+                       <tr>
+                           <td>iCL: Corporate:</td>
+                           <td>{{ target_sheet_record.corporate }}</td>
+                       </tr>
+
+                       <tr>
+                           <td>ICL: Retail:</td>
+                           <td>{{ target_sheet_record.retail }}</td>
+                       </tr>
+                       
+                       <tr>    
+                           <td>OWWA</td>
+                           <td>{{ target_sheet_record.owwa }}</td>
+                       
+                       </tr>
+                       <tr>
+                           <td>Informatics Senior High School:</td>
+                           <td>{{ target_sheet_record.seniorhigh }}</td>
+                       </tr>
+
+                       <tr>
+                           <td>Informatics Higher Education:</td>
+                           <td> {{ target_sheet_record.higher_ed }}</td>
+                       </tr>
+        {% endfor %}                
+                   </tbody>
+                   </table>
+
+                                  
+       </div>
+   
+</div>
+</center>  
+<br>
+</div>
+</div> 
+<br><br>
+>>>>>>> 180452339520ca24726b23483e4e66d43307c895
 
 
         </div>
